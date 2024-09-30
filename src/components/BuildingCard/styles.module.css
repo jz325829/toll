@@ -1,0 +1,29 @@
+ .image-wrapper {
+   width: 100%;
+ }
+
+@media screen and (max-width: 820px) {
+  .image-wrapper {
+    max-width: 754px;
+    max-height: 270px
+  }
+
+  .image-wrapper > img  {
+    max-width: 754px;
+    max-height: 270px
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .image-wrapper {
+    max-width: 480px;
+  }
+}
+
+
+@media (orientation: landscape) {
+ .image-wrapper>img {
+    max-width: 780px;
+    max-height: 310px;
+  }
+}

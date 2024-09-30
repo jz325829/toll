@@ -1,0 +1,40 @@
+/* styles.module.css */
+
+.btn-circle {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: #E9EDF0;
+    color: #0C223F;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: opacity 0.2s ease-in-out;
+    gap: 10px;
+}
+
+.btn-circle:hover {
+    opacity: 0.85;
+}
+
+.btn-circle.primary {
+    background-color: #0C223F;
+    color: #fff;
+}
+
+.btn-circle.primary:hover {
+    background-color: #06161D;
+}
+
+.btn-circle.secondary {
+    background-color: #fff;
+    border: 1px solid #E9EDF0;
+    color: #0C223F;
+}
+
+.btn-circle.secondary:hover {
+    opacity: 0.85;
+    background-color: #E9EDF0;
+}

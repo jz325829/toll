@@ -1,0 +1,42 @@
+{
+  "printWidth": 80,
+  "trailingComma": "all",
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": true,
+  "arrowParens": "avoid",
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "parser": "babel-eslint",
+        "semi": true,
+        "trailingComma": "es5"
+      }
+    },
+    {
+      "files": "*.jsx",
+      "options": {
+        "parser": "babel-eslint",
+        "semi": true,
+        "trailingComma": "es5"
+      }
+    },
+    {
+      "files": "*.ts",
+      "options": {
+        "parser": "@typescript-eslint/parser",
+        "semi": true,
+        "trailingComma": "all"
+      }
+    },
+    {
+      "files": "*.tsx",
+      "options": {
+        "parser": "@typescript-eslint/parser",
+        "semi": true,
+        "trailingComma": "all"
+      }
+    }
+  ]
+}

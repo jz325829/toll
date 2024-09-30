@@ -1,0 +1,575 @@
+{
+  "building1": {
+    "1": {
+      "price": 295758,
+      "square": 145,
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 116
+    },
+    "2": {
+      "price": 915001,
+      "square": 122,
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 115
+    },
+    "3": {
+      "price": 106486,
+      "square": 48,
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 117
+    },
+    "4": {
+      "price": 407936,
+      "square": 131,
+      "bedrooms": 4,
+      "bathrooms": 2,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 119
+    },
+    "5": {
+      "price": 853053,
+      "square": 119,
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 118
+    },
+    "6": {
+      "price": 254470,
+      "square": 142,
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 120
+    },
+    "7": {
+      "price": 414436,
+      "square": 100,
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 122
+    },
+    "8": {
+      "price": 275680,
+      "square": 64,
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 121
+    },
+    "9": {
+      "price": 249562,
+      "square": 138,
+      "bedrooms": 1,
+      "bathrooms": 4,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 123
+    },
+    "10": {
+      "price": 598911,
+      "square": 87,
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 125
+    },
+    "11": {
+      "price": 792729,
+      "square": 47,
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 124
+    },
+    "12": {
+      "price": 457272,
+      "square": 86,
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 126
+    },
+    "13": {
+      "price": 482144,
+      "square": 73,
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 128
+    },
+    "14": {
+      "price": 415518,
+      "square": 128,
+      "bedrooms": 2,
+      "bathrooms": 4,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 127
+    },
+    "15": {
+      "price": 85165,
+      "square": 98,
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 129
+    },
+    "16": {
+      "price": 263723,
+      "square": 120,
+      "bedrooms": 2,
+      "bathrooms": 3,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 131
+    },
+    "17": {
+      "price": 165923,
+      "square": 120,
+      "bedrooms": 4,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 130
+    },
+    "18": {
+      "price": 990299,
+      "square": 90,
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 132
+    },
+    "19": {
+      "price": 125078,
+      "square": 68,
+      "bedrooms": 4,
+      "bathrooms": 1,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 134
+    },
+    "20": {
+      "price": 411539,
+      "square": 84,
+      "bedrooms": 3,
+      "bathrooms": 1,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 133
+    },
+    "21": {
+      "price": 218884,
+      "square": 114,
+      "bedrooms": 1,
+      "bathrooms": 4,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 135
+    },
+    "22": {
+      "price": 663508,
+      "square": 115,
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 137
+    },
+    "23": {
+      "price": 657314,
+      "square": 147,
+      "bedrooms": 1,
+      "bathrooms": 3,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 136
+    },
+    "24": {
+      "price": 287523,
+      "square": 136,
+      "bedrooms": 1,
+      "bathrooms": 3,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 138
+    },
+    "25": {
+      "price": 655706,
+      "square": 66,
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 140
+    },
+    "26": {
+      "price": 666324,
+      "square": 109,
+      "bedrooms": 2,
+      "bathrooms": 3,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 139
+    },
+    "27": {
+      "price": 318879,
+      "square": 127,
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 141
+    }
+  },
+  "building2": {
+    "1": {
+      "price": 825919,
+      "square": 113,
+      "bedrooms": 2,
+      "bathrooms": 3,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 80
+    },
+    "2": {
+      "price": 95164,
+      "square": 105,
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 79
+    },
+    "3": {
+      "price": 897903,
+      "square": 122,
+      "bedrooms": 2,
+      "bathrooms": 4,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 81
+    },
+    "4": {
+      "price": 318238,
+      "square": 106,
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 83
+    },
+    "5": {
+      "price": 114684,
+      "square": 127,
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 82
+    },
+    "6": {
+      "price": 478635,
+      "square": 85,
+      "bedrooms": 1,
+      "bathrooms": 4,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 84
+    },
+    "7": {
+      "price": 237338,
+      "square": 79,
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 86
+    },
+    "8": {
+      "price": 483862,
+      "square": 125,
+      "bedrooms": 1,
+      "bathrooms": 3,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 85
+    },
+    "9": {
+      "price": 152342,
+      "square": 87,
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 87
+    },
+    "10": {
+      "price": 677755,
+      "square": 63,
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 89
+    },
+    "11": {
+      "price": 152618,
+      "square": 130,
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 88
+    },
+    "12": {
+      "price": 262667,
+      "square": 95,
+      "bedrooms": 4,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 90
+    }
+  },
+  "building3": {
+    "1": {
+      "price": 457675,
+      "square": 68,
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 95
+    },
+    "2": {
+      "price": 417384,
+      "square": 87,
+      "bedrooms": 3,
+      "bathrooms": 1,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 94
+    },
+    "3": {
+      "price": 84713,
+      "square": 84,
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 96
+    },
+    "4": {
+      "price": 43844,
+      "square": 96,
+      "bedrooms": 2,
+      "bathrooms": 3,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 98
+    },
+    "5": {
+      "price": 199922,
+      "square": 113,
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 97
+    },
+    "6": {
+      "price": 90832,
+      "square": 133,
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 99
+    },
+    "7": {
+      "price": 378365,
+      "square": 72,
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 101
+    },
+    "8": {
+      "price": 277417,
+      "square": 68,
+      "bedrooms": 1,
+      "bathrooms": 4,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 100
+    },
+    "9": {
+      "price": 130825,
+      "square": 98,
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 102
+    },
+    "10": {
+      "price": 408974,
+      "square": 124,
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 104
+    },
+    "11": {
+      "price": 692590,
+      "square": 73,
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 103
+    },
+    "12": {
+      "price": 699647,
+      "square": 78,
+      "bedrooms": 4,
+      "bathrooms": 2,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 105
+    },
+    "13": {
+      "price": 671840,
+      "square": 81,
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 107
+    },
+    "14": {
+      "price": 568370,
+      "square": 102,
+      "bedrooms": 1,
+      "bathrooms": 4,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 106
+    },
+    "15": {
+      "price": 146849,
+      "square": 64,
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 108
+    },
+    "16": {
+      "price": 163901,
+      "square": 81,
+      "bedrooms": 3,
+      "bathrooms": 1,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 110
+    },
+    "17": {
+      "price": 423912,
+      "square": 130,
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 109
+    },
+    "18": {
+      "price": 217936,
+      "square": 120,
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 111
+    },
+    "19": {
+      "price": 507485,
+      "square": 69,
+      "bedrooms": 2,
+      "bathrooms": 4,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 113
+    },
+    "20": {
+      "price": 657655,
+      "square": 114,
+      "bedrooms": 4,
+      "bathrooms": 2,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 112
+    },
+    "21": {
+      "price": 163453,
+      "square": 131,
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 114
+    },
+    "22": {
+      "price": 942497,
+      "square": 49,
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 116
+    },
+    "23": {
+      "price": 538100,
+      "square": 56,
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "floors": 2,
+      "available": true,
+      "unitNumber": 115
+    },
+    "24": {
+      "price": 217562,
+      "square": 73,
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "floors": 1,
+      "available": true,
+      "unitNumber": 117
+    }
+  }
+}

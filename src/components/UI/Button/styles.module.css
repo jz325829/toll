@@ -1,0 +1,29 @@
+.roundButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 15px 0;
+  background-color: #0070CD;
+  color: white;
+  border-radius: 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.roundButton.secondary {
+  background-color: #E9EDF0;
+  color: #0C223F;
+}
+
+.roundButton:hover {
+  opacity: 0.85;
+  color:#fff
+}
+
+.roundButton.secondary {
+  color:#0C223F
+}

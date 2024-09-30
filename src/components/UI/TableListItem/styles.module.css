@@ -1,0 +1,15 @@
+.info-wrapper {
+  gap:30px;
+}
+
+@media screen and (max-width: 844px) {
+.info-wrapper {
+    gap: 35px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+.info-wrapper {
+    gap: 20px;
+  }
+}

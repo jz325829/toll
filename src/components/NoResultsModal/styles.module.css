@@ -1,0 +1,17 @@
+.container {
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#0C223F;
+  gap:16px;
+  max-width:284px;
+  padding:10px 12px;
+}
+
+.icon {
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  opacity: 0.4;
+}

@@ -1,0 +1,53 @@
+.container { 
+  max-width: 366px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: 'GothamSSm';
+  font-weight: 500;
+  color: #606A70;
+  line-height: 20px;
+  font-size: 14px;
+  white-space: normal;
+}
+
+.head {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  color:#0C223F;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.container p {
+    margin-top: 16px;
+    text-align: justify;
+}
+
+.head p {
+  margin-top: 0;
+  padding-top:5px;
+}
+
+.title1 {
+  color:#606A70;
+
+}
+
+.container a {
+  margin-top: 25px;
+
+}
+
+.bold {
+  color:#0C223F;
+}
+
+.app {
+  overflow-y: hidden;
+}
+
+
