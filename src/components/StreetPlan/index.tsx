@@ -29,27 +29,28 @@ const StreetPlan = ({
   }
   return (
     <>
-      <Box 
-      position="absolute" 
-      top="35px" 
-      right="25px" 
-      paddingTop="5px" 
-      paddingLeft="5px" 
-      paddingRight="5px"
-      rounded={2}
-      zIndex={1000} 
-      cursor={'pointer'} 
-      backgroundColor="#ffffff">
-        <Image
-            objectFit="cover"
-            src="images/street_plan.png"
-            alt="Chakra UI"
-            width="200px"
-            height="120px"
-            onClick={togglePopup}
-            />
-      </Box>
-
+      {!isOpenPopUp && 
+        <Box 
+        position="absolute" 
+        top="35px" 
+        right="25px" 
+        paddingTop="5px" 
+        paddingLeft="5px" 
+        paddingRight="5px"
+        rounded={2}
+        zIndex={1000} 
+        cursor={'pointer'} 
+        backgroundColor="#ffffff">
+          <Image
+              objectFit="cover"
+              src="images/street_plan.png"
+              alt="Chakra UI"
+              width="200px"
+              height="120px"
+              onClick={togglePopup}
+              />
+        </Box>
+      }
       <Modal
           isOpen={isOpenPopUp}
           togglePopup={togglePopup}
@@ -97,7 +98,7 @@ const StreetPlan = ({
           src="images/ellipse.png"
           position="absolute" 
           top="80%" 
-          right="80%"
+          right="67.5%"
           onClick={() => togglePosition(4)}
           cursor={'pointer'}
           />
@@ -106,7 +107,7 @@ const StreetPlan = ({
           src="images/ellipse.png"
           position="absolute" 
           top="80%" 
-          right="21%"
+          right="36%"
           onClick={() => togglePosition(5)}
           cursor={'pointer'}
           />
