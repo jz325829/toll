@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Html, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
@@ -189,7 +189,6 @@ const RaycasterHelper: React.FC<{ handlePositionChange: (id: number) => void }> 
       setHoveredHotspot(false);
     }
   };
-  
 
   // // Handle the click event for position change
   // const handleClick = (event: MouseEvent) => {
@@ -235,33 +234,6 @@ const RaycasterHelper: React.FC<{ handlePositionChange: (id: number) => void }> 
   return null;
 };
 
-const MouseCameraControl = () => {
-  const { camera } = useThree();
-  const mouse = useRef({ x: 0 });
-
-  const rotationSpeed = 0.01; // Adjust the sensitivity of the horizontal movement
-
-  // Handle mouse movement (only track horizontal movement)
-  const handleMouseMove = (event: MouseEvent) => {
-    mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
-  };
-
-  useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
-  useFrame(() => {
-    // Only adjust the camera's rotation horizontally (rotation.y)
-    camera.rotation.y -= mouse.current.x * rotationSpeed;
-  });
-
-  return null;
-};
-
 interface Props {
   setIsPageLoading: (loading: boolean) => void;
 }
@@ -301,7 +273,7 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
             setIsPageLoading={setIsPageLoading}
             />
         ))}
-        <MouseCameraControl />
+        <OrbitControls enableZoom={false} enablePan={false} rotateSpeed={-0.5}/>
 
         {toolTipPositions
           .filter((toolTipPosition) => toolTipPosition.panoramaId === currentPosition.id)
