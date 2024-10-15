@@ -29,7 +29,17 @@ const StreetPlan = ({
   }
   return (
     <>
-      <Box position="absolute" top="15px" right="20px" zIndex={1000} cursor={'pointer'}>
+      <Box 
+      position="absolute" 
+      top="35px" 
+      right="25px" 
+      paddingTop="5px" 
+      paddingLeft="5px" 
+      paddingRight="5px"
+      rounded={2}
+      zIndex={1000} 
+      cursor={'pointer'} 
+      backgroundColor="#ffffff">
         <Image
             objectFit="cover"
             src="images/street_plan.png"

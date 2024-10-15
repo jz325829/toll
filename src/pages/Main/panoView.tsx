@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Html, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
@@ -189,33 +189,34 @@ const RaycasterHelper: React.FC<{ handlePositionChange: (id: number) => void }> 
       setHoveredHotspot(false);
     }
   };
+  
 
-  // Handle the click event for position change
-  const handleClick = (event: MouseEvent) => {
-    const canvasBounds = gl.domElement.getBoundingClientRect();
-    const x = ((event.clientX - canvasBounds.left) / canvasBounds.width) * 2 - 1;
-    const y = -((event.clientY - canvasBounds.top) / canvasBounds.height) * 2 + 1;
+  // // Handle the click event for position change
+  // const handleClick = (event: MouseEvent) => {
+  //   const canvasBounds = gl.domElement.getBoundingClientRect();
+  //   const x = ((event.clientX - canvasBounds.left) / canvasBounds.width) * 2 - 1;
+  //   const y = -((event.clientY - canvasBounds.top) / canvasBounds.height) * 2 + 1;
 
-    // Update the mouse position and raycaster
-    mouse.set(x, y);
-    raycaster.setFromCamera(mouse, camera);
+  //   // Update the mouse position and raycaster
+  //   mouse.set(x, y);
+  //   raycaster.setFromCamera(mouse, camera);
 
-    // Check for intersections with scene objects
-    const intersects = raycaster.intersectObjects(scene.children, true);
-    if (intersects.length > 0) {
-      const clickedObject = intersects[0].object;
+  //   // Check for intersections with scene objects
+  //   const intersects = raycaster.intersectObjects(scene.children, true);
+  //   if (intersects.length > 0) {
+  //     const clickedObject = intersects[0].object;
 
-      hotspots.forEach((hotspot) => {
-        // Compare positions using approximate values to avoid floating point precision issues
-        const hotspotPosition = new THREE.Vector3(...hotspot.position);
-        const clickedPosition = clickedObject.position.clone();
+  //     hotspots.forEach((hotspot) => {
+  //       // Compare positions using approximate values to avoid floating point precision issues
+  //       const hotspotPosition = new THREE.Vector3(...hotspot.position);
+  //       const clickedPosition = clickedObject.position.clone();
 
-        if (hotspotPosition.distanceTo(clickedPosition) < 1) {
-          handlePositionChange(hotspot.targetPositionId);
-        }
-      });
-    }
-  };
+  //       if (hotspotPosition.distanceTo(clickedPosition) < 1) {
+  //         handlePositionChange(hotspot.targetPositionId);
+  //       }
+  //     });
+  //   }
+  // };
 
   // Attach event listeners once when the component mounts
   React.useEffect(() => {
@@ -230,6 +231,33 @@ const RaycasterHelper: React.FC<{ handlePositionChange: (id: number) => void }> 
   React.useEffect(() => {
     gl.domElement.style.cursor = hoveredHotspot ? "pointer" : 'url(icons/rotate-icon.png) 25 25, auto'; 
   }, [hoveredHotspot, gl.domElement]);
+
+  return null;
+};
+
+const MouseCameraControl = () => {
+  const { camera } = useThree();
+  const mouse = useRef({ x: 0 });
+
+  const rotationSpeed = 0.01; // Adjust the sensitivity of the horizontal movement
+
+  // Handle mouse movement (only track horizontal movement)
+  const handleMouseMove = (event: MouseEvent) => {
+    mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+  };
+
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  useFrame(() => {
+    // Only adjust the camera's rotation horizontally (rotation.y)
+    camera.rotation.y -= mouse.current.x * rotationSpeed;
+  });
 
   return null;
 };
@@ -273,7 +301,7 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
             setIsPageLoading={setIsPageLoading}
             />
         ))}
-        <OrbitControls enableZoom={false} enablePan={false} />
+        <MouseCameraControl />
 
         {toolTipPositions
           .filter((toolTipPosition) => toolTipPosition.panoramaId === currentPosition.id)
