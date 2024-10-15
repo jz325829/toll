@@ -340,6 +340,10 @@ const Main = ({
 
   const handlePageLoadedTrue = () => setIsPageLoading(true);
 
+  const handlePageLoading = (loading: boolean) => {
+    setIsPageLoading(loading)
+  }
+
   useEffect(() => {
     const handleResize = () => {
       setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
@@ -513,7 +517,7 @@ const Main = ({
             cursor={'url(icons/rotate-icon.png) 25 25, auto'}
           >
             <PanoView
-              setPageLoaded={handlePageLoaded}
+              setIsPageLoading={handlePageLoading}
             />
             <Carousel
               loadedImages={loadedImages}

@@ -79,28 +79,47 @@ const hotspots: Hotspot[] = [
 interface PanoramaProps {
   image: string;
   visible: boolean;
+  setIsPageLoading: (loading: boolean) => void;
 }
 
-const Panorama: React.FC<PanoramaProps> = ({ image, visible }) => {
+const Panorama: React.FC<PanoramaProps> = ({ image, visible, setIsPageLoading }) => {
   const mesh = useRef<THREE.Mesh>(null);
 
-  // Update the visibility of the panorama
+  // Use state to track when the texture is loaded
+  const [isTextureLoaded, setIsTextureLoaded] = useState(false);
+
   useFrame(() => {
     if (mesh.current) {
       mesh.current.visible = visible;
     }
   });
 
-  const texture = new THREE.TextureLoader().load(image);
+  // Load the texture and trigger setIsPageLoading(false) after it's fully loaded
+  const texture = new THREE.TextureLoader().load(
+    image,
+    () => {
+      // Callback for when the texture has fully loaded
+      setIsTextureLoaded(true);
+      setIsPageLoading(false); // Set loading to false when texture is fully loaded
+    },
+    undefined, 
+    (error) => {
+      console.error("An error occurred loading the texture:", error);
+    }
+  );
+
   texture.wrapS = THREE.RepeatWrapping;
   texture.repeat.x = -1;
-  return (
+
+  // Return mesh only if texture is loaded
+  return isTextureLoaded ? (
     <mesh ref={mesh} rotation={[0, Math.PI / 2, 0]}>
       <sphereGeometry args={[500, 60, 40]} />
       <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
     </mesh>
-  );
+  ) : null; // Optionally, you can return null or a placeholder while the texture is loading
 };
+
 
 // Hotspot component for clickable spots
 interface HotspotProps {
@@ -216,18 +235,18 @@ const RaycasterHelper: React.FC<{ handlePositionChange: (id: number) => void }> 
 };
 
 interface Props {
-  setPageLoaded: () => void;
+  setIsPageLoading: (loading: boolean) => void;
 }
 
-const PanoView: React.FC<Props> = ({ setPageLoaded }) => {
+const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
   const [currentPosition, setCurrentPosition] = useState<Position>(positions[0]);
   const dispatch = useDispatch();
 
-  setPageLoaded();
   // Function to change panorama position with smooth transition
   const handlePositionChange = (positionId: number) => {
     const newPosition = positions.find((pos) => pos.id === positionId);
     if (newPosition) {
+      setIsPageLoading(true);
       setCurrentPosition(newPosition);
     }
   };
@@ -250,7 +269,9 @@ const PanoView: React.FC<Props> = ({ setPageLoaded }) => {
           <Panorama
             key={pos.id}
             image={pos.image}
-            visible={pos.id === currentPosition.id} />
+            visible={pos.id === currentPosition.id} 
+            setIsPageLoading={setIsPageLoading}
+            />
         ))}
         <OrbitControls enableZoom={false} enablePan={false} />
 
