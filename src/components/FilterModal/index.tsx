@@ -61,7 +61,7 @@ const FilterModal: FC<Props> = ({
   const bedrooms = useSelector((state: RootState) => state.filters.bedrooms);
   const floorsNumber = useSelector((state: RootState) => state.filters.floorsNumber);
 
-  const building = useSelector((state: RootState) => state.carousel.bulding);
+  const buildingId = useSelector((state: RootState) => state.carousel.buildingId);
   const [priceMinMax, setPriceMinMax] = useState([0, 100]);
   const [squareMinMax, setSquareMinMax] = useState([0, 100]);
   const [priceValue, setPriceValue] = useState(
@@ -114,7 +114,7 @@ const FilterModal: FC<Props> = ({
 
   useEffect(() => {
     if (dummyData) {
-      const { price, square } = findMinMaxValues(dummyData, building);
+      const { price, square } = findMinMaxValues(dummyData, buildingId);
       setPriceMinMax([price.min, price.max]);
       setSquareMinMax([square.min, square.max]);
       const updatedMinMaxPrice = {
@@ -238,7 +238,7 @@ const FilterModal: FC<Props> = ({
 
   const toggleFilters = () => {
     const { isFilterStarted: defaultFilter, ...clearedFilter } = clearedFilterState;
-    const { price, square } = findMinMaxValues(dummyData, building);
+    const { price, square } = findMinMaxValues(dummyData, buildingId);
     if (modalContentRef.current) {
       modalContentRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }

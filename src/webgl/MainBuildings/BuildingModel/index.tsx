@@ -10,7 +10,7 @@ interface Props {
   model: THREE.Object3D<THREE.Object3DEventMap>;
   dummyData: BuildingData | null | undefined;
   filters: Filters;
-  buildingNumber: 'building1' | 'building2' | 'building3';
+  buildingNumber: string;
   materials: MaterialsCategorized,
   material: THREE.MeshBasicMaterial
   materialDisabled: THREE.MeshBasicMaterial,

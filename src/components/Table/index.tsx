@@ -31,8 +31,7 @@ import { $carousel_actions } from '../../store/carousel/carouselSlice';
 import { ExtraDataValue } from '../../webgl/MainBuildings/types';
 import { formatNumberWithCommas } from '../../helpers/formatNumberWithCommas';
 import ArrowRightTableIcon from '../UI/SvgIcons/ArrowRightTableIcon';
-import { UNIT_TO_RENDER_BUILDING_1, UNIT_TO_RENDER_BUILDING_2, UnitToRenderBuilding } from '../../constants/cameras';
-import { VERSION2_TO_RENDER_BUILDING_1, VERSION2_TO_RENDER_BUILDING_2, VERSION2_TO_RENDER_BUILDING_3 } from '../../constants/version2-cameras';
+import { UnitToRenderBuilding } from 'src/constants/cameras';
 
 interface Props {
   data: ExtraDataValue[];
@@ -54,7 +53,7 @@ const Table: React.FC<Props> = ({
   const dispatch = useDispatch();
   const [isLoadingUnit, setIsloadingUnit] = useState(false);
 
-  const handleClickView = async (buildingNumber: 0 | 1 | 2 | 3, unitNumber: number, unit: number, updatedBuildingNumber: '1' | '2' | 'main' | '3', isSmallerThan481: boolean, isSmallerThan820: boolean) => {
+  const handleClickView = async (buildingNumber: 0 | 1 | 2 | 3 | 4 | 5 | 6, unitNumber: number, unit: number, updatedBuildingNumber: string, isSmallerThan481: boolean, isSmallerThan820: boolean) => {
     if (isSmallerThan820) {
       closeTableModal();
       setIsUnitModalMobileOpen(false);
@@ -65,63 +64,29 @@ const Table: React.FC<Props> = ({
     let unitToRenderBuilding: UnitToRenderBuilding;
 
     let updaetedUnitModel: string;
-    if (isItSecondVersion) {
-      switch (updatedBuildingNumber) {
-        case '1':
-          updaetedUnitModel = `SM_Building_1_Part_${updatedUnit}`;
-          break;
-        case '2':
-          updaetedUnitModel = `SM_Building_2_Part_${updatedUnit}`;
-          break;
-        case '3':
-          updaetedUnitModel = `SM_Building_3_Part_${updatedUnit}`;
-          break;
-        default:
-          updaetedUnitModel = `SM_Building_1_Part_${updatedUnit}`;
-          break;
-      }
-    } else {
-      switch (updatedBuildingNumber) {
-        case '1':
-          updaetedUnitModel = `Build1_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
-          break;
-        case '2':
-          updaetedUnitModel = `Build2_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
-          break;
-        default:
-          updaetedUnitModel = `Build1_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
-          break;
-      }
-    }
+    // switch (updatedBuildingNumber) {
+    //   case 'building1':
+    //     updaetedUnitModel = `Build1_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
+    //     break;
+    //   case 'building2':
+    //     updaetedUnitModel = `Build2_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
+    //     break;
+    //   default:
+    //     updaetedUnitModel = `Build1_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
+    //     break;
+    // }
 
-    if (isItSecondVersion) {
-      switch (updatedBuildingNumber) {
-        case '1':
-          unitToRenderBuilding = VERSION2_TO_RENDER_BUILDING_1;
-          break;
-        case '2':
-          unitToRenderBuilding = VERSION2_TO_RENDER_BUILDING_2;
-          break;
-        case '3':
-          unitToRenderBuilding = VERSION2_TO_RENDER_BUILDING_3;
-          break;
-        default:
-          unitToRenderBuilding = VERSION2_TO_RENDER_BUILDING_1;
-          break;
-      }
-    } else {
-      switch (updatedBuildingNumber) {
-        case '1':
-          unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_1;
-          break;
-        case '2':
-          unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_2;
-          break;
-        default:
-          unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_1;
-          break;
-      }
-    }
+    // switch (updatedBuildingNumber) {
+    //   case 'building1':
+    //     unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_1;
+    //     break;
+    //   case 'building2':
+    //     unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_2;
+    //     break;
+    //   default:
+    //     unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_1;
+    //     break;
+    // }
 
     setIsloadingUnit(true);
 
@@ -133,7 +98,7 @@ const Table: React.FC<Props> = ({
     );
     dispatch($carousel_actions.updatedUnitCardInfo(unit));
 
-    dispatch($carousel_actions.setBuildingNumber(updatedBuildingNumber));
+    dispatch($carousel_actions.setBuildingId(updatedBuildingNumber));
     dispatch($carousel_actions.setZoomed(true));
 
     dispatch($carousel_actions.updateBuildingDataNumber(buildingNumber));
@@ -169,23 +134,35 @@ const Table: React.FC<Props> = ({
           const { buildingName, unit, unitNumber } = cell.row.original;
           const [isSmallerThan820] = useMediaQuery('(max-width: 820px)');
           const [isSmallerThan481] = useMediaQuery('(max-width: 480px)');
-          let buildingNumber: 1 | 2 | 3;
-          let updatedBuildingNumber: '1' | '2' | '3';
+          let buildingNumber: 1 | 2 | 3 | 4 | 5 | 6;
+          let updatedBuildingNumber: string;
           switch (buildingName) {
             case 'Building 1':
               buildingNumber = 1;
-              updatedBuildingNumber = '1';
+              updatedBuildingNumber = 'building1';
               break;
             case 'Building 2':
-              updatedBuildingNumber = '2';
-              buildingNumber = 3;
+              updatedBuildingNumber = 'building2';
+              buildingNumber = 2;
               break;
             case 'Building 3':
-              updatedBuildingNumber = '3';
+              updatedBuildingNumber = 'building3';
               buildingNumber = 3;
               break;
+            case 'Building 4':
+              updatedBuildingNumber = 'building4';
+              buildingNumber = 4;
+              break;
+            case 'Building 5':
+              updatedBuildingNumber = 'building5';
+              buildingNumber = 5;
+              break;
+            case 'Building 6':
+              updatedBuildingNumber = 'building6';
+              buildingNumber = 6;
+              break;
             default:
-              updatedBuildingNumber = '1';
+              updatedBuildingNumber = 'building1';
               buildingNumber = 1;
               break;
           }
@@ -217,23 +194,35 @@ const Table: React.FC<Props> = ({
           const [isSmallerThan820] = useMediaQuery('(max-width: 820px)');
           const { unit, buildingName, unitNumber } = cell.row.original;
           const [isSmallerThan481] = useMediaQuery('(max-width: 480px)');
-          let buildingNumber: 1 | 2 | 3;
-          let updatedBuildingNumber: '1' | '2' | '3';
+          let buildingNumber: 1 | 2 | 3 | 4 | 5 | 6;
+          let updatedBuildingNumber: string;
           switch (buildingName) {
             case 'Building 1':
               buildingNumber = 1;
-              updatedBuildingNumber = '1';
+              updatedBuildingNumber = 'building1';
               break;
             case 'Building 2':
-              updatedBuildingNumber = '2';
-              buildingNumber = 3;
+              updatedBuildingNumber = 'building2';
+              buildingNumber = 2;
               break;
             case 'Building 3':
-              updatedBuildingNumber = '3';
+              updatedBuildingNumber = 'building3';
               buildingNumber = 3;
               break;
+            case 'Building 4':
+              updatedBuildingNumber = 'building4';
+              buildingNumber = 4;
+              break;
+            case 'Building 5':
+              updatedBuildingNumber = 'building5';
+              buildingNumber = 5;
+              break;
+            case 'Building 6':
+              updatedBuildingNumber = 'building6';
+              buildingNumber = 6;
+              break;
             default:
-              updatedBuildingNumber = '1';
+              updatedBuildingNumber = 'building1';
               buildingNumber = 1;
               break;
           }
@@ -263,23 +252,35 @@ const Table: React.FC<Props> = ({
           const [isSmallerThan820] = useMediaQuery('(max-width: 820px)');
           const { unit, buildingName, unitNumber } = cell.row.original;
           const [isSmallerThan481] = useMediaQuery('(max-width: 480px)');
-          let buildingNumber: 1 | 2 | 3;
-          let updatedBuildingNumber: '1' | '2' | '3';
+          let buildingNumber: 1 | 2 | 3 | 4 | 5 | 6;
+          let updatedBuildingNumber: string;
           switch (buildingName) {
             case 'Building 1':
               buildingNumber = 1;
-              updatedBuildingNumber = '1';
+              updatedBuildingNumber = 'building1';
               break;
             case 'Building 2':
-              updatedBuildingNumber = '2';
-              buildingNumber = 3;
+              updatedBuildingNumber = 'building2';
+              buildingNumber = 2;
               break;
             case 'Building 3':
-              updatedBuildingNumber = '3';
+              updatedBuildingNumber = 'building3';
               buildingNumber = 3;
               break;
+            case 'Building 4':
+              updatedBuildingNumber = 'building4';
+              buildingNumber = 4;
+              break;
+            case 'Building 5':
+              updatedBuildingNumber = 'building5';
+              buildingNumber = 5;
+              break;
+            case 'Building 6':
+              updatedBuildingNumber = 'building6';
+              buildingNumber = 6;
+              break;
             default:
-              updatedBuildingNumber = '1';
+              updatedBuildingNumber = 'building1';
               buildingNumber = 1;
               break;
           }
@@ -309,23 +310,35 @@ const Table: React.FC<Props> = ({
           const [isSmallerThan481] = useMediaQuery('(max-width: 480px)');
           const [isSmallerThan820] = useMediaQuery('(max-width: 820px)');
           const { unit, buildingName } = cell.row.original;
-          let buildingNumber: 1 | 2 | 3;
-          let updatedBuildingNumber: '1' | '2' | '3';
+          let buildingNumber: 1 | 2 | 3 | 4 | 5 | 6;
+          let updatedBuildingNumber: string;
           switch (buildingName) {
             case 'Building 1':
               buildingNumber = 1;
-              updatedBuildingNumber = '1';
+              updatedBuildingNumber = 'building1';
               break;
             case 'Building 2':
-              updatedBuildingNumber = '2';
-              buildingNumber = 3;
+              updatedBuildingNumber = 'building2';
+              buildingNumber = 2;
               break;
             case 'Building 3':
-              updatedBuildingNumber = '3';
+              updatedBuildingNumber = 'building3';
               buildingNumber = 3;
               break;
+            case 'Building 4':
+              updatedBuildingNumber = 'building4';
+              buildingNumber = 4;
+              break;
+            case 'Building 5':
+              updatedBuildingNumber = 'building5';
+              buildingNumber = 5;
+              break;
+            case 'Building 6':
+              updatedBuildingNumber = 'building6';
+              buildingNumber = 6;
+              break;
             default:
-              updatedBuildingNumber = '1';
+              updatedBuildingNumber = 'building1';
               buildingNumber = 1;
               break;
           }
@@ -357,23 +370,35 @@ const Table: React.FC<Props> = ({
 
           const value = `$${cell.getValue()}`;
           const { unit, buildingName, unitNumber } = cell.row.original;
-          let buildingNumber: 1 | 2 | 3;
-          let updatedBuildingNumber: '1' | '2' | '3';
+          let buildingNumber: 1 | 2 | 3 | 4 | 5 | 6;
+          let updatedBuildingNumber: string;
           switch (buildingName) {
             case 'Building 1':
               buildingNumber = 1;
-              updatedBuildingNumber = '1';
+              updatedBuildingNumber = 'building1';
               break;
             case 'Building 2':
-              updatedBuildingNumber = '2';
-              buildingNumber = 3;
+              updatedBuildingNumber = 'building2';
+              buildingNumber = 2;
               break;
             case 'Building 3':
-              updatedBuildingNumber = '3';
+              updatedBuildingNumber = 'building3';
               buildingNumber = 3;
               break;
+            case 'Building 4':
+              updatedBuildingNumber = 'building4';
+              buildingNumber = 4;
+              break;
+            case 'Building 5':
+              updatedBuildingNumber = 'building5';
+              buildingNumber = 5;
+              break;
+            case 'Building 6':
+              updatedBuildingNumber = 'building6';
+              buildingNumber = 6;
+              break;
             default:
-              updatedBuildingNumber = '1';
+              updatedBuildingNumber = 'building1';
               buildingNumber = 1;
               break;
           }

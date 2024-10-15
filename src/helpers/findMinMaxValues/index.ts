@@ -1,41 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BuildingData, UnitData } from '../../webgl/MainBuildings/types';
 
-type BuildingNumber = 'main' | '1' | '2' | '3';
-export function findMinMaxValues(dummyData: BuildingData, buildingNumber: BuildingNumber) {
+export function findMinMaxValues(dummyData: BuildingData, buildingId: string) {
   let dataToArray: any = Object.values(dummyData);
   const version = import.meta.env.VITE_APP_VERSION;
   const isItSecondVersion = version === 'version_2';
 
-  switch (buildingNumber) {
-    case '1':
+  switch (buildingId) {
+    case 'building1':
       dataToArray = Object.values(dummyData.building1);
       break;
-    case '2':
+    case 'building2':
       dataToArray = Object.values(dummyData.building2);
       break;
-    case '3':
+    case 'building3':
       dataToArray = Object.values(dummyData.building3);
       break;
-    case 'main':
-      dataToArray = isItSecondVersion ? [
-        ...Object.values(dummyData.building1),
-        ...Object.values(dummyData.building2),
-        ...Object.values(dummyData.building3),
-      ] : [
-        ...Object.values(dummyData.building1),
-        ...Object.values(dummyData.building2),
-      ];
+    case 'building4':
+      dataToArray = Object.values(dummyData.building4);
+      break;
+    case 'building5':
+      dataToArray = Object.values(dummyData.building5);
+      break;
+    case 'building6':
+      dataToArray = Object.values(dummyData.building6);
       break;
     default:
-      dataToArray = isItSecondVersion ? [
-        ...Object.values(dummyData.building1),
-        ...Object.values(dummyData.building2),
-        ...Object.values(dummyData.building3),
-      ] : [
-        ...Object.values(dummyData.building1),
-        ...Object.values(dummyData.building2),
-      ];
+      dataToArray = Object.values(dummyData.building1);
   }
 
   return dataToArray.reduce((acc, curr) => {

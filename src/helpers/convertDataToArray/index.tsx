@@ -3,26 +3,34 @@ import {
   BuildingData, ExtraDataValue, BuildingDataBuilding,
 } from '../../webgl/MainBuildings/types';
 
-type BuildingNumber = 'main' | '1' | '2' | '3';
 
 const convertToObjectWithUnitKey = (
   obj: BuildingDataBuilding,
-  buildingNumber: BuildingNumber,
+  buildingId: string,
   filters: Filters,
 ) => {
   const {
     bathrooms, bedrooms, floorsNumber: floors, price, square,
   } = filters;
   let buildingName: string;
-  switch (buildingNumber) {
-    case '1':
+  switch (buildingId) {
+    case 'building1':
       buildingName = 'Building 1';
       break;
-    case '2':
+    case 'building2':
       buildingName = 'Building 2';
       break;
-    case '3':
+    case 'building3':
       buildingName = 'Building 3';
+      break;
+    case 'building4':
+      buildingName = 'Building 4';
+      break;
+    case 'building5':
+      buildingName = 'Building 5';
+      break;
+    case 'building6':
+      buildingName = 'Building 6';
       break;
     default:
       buildingName = 'Building 1';
@@ -67,42 +75,32 @@ const convertToObjectWithUnitKey = (
 
 export const convertDataToArray = (
   dummyData: BuildingData,
-  buildingNumber: BuildingNumber,
+  buildingId: string,
   sort: string,
   filters: Filters,
 ) => {
-  const version = import.meta.env.VITE_APP_VERSION;
-  const isItSecondVersion = version === 'version_2';
   let arrayData: ExtraDataValue[] = [];
-  switch (buildingNumber) {
-    case '1':
+  switch (buildingId) {
+    case 'building1':
       arrayData = convertToObjectWithUnitKey(dummyData.building1, '1', filters);
       break;
-    case '2':
+    case 'building2':
       arrayData = convertToObjectWithUnitKey(dummyData.building2, '2', filters);
       break;
-    case '3':
+    case 'building3':
       arrayData = convertToObjectWithUnitKey(dummyData.building3, '3', filters);
       break;
-    case 'main':
-      arrayData = isItSecondVersion ? [
-        ...convertToObjectWithUnitKey(dummyData.building1, '1', filters),
-        ...convertToObjectWithUnitKey(dummyData.building2, '2', filters),
-        ...convertToObjectWithUnitKey(dummyData.building3, '3', filters),
-      ] : [
-        ...convertToObjectWithUnitKey(dummyData.building1, '1', filters),
-        ...convertToObjectWithUnitKey(dummyData.building2, '2', filters),
-      ];
+    case 'building4':
+      arrayData = convertToObjectWithUnitKey(dummyData.building4, '4', filters);
+      break;
+    case 'building5':
+      arrayData = convertToObjectWithUnitKey(dummyData.building5, '5', filters);
+      break;
+    case 'building6':
+      arrayData = convertToObjectWithUnitKey(dummyData.building6, '6', filters);
       break;
     default:
-      arrayData = isItSecondVersion ? [
-        ...convertToObjectWithUnitKey(dummyData.building1, '1', filters),
-        ...convertToObjectWithUnitKey(dummyData.building2, '2', filters),
-        ...convertToObjectWithUnitKey(dummyData.building3, '3', filters),
-      ] : [
-        ...convertToObjectWithUnitKey(dummyData.building1, '1', filters),
-        ...convertToObjectWithUnitKey(dummyData.building2, '2', filters),
-      ];
+      convertToObjectWithUnitKey(dummyData.building1, '1', filters);
   }
 
   let sortedData: ExtraDataValue[];

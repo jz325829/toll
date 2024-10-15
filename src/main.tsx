@@ -34,7 +34,7 @@ declare global {
 
     swellData: {
       toll: {
-        showUnit: (id: string) => void,
+        showUnit: (unitId: string, building: string) => void,
         showImage: (id: string) => void,
       },
       assetPath: string | null

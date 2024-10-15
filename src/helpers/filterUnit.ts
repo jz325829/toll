@@ -9,7 +9,7 @@ const filterUnit = (unitData: UnitData, filters: Filters) => {
   let isAvailable = false;
 
   if (unitData) {
-    if (unitData.category && unitData.category !== 'unavailable') {
+    if (unitData.category && (unitData.category === 'available' || unitData.category === 'quick_delivery')) {
       isAvailable = true;
     }
     if (isFilterStarted) {

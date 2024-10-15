@@ -24,12 +24,11 @@ import { RootState } from '../../store/store';
 import Loader from '../../components/Loader';
 import { $carousel_actions } from '../../store/carousel/carouselSlice';
 import UnitCard from '../../components/UnitCard';
-import { building1Config, building2Config, camerasConfig } from '../../constants/cameras';
-import {
-  mainviewConfig, version2Building1Config, version2Building2Config, version2Building3Config,
-} from '../../constants/version2-cameras';
+import { building1Config, building2Config, building3Config, building4Config, building5Config, building6Config } from '../../constants/cameras';
+
 import { CameraData } from './types';
 import useIsSomeUnitAvailable from '../../hooks/useIsSomeUnitAvailable';
+import PanoView from './panoView';
 
 interface ZoomBoxProps {
   children: React.ReactNode | React.ReactNode;
@@ -193,12 +192,10 @@ const ZoomBox: React.FC<ZoomBoxProps> = ({ children }) => {
   }, [divRef]);
 
   useEffect(() => {
-    const aspect = import.meta.env.VITE_APP_VERSION === 'version_2' ? '2800/1077' : '1920/1080'
-
     const el = document.getElementById(window.swellData.targetElement || 'rootId');
 
     if (el) {
-      el.style.aspectRatio = aspect;
+      el.style.aspectRatio = '1920/920';
     }
   });
 
@@ -219,7 +216,7 @@ const ZoomBox: React.FC<ZoomBoxProps> = ({ children }) => {
           width: isDeviceWidthSmallerThenHeight ? 'auto' : '100%',
           height: !isDeviceWidthSmallerThenHeight ? 'auto' : '100%',
           transformOrigin: '0 0',
-          aspectRatio: import.meta.env.VITE_APP_VERSION === 'version_2' ? '2800/1077' : '1920/1080',
+          aspectRatio: '1920/920',
         }}
       >
         {children}
@@ -228,7 +225,13 @@ const ZoomBox: React.FC<ZoomBoxProps> = ({ children }) => {
   );
 };
 
-const Main = () => {
+interface Props {
+  dummyData: BuildingData | null | undefined
+}
+
+const Main = ({
+  dummyData
+}: Props) => {
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [isOpenTableModal, setIsOpenTableModal] = useState(false);
   const version = import.meta.env.VITE_APP_VERSION;
@@ -243,17 +246,15 @@ const Main = () => {
   const [_, setIsTouchDevice] = useState('ontouchstart' in window || navigator.maxTouchPoints > 0);
   const isTouchDevice = false;
   const isDragging = useSelector((state: RootState) => state.carousel.isDragging);
-  const [dummyData, setDummyData] = useState<BuildingData | null>();
   const [isOpenningUnit, setIsOpenningUnit] = useState(false);
   const toolTipInfo = useSelector((state: RootState) => state.carousel.toolTipInfo);
   const unitCardNumber = useSelector((state: RootState) => state.carousel.unitCardNumber);
 
   const isLoadingRender = useSelector((state: RootState) => state.carousel.isLoadingRender);
 
-  const building = useSelector((state: RootState) => state.carousel.bulding);
+  const buildingId = useSelector((state: RootState) => state.carousel.buildingId);
   const zoomedUnit = useSelector((state: RootState) => state.carousel.zoomedUnit);
 
-  const buildingDataNumber = useSelector((state: RootState) => state.carousel.buildingDataNumber);
   const isUnitCardOpen = useSelector((state: RootState) => state.carousel.isCardOpen);
   const loadedImages = useRef<{ main: number[] }>({ main: [] });
 
@@ -265,58 +266,33 @@ const Main = () => {
 
   const dispatch = useDispatch();
 
-  let buildingNumber: 'building1' | 'building2';
-
-  switch (buildingDataNumber) {
-    case 1:
-      buildingNumber = 'building1';
-      break;
-    case 2:
-      buildingNumber = 'building2';
-      break;
-    default:
-      buildingNumber = 'building1';
-      break;
-  }
-
   let buildingConfig: CameraData;
 
-  if (isItSecondVersion) {
-    switch (building) {
-      case '1':
-        buildingConfig = version2Building1Config;
-        break;
-      case 'main':
-        buildingConfig = mainviewConfig;
-        break;
-      case '2':
-        buildingConfig = version2Building2Config;
-        break;
-      case '3':
-        buildingConfig = version2Building3Config;
-        break;
-      default:
-        buildingConfig = camerasConfig;
-        break;
-    }
-  } else {
-    switch (building) {
-      case '1':
-        buildingConfig = building1Config;
-        break;
-      case 'main':
-        buildingConfig = camerasConfig;
-        break;
-      case '2':
-        buildingConfig = building2Config;
-        break;
-      default:
-        buildingConfig = camerasConfig;
-        break;
-    }
+  switch (buildingId) {
+    case 'building1':
+      buildingConfig = building1Config;
+      break;
+    case 'building2':
+      buildingConfig = building2Config;
+      break;
+    case 'building3':
+      buildingConfig = building3Config;
+      break;
+    case 'building4':
+      buildingConfig = building4Config;
+      break;
+    case 'building5':
+      buildingConfig = building5Config;
+      break;
+    case 'building6':
+      buildingConfig = building6Config;
+      break;
+    default:
+      buildingConfig = building1Config;
+      break;
   }
 
-  const buildingData = dummyData && dummyData[buildingNumber];
+  const buildingData = dummyData && dummyData[buildingId as keyof typeof dummyData];;
   const unitData: UnitData | undefined = buildingData
     ? buildingData[unitCardNumber]
     : undefined;
@@ -325,7 +301,8 @@ const Main = () => {
 
   const isBuilding1Loading = useSelector((state: RootState) => !state.carousel.isLoadedFirstImages);
 
-  const buildingLoading = (building === '1' || building === '2') && isBuilding1Loading;
+  const buildingLoading = (buildingId === 'building1' || buildingId === 'building2' || 
+    buildingId === 'building3' || buildingId === 'building4' || buildingId === 'building5' || buildingId === 'building6') && isBuilding1Loading;
 
   const filters = useSelector((state: RootState) => state.filters);
   const isSomeUnitAvailable = useIsSomeUnitAvailable(buildingData!);
@@ -362,29 +339,6 @@ const Main = () => {
   };
 
   const handlePageLoadedTrue = () => setIsPageLoading(true);
-
-  useEffect(() => {
-    const filePath: string = isItSecondVersion ? '/data/units_version_2.json' : '/data/units.json';
-    const { unitData } = window.swellData;
-
-    if (unitData) {
-      setDummyData(unitData);
-    } else {
-      fetch(filePath)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Couldn"t load data ');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setDummyData(data);
-        })
-        .catch((error) => {
-          console.error('Error happend while fetching file:', error);
-        });
-    }
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -439,31 +393,31 @@ const Main = () => {
     }
   };
 
-  // const handleImageMouseMove = (event: React.PointerEvent<HTMLDivElement>) => {
-  //   const { movementX } = event;
-  //   if (isDragging) {
-  //     if (zoomedUnit !== '0') {
-  //       dispatch($carousel_actions.updatedZoomUnit('0'));
-  //     }
-  //     let next = currentSlideRef.current;
+  const handleImageMouseMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const { movementX } = event;
+    if (isDragging) {
+      if (zoomedUnit !== '0') {
+        dispatch($carousel_actions.updatedZoomUnit('0'));
+      }
+      let next = currentSlideRef.current;
 
-  //     if (movementX > 0) {
-  //       let updatedSlideId = currentSlideRef.current - 1;
+      if (movementX > 0) {
+        let updatedSlideId = currentSlideRef.current - 1;
 
-  //       if (updatedSlideId <= 0) {
-  //         updatedSlideId = 120;
-  //       }
-  //       next = updatedSlideId;
-  //     } else if (movementX < 0) {
-  //       let updatedSlideId = currentSlideRef.current + 1;
-  //       if (updatedSlideId >= 121) {
-  //         updatedSlideId = 1;
-  //       }
-  //       next = updatedSlideId;
-  //     }
-  //     updateCurrentSlide(next);
-  //   }
-  // };
+        if (updatedSlideId <= 0) {
+          updatedSlideId = 120;
+        }
+        next = updatedSlideId;
+      } else if (movementX < 0) {
+        let updatedSlideId = currentSlideRef.current + 1;
+        if (updatedSlideId >= 121) {
+          updatedSlideId = 1;
+        }
+        next = updatedSlideId;
+      }
+      updateCurrentSlide(next);
+    }
+  };
 
   let previousX: null | number = null;
   const handleImageTouchMouseMove = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -510,107 +464,126 @@ const Main = () => {
   return (
     <div className="app">
       <Loader isLoading={isPageLoading || buildingLoading || isLoadingRender} />
-      <Header
-        toggleFilterPopup={toggleFilterPopup}
-        toggleTableModalPopup={closeTableModalPopup}
-        toggleTableModal={toggleTableModalPopup}
-      />
-      <FilterModal
-        setIsUnitModalMobileOpen={setIsModalMobileOpen}
-        closeTableModal={closeTableModalPopup}
-        togglePopup={toggleFilterPopup}
-        isOpen={isOpenFilter}
-        isOpenTableModal={isOpenTableModal}
-        toggleTableModalPopup={toggleTableModalPopup}
-        dummyData={dummyData!}
-      />
-      <NoResultModal
-        isOpen={isOpenNoRes}
-        togglePopup={toggleNoResPopup}
-        toggleFilterModal={toggleOpenFilterPopup}
-      />
-      {unitData && !window.swellData.unitData && (
-        <UnitCard
-          isModalMobileOpen={isModalMobileOpen}
-          setIsModalMobileOpen={setIsModalMobileOpen}
-          isOpen={isUnitCardOpen}
-          togglePopup={toggleUnitCardPopup}
-          bedrooms={unitData.bedrooms}
-          bathrooms={unitData.bathrooms}
-          square={unitData.square}
-          price={unitData.price}
-          unitNumber={realUnitNumber!}
-        />
-      )}
-      <BuildingCard />
-      <Zoom
-        isOpenTableModal={isOpenTableModal}
-        closeTableModal={closeTableModal}
-        isVisible={isVisibleRooms}
-        handleHideRooms={handleRoomsVisibility}
-      />
-      <ZoomBox>
-        <Box
-          position="absolute"
-          left="0"
-          top="0"
-          ref={(ref) => {
-            ref?.addEventListener('touchmove', (e) => e.preventDefault());
-          }}
-          width="100%"
-          // onTouchMove={handleImageTouchMouseMove}
-          height="100%"
-          transition="all 0.3s ease-in-out"
-          transform={isOpenHeader ? transitionY : 'translateY(0)'}
-          display="flex"
-          mt="auto"
-          style={{ pointerEvents: 'auto' }}
-          // onPointerMove={handleImageMouseMove}
-          // onPointerDown={handleMouseDown}
-          cursor={isOpenningUnit ? 'url(icons/rotate-icon.png) 25 25, auto' : toolTipInfo.isHovered ? 'pointer' : 'grab'}
-        >
-          <Carousel
-            loadedImages={loadedImages}
-            isPageLoaded={isPageLoading}
-            setPageLoaded={handlePageLoaded}
+      { buildingId !== 'main' && (
+        <>
+          <Header
+            toggleFilterPopup={toggleFilterPopup}
+            toggleTableModalPopup={closeTableModalPopup}
+            toggleTableModal={toggleTableModalPopup}
           />
+          <FilterModal
+            setIsUnitModalMobileOpen={setIsModalMobileOpen}
+            closeTableModal={closeTableModalPopup}
+            togglePopup={toggleFilterPopup}
+            isOpen={isOpenFilter}
+            isOpenTableModal={isOpenTableModal}
+            toggleTableModalPopup={toggleTableModalPopup}
+            dummyData={dummyData!}
+          />
+          <NoResultModal
+            isOpen={isOpenNoRes}
+            togglePopup={toggleNoResPopup}
+            toggleFilterModal={toggleOpenFilterPopup}
+          />
+        </>
+      )}
+        {/* {unitData && !window.swellData.unitData && (
+          <UnitCard
+            isModalMobileOpen={isModalMobileOpen}
+            setIsModalMobileOpen={setIsModalMobileOpen}
+            isOpen={isUnitCardOpen}
+            togglePopup={toggleUnitCardPopup}
+            bedrooms={unitData.bedrooms}
+            bathrooms={unitData.bathrooms}
+            square={unitData.square}
+            price={unitData.price}
+            unitNumber={realUnitNumber!}
+          />
+        )} */}
+        {/* <BuildingCard /> */}
+        <Zoom
+          isOpenTableModal={isOpenTableModal}
+          closeTableModal={closeTableModal}
+          isVisible={isVisibleRooms}
+          handleHideRooms={handleRoomsVisibility}
+        />
+        <ZoomBox>
+        { buildingId === 'main' ? 
+          <Box
+            cursor={'url(icons/rotate-icon.png) 25 25, auto'}
+          >
+            <PanoView
+              setPageLoaded={handlePageLoaded}
+            />
+            <Carousel
+              loadedImages={loadedImages}
+              isPageLoaded={isPageLoading}
+              setPageLoaded={handlePageLoaded}
+            />
+          </Box>
+          :
           <Box
             position="absolute"
             left="0"
             top="0"
+            ref={(ref) => {
+              ref?.addEventListener('touchmove', (e) => e.preventDefault());
+            }}
             width="100%"
+            onTouchMove={handleImageTouchMouseMove}
             height="100%"
-            ref={target}
+            transition="all 0.3s ease-in-out"
+            transform={isOpenHeader ? transitionY : 'translateY(0)'}
+            display="flex"
+            mt="auto"
+            style={{ pointerEvents: 'auto' }}
+            onPointerMove={handleImageMouseMove}
+            onPointerDown={handleMouseDown}
+            cursor={isOpenningUnit ? 'url(icons/rotate-icon.png) 25 25, auto' : toolTipInfo.isHovered ? 'pointer' : 'grab'}
           >
-            <Canvas
-              resize={{ scroll: false }}
-              style={{
-                opacity: 1,
-                pointerEvents: 'auto',
-              }}
-              dpr={[1, 2]}
-              gl={{
-                alpha: true,
-                stencil: false,
-                depth: false,
-                antialias: false,
-              }}
-              camera={{
-                far: 2000,
-                fov: 45,
-              }}
+            <Carousel
+              loadedImages={loadedImages}
+              isPageLoaded={isPageLoading}
+              setPageLoaded={handlePageLoaded}
+            />
+            <Box
+              position="absolute"
+              left="0"
+              top="0"
+              width="100%"
+              height="100%"
+              ref={target}
             >
-              <Scene
-                setPageLoadedTrue={handlePageLoadedTrue}
-                isVisibleRooms={isVisibleRooms}
-                setPageLoaded={handlePageLoaded}
-                isPageLoaded={!isPageLoading}
-                dummyData={dummyData}
-              />
-            </Canvas>
+              <Canvas
+                resize={{ scroll: false }}
+                style={{
+                  opacity: 1,
+                  pointerEvents: 'auto',
+                }}
+                dpr={[1, 2]}
+                gl={{
+                  alpha: true,
+                  stencil: false,
+                  depth: false,
+                  antialias: false,
+                }}
+                camera={{
+                  far: 2000,
+                  fov: 45,
+                }}
+              >
+                <Scene
+                  setPageLoadedTrue={handlePageLoadedTrue}
+                  isVisibleRooms={isVisibleRooms}
+                  setPageLoaded={handlePageLoaded}
+                  isPageLoaded={!isPageLoading}
+                  dummyData={dummyData}
+                />
+              </Canvas>
+            </Box>
           </Box>
-        </Box>
-      </ZoomBox>
+          }
+        </ZoomBox>
     </div>
   );
 };

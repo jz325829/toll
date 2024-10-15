@@ -1,12 +1,12 @@
 {
   "building1": {
     "1": {
+      "category": "available",
       "price": 295758,
       "square": 145,
       "bedrooms": 4,
       "bathrooms": 4,
       "floors": 1,
-      "available": true,
       "unitNumber": 116
     },
     "2": {
@@ -15,7 +15,6 @@
       "bedrooms": 1,
       "bathrooms": 2,
       "floors": 2,
-      "available": true,
       "unitNumber": 115
     },
     "3": {
@@ -24,7 +23,6 @@
       "bedrooms": 4,
       "bathrooms": 3,
       "floors": 2,
-      "available": true,
       "unitNumber": 117
     },
     "4": {
@@ -33,7 +31,6 @@
       "bedrooms": 4,
       "bathrooms": 2,
       "floors": 2,
-      "available": true,
       "unitNumber": 119
     },
     "5": {
@@ -42,7 +39,6 @@
       "bedrooms": 1,
       "bathrooms": 1,
       "floors": 2,
-      "available": true,
       "unitNumber": 118
     },
     "6": {
@@ -51,7 +47,6 @@
       "bedrooms": 1,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 120
     },
     "7": {
@@ -60,7 +55,6 @@
       "bedrooms": 1,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 122
     },
     "8": {
@@ -69,7 +63,6 @@
       "bedrooms": 4,
       "bathrooms": 4,
       "floors": 2,
-      "available": true,
       "unitNumber": 121
     },
     "9": {
@@ -78,7 +71,6 @@
       "bedrooms": 1,
       "bathrooms": 4,
       "floors": 1,
-      "available": true,
       "unitNumber": 123
     },
     "10": {
@@ -87,7 +79,6 @@
       "bedrooms": 1,
       "bathrooms": 2,
       "floors": 2,
-      "available": true,
       "unitNumber": 125
     },
     "11": {
@@ -96,7 +87,6 @@
       "bedrooms": 3,
       "bathrooms": 2,
       "floors": 2,
-      "available": true,
       "unitNumber": 124
     },
     "12": {
@@ -105,7 +95,6 @@
       "bedrooms": 2,
       "bathrooms": 2,
       "floors": 2,
-      "available": true,
       "unitNumber": 126
     },
     "13": {
@@ -114,7 +103,6 @@
       "bedrooms": 3,
       "bathrooms": 3,
       "floors": 2,
-      "available": true,
       "unitNumber": 128
     },
     "14": {
@@ -123,7 +111,6 @@
       "bedrooms": 2,
       "bathrooms": 4,
       "floors": 2,
-      "available": true,
       "unitNumber": 127
     },
     "15": {
@@ -132,7 +119,6 @@
       "bedrooms": 1,
       "bathrooms": 2,
       "floors": 2,
-      "available": true,
       "unitNumber": 129
     },
     "16": {
@@ -141,7 +127,6 @@
       "bedrooms": 2,
       "bathrooms": 3,
       "floors": 1,
-      "available": true,
       "unitNumber": 131
     },
     "17": {
@@ -150,7 +135,6 @@
       "bedrooms": 4,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 130
     },
     "18": {
@@ -159,7 +143,6 @@
       "bedrooms": 1,
       "bathrooms": 2,
       "floors": 2,
-      "available": true,
       "unitNumber": 132
     },
     "19": {
@@ -168,7 +151,6 @@
       "bedrooms": 4,
       "bathrooms": 1,
       "floors": 2,
-      "available": true,
       "unitNumber": 134
     },
     "20": {
@@ -177,7 +159,6 @@
       "bedrooms": 3,
       "bathrooms": 1,
       "floors": 1,
-      "available": true,
       "unitNumber": 133
     },
     "21": {
@@ -186,7 +167,6 @@
       "bedrooms": 1,
       "bathrooms": 4,
       "floors": 1,
-      "available": true,
       "unitNumber": 135
     },
     "22": {
@@ -195,7 +175,6 @@
       "bedrooms": 2,
       "bathrooms": 1,
       "floors": 1,
-      "available": true,
       "unitNumber": 137
     },
     "23": {
@@ -204,7 +183,6 @@
       "bedrooms": 1,
       "bathrooms": 3,
       "floors": 2,
-      "available": true,
       "unitNumber": 136
     },
     "24": {
@@ -213,7 +191,6 @@
       "bedrooms": 1,
       "bathrooms": 3,
       "floors": 2,
-      "available": true,
       "unitNumber": 138
     },
     "25": {
@@ -222,7 +199,6 @@
       "bedrooms": 4,
       "bathrooms": 3,
       "floors": 2,
-      "available": true,
       "unitNumber": 140
     },
     "26": {
@@ -231,7 +207,6 @@
       "bedrooms": 2,
       "bathrooms": 3,
       "floors": 2,
-      "available": true,
       "unitNumber": 139
     },
     "27": {
@@ -240,18 +215,17 @@
       "bedrooms": 4,
       "bathrooms": 4,
       "floors": 1,
-      "available": true,
       "unitNumber": 141
     }
   },
   "building2": {
     "1": {
+      "category": "available",
       "price": 825919,
       "square": 113,
       "bedrooms": 2,
       "bathrooms": 3,
       "floors": 1,
-      "available": true,
       "unitNumber": 80
     },
     "2": {
@@ -260,7 +234,6 @@
       "bedrooms": 3,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 79
     },
     "3": {
@@ -269,7 +242,6 @@
       "bedrooms": 2,
       "bathrooms": 4,
       "floors": 1,
-      "available": true,
       "unitNumber": 81
     },
     "4": {
@@ -278,7 +250,6 @@
       "bedrooms": 1,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 83
     },
     "5": {
@@ -287,7 +258,6 @@
       "bedrooms": 2,
       "bathrooms": 1,
       "floors": 2,
-      "available": true,
       "unitNumber": 82
     },
     "6": {
@@ -296,7 +266,6 @@
       "bedrooms": 1,
       "bathrooms": 4,
       "floors": 2,
-      "available": true,
       "unitNumber": 84
     },
     "7": {
@@ -305,7 +274,6 @@
       "bedrooms": 1,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 86
     },
     "8": {
@@ -314,7 +282,6 @@
       "bedrooms": 1,
       "bathrooms": 3,
       "floors": 1,
-      "available": true,
       "unitNumber": 85
     },
     "9": {
@@ -323,7 +290,6 @@
       "bedrooms": 4,
       "bathrooms": 4,
       "floors": 1,
-      "available": true,
       "unitNumber": 87
     },
     "10": {
@@ -332,7 +298,6 @@
       "bedrooms": 4,
       "bathrooms": 4,
       "floors": 2,
-      "available": true,
       "unitNumber": 89
     },
     "11": {
@@ -341,7 +306,6 @@
       "bedrooms": 2,
       "bathrooms": 2,
       "floors": 2,
-      "available": true,
       "unitNumber": 88
     },
     "12": {
@@ -350,7 +314,6 @@
       "bedrooms": 4,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 90
     }
   },
@@ -361,70 +324,70 @@
       "bedrooms": 1,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
+      "category": "sold",
       "unitNumber": 95
     },
     "2": {
       "price": 417384,
       "square": 87,
       "bedrooms": 3,
+      "category": "deposit",
       "bathrooms": 1,
       "floors": 1,
-      "available": true,
       "unitNumber": 94
     },
     "3": {
       "price": 84713,
+      "category": "coming_soon",
       "square": 84,
       "bedrooms": 1,
       "bathrooms": 1,
       "floors": 2,
-      "available": true,
       "unitNumber": 96
     },
     "4": {
       "price": 43844,
+      "category": "future_phase",
       "square": 96,
       "bedrooms": 2,
       "bathrooms": 3,
       "floors": 1,
-      "available": true,
       "unitNumber": 98
     },
     "5": {
       "price": 199922,
+      "category": "quick_delivery",
       "square": 113,
       "bedrooms": 3,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 97
     },
     "6": {
       "price": 90832,
+      "category": "not_available",
       "square": 133,
       "bedrooms": 1,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 99
     },
     "7": {
+      "category": "available",
       "price": 378365,
       "square": 72,
       "bedrooms": 3,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 101
     },
     "8": {
+      "category": "unavailable",
       "price": 277417,
       "square": 68,
       "bedrooms": 1,
       "bathrooms": 4,
       "floors": 1,
-      "available": true,
       "unitNumber": 100
     },
     "9": {
@@ -433,7 +396,6 @@
       "bedrooms": 4,
       "bathrooms": 4,
       "floors": 2,
-      "available": true,
       "unitNumber": 102
     },
     "10": {
@@ -442,7 +404,6 @@
       "bedrooms": 2,
       "bathrooms": 1,
       "floors": 1,
-      "available": true,
       "unitNumber": 104
     },
     "11": {
@@ -451,7 +412,6 @@
       "bedrooms": 2,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 103
     },
     "12": {
@@ -460,7 +420,6 @@
       "bedrooms": 4,
       "bathrooms": 2,
       "floors": 2,
-      "available": true,
       "unitNumber": 105
     },
     "13": {
@@ -469,7 +428,6 @@
       "bedrooms": 3,
       "bathrooms": 3,
       "floors": 2,
-      "available": true,
       "unitNumber": 107
     },
     "14": {
@@ -478,7 +436,6 @@
       "bedrooms": 1,
       "bathrooms": 4,
       "floors": 1,
-      "available": true,
       "unitNumber": 106
     },
     "15": {
@@ -487,7 +444,6 @@
       "bedrooms": 2,
       "bathrooms": 2,
       "floors": 2,
-      "available": true,
       "unitNumber": 108
     },
     "16": {
@@ -496,7 +452,6 @@
       "bedrooms": 3,
       "bathrooms": 1,
       "floors": 1,
-      "available": true,
       "unitNumber": 110
     },
     "17": {
@@ -505,7 +460,6 @@
       "bedrooms": 3,
       "bathrooms": 3,
       "floors": 1,
-      "available": true,
       "unitNumber": 109
     },
     "18": {
@@ -514,7 +468,6 @@
       "bedrooms": 4,
       "bathrooms": 3,
       "floors": 2,
-      "available": true,
       "unitNumber": 111
     },
     "19": {
@@ -523,7 +476,6 @@
       "bedrooms": 2,
       "bathrooms": 4,
       "floors": 2,
-      "available": true,
       "unitNumber": 113
     },
     "20": {
@@ -532,7 +484,6 @@
       "bedrooms": 4,
       "bathrooms": 2,
       "floors": 1,
-      "available": true,
       "unitNumber": 112
     },
     "21": {
@@ -541,7 +492,6 @@
       "bedrooms": 4,
       "bathrooms": 4,
       "floors": 2,
-      "available": true,
       "unitNumber": 114
     },
     "22": {
@@ -550,7 +500,6 @@
       "bedrooms": 3,
       "bathrooms": 2,
       "floors": 2,
-      "available": true,
       "unitNumber": 116
     },
     "23": {
@@ -559,7 +508,6 @@
       "bedrooms": 1,
       "bathrooms": 1,
       "floors": 2,
-      "available": true,
       "unitNumber": 115
     },
     "24": {
@@ -568,7 +516,6 @@
       "bedrooms": 2,
       "bathrooms": 1,
       "floors": 1,
-      "available": true,
       "unitNumber": 117
     }
   }

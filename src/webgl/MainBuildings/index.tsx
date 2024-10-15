@@ -18,13 +18,10 @@ import BuildingModel, { MaterialsCategorized } from './BuildingModel';
 import { RootState } from '../../store/store';
 import UnitTooltip from '../../components/UI/UnitTooltip';
 import { RenderTexture, RenderTextureAPI } from '../helpers/RenderTexture';
-import {
-  OBJECTS_POSITIONS, OBJECTS_POSITIONS_BUILDING1, OBJECTS_POSITIONS_BUILDING2,
-} from '../../constants/cameras';
 import { findAllAvialableUnits } from '../../helpers/findAllAvialableUnits';
 import {
-  MAINVIEW_VERSION2, VERSION2_BUILDING1_CAMERAS, VERSION2_BUILDING2_CAMERAS, VERSION2_BUILDING3_CAMERAS,
-} from '../../constants/version2-cameras';
+  BUILDING1_CAMERAS, BUILDING2_CAMERAS, BUILDING3_CAMERAS, BUILDING4_CAMERAS, BUILDING5_CAMERAS, BUILDING6_CAMERAS
+} from '../../constants/cameras';
 // import { Html } from '../utils/Html';
 
 interface Props {
@@ -115,13 +112,13 @@ class MeshMaskedMaterial extends THREE.MeshBasicMaterial {
 const MainBuildings: React.FC<Props> = ({
   isVisibleRooms, dummyData,
 }) => {
-  const buildingNumber = useSelector((state: RootState) => state.carousel.bulding);
+  const buildingId = useSelector((state: RootState) => state.carousel.buildingId);
 
   const version = import.meta.env.VITE_APP_VERSION;
   const isItSecondVersion = version === 'version_2';
 
   const dispatch = useDispatch();
-  let modelPath = isItSecondVersion ? 'models/Buildings_newtalley.glb' : 'models/loft_13_05_fix_02.glb';
+  let modelPath = 'models/buildings.glb';
 
   const { assetPath } = window.swellData;
   if (assetPath) {
@@ -138,23 +135,21 @@ const MainBuildings: React.FC<Props> = ({
   const isDragging = useSelector((state: RootState) => state.carousel.isDragging);
 
   const objectsPositions = useMemo(() => {
-    if (isItSecondVersion) {
-      if (buildingNumber === '1') {
-        return VERSION2_BUILDING1_CAMERAS;
-      } if (buildingNumber === '2') {
-        return VERSION2_BUILDING2_CAMERAS;
-      } if (buildingNumber === '3') {
-        return VERSION2_BUILDING3_CAMERAS;
-      }
-      return MAINVIEW_VERSION2;
+    if (buildingId === 'building1') {
+      return BUILDING1_CAMERAS;
+    } if (buildingId === 'building2') {
+      return BUILDING2_CAMERAS;
+    } if (buildingId === 'building3') {
+      return BUILDING3_CAMERAS;
+    } if (buildingId === 'building4') {
+      return BUILDING4_CAMERAS;
+    } if (buildingId === 'building5') {
+      return BUILDING5_CAMERAS;
+    } if (buildingId === 'building6') {
+      return BUILDING6_CAMERAS;
     }
-    if (buildingNumber === '1') {
-      return OBJECTS_POSITIONS_BUILDING1;
-    } if (buildingNumber === '2') {
-      return OBJECTS_POSITIONS_BUILDING2;
-    }
-    return OBJECTS_POSITIONS;
-  }, [buildingNumber]);
+    return BUILDING1_CAMERAS;
+  }, [buildingId]);
 
   const { camera, gl, scene } = useThree();
   const isZoomed = useSelector((state: RootState) => state.carousel.isZoomed);
@@ -168,15 +163,11 @@ const MainBuildings: React.FC<Props> = ({
   const {
     building1,
     building2,
-    divider1,
-    divider2,
-    roof1,
-    dividerMesh,
-    roof2,
     building3,
-    divider3,
-    roof3,
-  } = useCategorizeChildrenInModal(modelScene.children, isItSecondVersion);
+    building4,
+    building5,
+    building6,
+  } = useCategorizeChildrenInModal(modelScene.children);
 
   const renderTextureAPIref = useRef<RenderTextureAPI>(null);
   const zoomUnitMaterial = useMemo(() => new THREE.MeshBasicMaterial({
@@ -187,18 +178,15 @@ const MainBuildings: React.FC<Props> = ({
 
   let fov: number;
   if (isItSecondVersion) {
-    switch (buildingNumber) {
-      case '1':
+    switch (buildingId) {
+      case 'building1':
         fov = 19;
         break;
-      case '2':
+      case 'building2':
         fov = 17;
         break;
-      case '3':
+      case 'building3':
         fov = 17;
-        break;
-      case 'main':
-        fov = 16;
         break;
       default:
         fov = 45;
@@ -228,7 +216,7 @@ const MainBuildings: React.FC<Props> = ({
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS|FxiOS|Tablet|tablet/i.test(navigator.userAgent);
 
   const renderMaterial = useMemo(() => new MeshMaskedMaterial({ transparent: true }), []);
-  const buildingData = dummyData && dummyData[`building${buildingNumber}` as keyof typeof dummyData];
+  const buildingData = dummyData && dummyData[buildingId as keyof typeof dummyData];
   const tooltipPivotRef = useRef<THREE.Object3D>(null);
   const pointerDownRef = useRef(new THREE.Vector3());
 
@@ -307,7 +295,7 @@ const MainBuildings: React.FC<Props> = ({
 
   const changeViewerCamera = (data: any, objectToFind: any = objectsPositions) => {
     const position = objectToFind[data.camera_name];
-    const target = objectToFind[`${data.camera_name}Target`];
+    const target = objectToFind[`${data.camera_name}.Target`];
 
     if (position && target) {
       renderCameraRef.current.position.copy(position).fromArray(position);
@@ -323,7 +311,7 @@ const MainBuildings: React.FC<Props> = ({
 
   const toggleBuildingOne = () => {
     dispatch($carousel_actions.setZoomed(true));
-    dispatch($carousel_actions.setBuildingNumber('1'));
+    dispatch($carousel_actions.setBuildingId('building1'));
     dispatch($carousel_actions.updateBuildingDataNumber(1));
 
     setTimeout(() => {
@@ -334,7 +322,7 @@ const MainBuildings: React.FC<Props> = ({
 
   const toggleBuildingThree = () => {
     dispatch($carousel_actions.setZoomed(true));
-    dispatch($carousel_actions.setBuildingNumber('3'));
+    dispatch($carousel_actions.setBuildingId('building3'));
     dispatch($carousel_actions.updateBuildingDataNumber(3));
 
     setTimeout(() => {
@@ -345,7 +333,7 @@ const MainBuildings: React.FC<Props> = ({
 
   const toggleBuildingTwo = () => {
     dispatch($carousel_actions.setZoomed(true));
-    dispatch($carousel_actions.setBuildingNumber('2'));
+    dispatch($carousel_actions.setBuildingId('building2'));
     dispatch($carousel_actions.updateBuildingDataNumber(2));
     const unitRende = isItSecondVersion ? 68 : 88;
     setTimeout(() => {
@@ -459,7 +447,7 @@ const MainBuildings: React.FC<Props> = ({
 
     if (e.point.distanceTo(pointerDownRef.current) < 0.15 && e.object.userData.isAvailable && isVisibleRooms) {
       if (window.swellData) {
-        window.swellData.toll.showUnit(e.object.userData.unitNumber);
+        window.swellData.toll.showUnit(e.object.userData.unitNumber, buildingId);
       } else {
         dispatch($carousel_actions.setUnitCard(true));
         dispatch($carousel_actions.setToolTip(false));
@@ -530,7 +518,7 @@ const MainBuildings: React.FC<Props> = ({
         <RenderTexture ref={renderTextureAPIref} attach="map">
           <PerspectiveCamera ref={renderCameraRef} makeDefault fov={fov} />
           <group ref={mainGroupRef} onClick={handleCloseToolTop}>
-            <group
+            {/* <group
               name="building_1"
               onPointerMove={handleMouseEnter}
               onPointerUp={handlePointerUp}
@@ -539,19 +527,8 @@ const MainBuildings: React.FC<Props> = ({
               onClick={handleMouseClick}
               ref={building1Ref}
             >
-              <group name="divider_1">
-                {isZoomed && buildingNumber === '1' && divider1.map((model) => (
-                  <primitive
-                    object={model}
-                    key={model.name}
-                    side={THREE.DoubleSide}
-                  >
-                    <primitive attach="material" object={dividerMaterial} />
-                  </primitive>
-                ))}
-              </group>
               {isZoomed
-                && buildingNumber === '1'
+                && buildingId === 'building1'
                 && building1.map((model) => (
                   <BuildingModel
                     materials={categorizedMaterials}
@@ -562,7 +539,7 @@ const MainBuildings: React.FC<Props> = ({
                     model={model}
                     dummyData={dummyData}
                     filters={filters}
-                    buildingNumber="building1"
+                    buildingNumber={buildingId}
                   />
                 ))}
               {!isZoomed && !!availableAparments[0] && (
@@ -605,7 +582,7 @@ const MainBuildings: React.FC<Props> = ({
               ref={building2Ref}
             >
               {isZoomed
-                && buildingNumber === '2'
+                && buildingId === 'building2'
                 && building2.map((model) => (
                   <BuildingModel
                     material={unitMaterial}
@@ -616,7 +593,7 @@ const MainBuildings: React.FC<Props> = ({
                     dummyData={dummyData}
                     materials={categorizedMaterials}
                     filters={filters}
-                    buildingNumber="building2"
+                    buildingNumber={buildingId}
                   />
                 ))}
               {!isZoomed && !!availableAparments[1] && (
@@ -646,7 +623,7 @@ const MainBuildings: React.FC<Props> = ({
               ref={building2Ref}
             >
               {isZoomed
-                && buildingNumber === '3'
+                && buildingId === 'building3'
                 && building3.map((model) => (
                   <BuildingModel
                     material={unitMaterial}
@@ -657,7 +634,7 @@ const MainBuildings: React.FC<Props> = ({
                     model={model}
                     dummyData={dummyData}
                     filters={filters}
-                    buildingNumber="building3"
+                    buildingNumber={buildingId}
                   />
                 ))}
 
@@ -676,55 +653,10 @@ const MainBuildings: React.FC<Props> = ({
                 </mesh>
               )}
 
-            </group>
-            <group name="roof_1">
-              {isZoomed && buildingNumber === '1' && roof1.map((model) => (
-                <primitive object={model} key={model.name} side={THREE.DoubleSide}>
-                  <primitive attach="material" object={maskMaterial} />
-                </primitive>
-              ))}
-            </group>
-            <group name="roof_2">
-              {isZoomed && buildingNumber === '2' && roof2.map((model) => (
-                <primitive object={model} key={model.name} side={THREE.DoubleSide}>
-                  <primitive attach="material" object={maskMaterial} />
-                </primitive>
-              ))}
-            </group>
-            <group name="roof_3">
-              {isZoomed && buildingNumber === '3' && roof3.map((model) => (
-                <primitive object={model} key={model.name} side={THREE.DoubleSide}>
-                  <primitive attach="material" object={maskMaterial} />
-                </primitive>
-              ))}
-            </group>
-
-            <group name="divider_2">
-              {isZoomed && buildingNumber === '2' && divider2.map((model) => (
-                <primitive object={model} key={model.name} side={THREE.DoubleSide}>
-                  <primitive attach="material" object={dividerMaterial} />
-                </primitive>
-              ))}
-            </group>
-            <group name="divider_3">
-              {isZoomed && buildingNumber === '3' && divider3.map((model) => (
-                <primitive object={model} key={model.name} side={THREE.DoubleSide}>
-                  <primitive attach="material" object={dividerMaterial} />
-                </primitive>
-              ))}
-            </group>
-            <group name="divider_Mesh">
-              {isZoomed && buildingNumber === '1' && dividerMesh.map((model) => (
-                <primitive object={model} key={model.name} side={THREE.DoubleSide}>
-                  <primitive object={model.children[0]}>
-                    <primitive attach="material" object={maskMaterial} />
-                  </primitive>
-                </primitive>
-              ))}
-            </group>
+            </group> */}
           </group>
-          {
-            buildingNumber !== 'main'
+          {/* {
+            buildingId !== 'main'
             && isZoomed
             && !isMobile
             && (
@@ -744,7 +676,7 @@ const MainBuildings: React.FC<Props> = ({
                 </Html>
               </object3D>
             )
-          }
+          } */}
           {/* <OrbitControls /> */}
         </RenderTexture>
       </primitive>

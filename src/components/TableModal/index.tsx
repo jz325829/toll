@@ -47,7 +47,7 @@ const TableModal: React.FC<Props> = ({
 }) => {
   const dispatch = useDispatch();
   const filters = useSelector((state: RootState) => state.filters);
-  const buildingNumber = useSelector((state: RootState) => state.carousel.bulding);
+  const buildingId = useSelector((state: RootState) => state.carousel.buildingId);
   const isZoomed = useSelector((state: RootState) => state.carousel.isZoomed);
 
   const buildingIndex = useSelector((state: RootState) => state.carousel.buildingDataNumber);
@@ -68,11 +68,11 @@ const TableModal: React.FC<Props> = ({
 
   useEffect(() => {
     if (dummyData) {
-      setConvertedData(convertDataToArray(dummyData, buildingNumber, sorting, filters));
+      setConvertedData(convertDataToArray(dummyData, buildingId, sorting, filters));
     }
   }, [
     dummyData,
-    buildingNumber,
+    buildingId,
     isOpenTable,
     sorting,
     filters,
@@ -110,7 +110,7 @@ const TableModal: React.FC<Props> = ({
     [
       dummyData,
       convertedData,
-      buildingNumber,
+      buildingId,
       isOpenTable,
       sorting,
       filters,

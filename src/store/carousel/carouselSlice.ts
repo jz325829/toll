@@ -1,18 +1,15 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  mainviewConfig, version2Building1Config, version2Building2Config, version2Building3Config,
-} from '../../constants/version2-cameras';
+
 import { RootState } from '../store';
 import {
-  Camera, camerasConfig, building1Config, building2Config,
+  Camera, building1Config, building2Config, building3Config, building4Config, building5Config, building6Config,
 } from '../../constants/cameras';
 
 interface CaouselState {
   activeItem: string
   isZoomed: boolean
-  bulding: '1' | '2' | 'main' | '3'
   toolTipInfo: {
     isHovered: boolean;
     toolTipId: string;
@@ -26,13 +23,13 @@ interface CaouselState {
   buildingDataNumber: 0 | 1 | 2 | 3;
   isNoDataFound: boolean;
   isLoadingRender: boolean;
-  zoomedUnit: string
+  zoomedUnit: string;
+  buildingId: string;
 }
 
 export const initialState: CaouselState = {
   activeItem: '1',
   isZoomed: false,
-  bulding: 'main',
   toolTipInfo: {
     isHovered: false,
     toolTipId: '1',
@@ -47,6 +44,7 @@ export const initialState: CaouselState = {
   isNoDataFound: false,
   isLoadingRender: false,
   zoomedUnit: '0',
+  buildingId: 'main'
 };
 
 const carouselSlice = createSlice({
@@ -59,8 +57,8 @@ const carouselSlice = createSlice({
     setZoomed: (state, action: PayloadAction<boolean>) => {
       state.isZoomed = action.payload;
     },
-    setBuildingNumber: (state, action: PayloadAction<'1' | '2' | 'main' | '3'>) => {
-      state.bulding = action.payload;
+    setBuildingId: (state, action: PayloadAction<string>) => {
+      state.buildingId = action.payload;
     },
     setToolTip: (state, action: PayloadAction<boolean>) => {
       const updatedToolTip = { ...state.toolTipInfo, isHovered: action.payload };
@@ -82,7 +80,7 @@ const carouselSlice = createSlice({
     setIsGotBack: (state, action: PayloadAction<boolean>) => {
       state.isGoingBack = action.payload;
     },
-    updateBuildingDataNumber: (state, action: PayloadAction<0 | 1 | 2 | 3>) => {
+    updateBuildingDataNumber: (state, action: PayloadAction<0 | 1 | 2 | 3 | 4 | 5 | 6>) => {
       state.buildingDataNumber = action.payload;
     },
     updateNoDataStatus: (state, action: PayloadAction<boolean>) => {
@@ -102,85 +100,60 @@ const carouselSlice = createSlice({
 
 const selectCarousel = (state: RootState) => state.carousel;
 export const selectActiveSlide = createSelector(selectCarousel, (state) => {
-  const version = import.meta.env.VITE_APP_VERSION;
-  const isItSecondVersion = version === 'version_2';
 
   let data;
-  if (isItSecondVersion) {
-    switch (state.bulding) {
-      case '1':
-        data = version2Building1Config;
-        break;
-      case 'main':
-        data = mainviewConfig;
-        break;
-      case '2':
-        data = version2Building2Config;
-        break;
-      case '3':
-        data = version2Building3Config;
-        break;
-      default:
-        data = mainviewConfig;
-        break;
-    }
-  } else {
-    switch (state.bulding) {
-      case '1':
-        data = building1Config;
-        break;
-      case 'main':
-        data = camerasConfig;
-        break;
-      case '2':
-        data = building2Config;
-        break;
-      default:
-        data = camerasConfig;
-        break;
-    }
+  switch (state.buildingId) {
+    case 'building1':
+      data = building1Config;
+      break;
+    case 'building2':
+      data = building2Config;
+      break;
+    case 'building3':
+      data = building3Config;
+      break;
+    case 'building4':
+      data = building4Config;
+      break;
+    case 'building5':
+      data = building5Config;
+      break;
+    case 'building6':
+      data = building6Config;
+      break;
+    default:
+      data = building1Config;
+      break;
   }
 
-  return data[state.activeItem as keyof typeof camerasConfig];
+  return data[state.activeItem as keyof typeof building1Config];
 });
 
 export const selectActiveData = createSelector(selectCarousel, (state) => {
-  const version = import.meta.env.VITE_APP_VERSION;
-  const isItSecondVersion = version === 'version_2';
   let data;
-  if (isItSecondVersion) {
-    switch (state.bulding) {
-      case '1':
-        data = version2Building1Config;
-        break;
-      case 'main':
-        data = mainviewConfig;
-        break;
-      case '2':
-        data = version2Building2Config;
-        break;
-      case '3':
-        data = version2Building3Config;
-        break;
-      default:
-        data = mainviewConfig;
-        break;
-    }
-  } else {
-    switch (state.bulding) {
-      case '1':
-        data = building1Config;
-        break;
-      case 'main':
-        data = camerasConfig;
-        break;
-      case '2':
-        data = building2Config;
-        break;
-      default:
-        data = camerasConfig;
-        break;
-    }
+  
+  switch (state.buildingId) {
+    case 'building1':
+      data = building1Config;
+      break;
+    case 'building2':
+      data = building2Config;
+      break;
+    case 'building3':
+      data = building3Config;
+      break;
+    case 'building4':
+      data = building4Config;
+      break;
+    case 'building5':
+      data = building5Config;
+      break;
+    case 'building6':
+      data = building6Config;
+      break;
+    default:
+      data = building1Config;
+      break;
   }
 
   return Object.values(data).map((i) => ({ id: i.camera_name, src: i.image }));

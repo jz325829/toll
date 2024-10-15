@@ -6,13 +6,12 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { UNIT_TO_RENDER_BUILDING_1, UNIT_TO_RENDER_BUILDING_2, UnitToRenderBuilding } from '../../../constants/cameras';
 import { findOffsets } from '../../../webgl/helpers/findOffsets';
 import { ExtraDataValue } from '../../../webgl/MainBuildings/types';
 import { formatNumberWithCommas } from '../../../helpers/formatNumberWithCommas';
 import { $carousel_actions } from '../../../store/carousel/carouselSlice';
 import styles from './styles.module.css';
-import { VERSION2_TO_RENDER_BUILDING_1, VERSION2_TO_RENDER_BUILDING_2, VERSION2_TO_RENDER_BUILDING_3 } from '../../../constants/version2-cameras';
+import { UnitToRenderBuilding } from 'src/constants/cameras';
 
 interface Props {
   unitData: ExtraDataValue;
@@ -39,23 +38,35 @@ const TableListItem: React.FC<Props> = ({
 
   const [isSmallerThan844] = useMediaQuery('(max-width: 844px)');
   const [isSmallerThan480] = useMediaQuery('(max-width: 480px)');
-  let buildingNumber: 1 | 2 | 3;
-  let updatedBuildingNumber: '1' | '2' | '3';
+  let buildingNumber: 1 | 2 | 3 | 4 | 5 | 6;
+  let updatedBuildingNumber: string;
   switch (buildingName) {
     case 'Building 1':
       buildingNumber = 1;
-      updatedBuildingNumber = '1';
+      updatedBuildingNumber = 'building1';
       break;
     case 'Building 2':
-      updatedBuildingNumber = '2';
-      buildingNumber = 3;
+      updatedBuildingNumber = 'building2';
+      buildingNumber = 2;
       break;
     case 'Building 3':
-      updatedBuildingNumber = '3';
+      updatedBuildingNumber = 'building3';
       buildingNumber = 3;
       break;
+    case 'Building 4':
+      updatedBuildingNumber = 'building4';
+      buildingNumber = 4;
+      break;
+    case 'Building 5':
+      updatedBuildingNumber = 'building5';
+      buildingNumber = 5;
+      break;
+    case 'Building 6':
+      updatedBuildingNumber = 'building6';
+      buildingNumber = 6;
+      break;
     default:
-      updatedBuildingNumber = '1';
+      updatedBuildingNumber = 'building1';
       buildingNumber = 1;
       break;
   }
@@ -67,65 +78,31 @@ const TableListItem: React.FC<Props> = ({
 
     setIsloadingUnit(true);
     let updaetedUnitModel: string;
-    if (isItSecondVersion) {
-      switch (buildingName) {
-        case 'Building 1':
-          updaetedUnitModel = `SM_Building_1_Part_${updatedUnit}`;
-          break;
-        case 'Building 2':
-          updaetedUnitModel = `SM_Building_2_Part_${updatedUnit}`;
-          break;
-        case 'Building 3':
-          updaetedUnitModel = `SM_Building_3_Part_${updatedUnit}`;
-          break;
-        default:
-          updaetedUnitModel = `SM_Building_1_Part_${updatedUnit}`;
-          break;
-      }
-    } else {
-      switch (buildingName) {
-        case 'Building 1':
-          updaetedUnitModel = `Build1_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
-          break;
-        case 'Building 2':
-          updaetedUnitModel = `Build2_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
-          break;
-        default:
-          updaetedUnitModel = `Build1_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
-          break;
-      }
-    }
+    // switch (buildingName) {
+    //   case 'Building 1':
+    //     updaetedUnitModel = `Build1_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
+    //     break;
+    //   case 'Building 2':
+    //     updaetedUnitModel = `Build2_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
+    //     break;
+    //   default:
+    //     updaetedUnitModel = `Build1_Part_${unitNumber < 10 ? '0' : ''}${unitNumber}`;
+    //     break;
+    // }
 
     let unitToRenderBuilding: UnitToRenderBuilding;
 
-    if (isItSecondVersion) {
-      switch (buildingName) {
-        case 'Building 1':
-          unitToRenderBuilding = VERSION2_TO_RENDER_BUILDING_1;
-          break;
-        case 'Building 2':
-          unitToRenderBuilding = VERSION2_TO_RENDER_BUILDING_2;
-          break;
-        case 'Building 3':
-          unitToRenderBuilding = VERSION2_TO_RENDER_BUILDING_3;
-          break;
-        default:
-          unitToRenderBuilding = VERSION2_TO_RENDER_BUILDING_1;
-          break;
-      }
-    } else {
-      switch (buildingName) {
-        case 'Building 1':
-          unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_1;
-          break;
-        case 'Building 2':
-          unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_2;
-          break;
-        default:
-          unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_1;
-          break;
-      }
-    }
+    // switch (buildingName) {
+    //   case 'Building 1':
+    //     unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_1;
+    //     break;
+    //   case 'Building 2':
+    //     unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_2;
+    //     break;
+    //   default:
+    //     unitToRenderBuilding = UNIT_TO_RENDER_BUILDING_1;
+    //     break;
+    // }
 
     const { offsetY, offsetX } = findOffsets(
       buildingNumber,
@@ -135,7 +112,7 @@ const TableListItem: React.FC<Props> = ({
     );
     dispatch($carousel_actions.updatedUnitCardInfo(unit));
 
-    dispatch($carousel_actions.setBuildingNumber(updatedBuildingNumber));
+    dispatch($carousel_actions.setBuildingId(updatedBuildingNumber));
     dispatch($carousel_actions.setZoomed(true));
     dispatch($carousel_actions.updateBuildingDataNumber(buildingNumber));
 

@@ -68,7 +68,7 @@ export default function Header({
 
   const handleGoBack = () => {
     dispatch($carousel_actions.setZoomed(false));
-    dispatch($carousel_actions.setBuildingNumber('main'));
+    dispatch($carousel_actions.setBuildingId('main'));
     dispatch($carousel_actions.updateBuildingDataNumber(0));
     dispatch($carousel_actions.setIsGotBack(true));
     dispatch($carousel_actions.setToolTip(false));

@@ -27,6 +27,9 @@ export type BuildingData = {
   building1: BuildingDataBuilding
   building2: BuildingDataBuilding
   building3: BuildingDataBuilding
+  building4: BuildingDataBuilding
+  building5: BuildingDataBuilding
+  building6: BuildingDataBuilding
 };
 
 export type FullUnitData = THREE.Object3D<THREE.Object3DEventMap> & UnitData;

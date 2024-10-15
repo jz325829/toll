@@ -7,8 +7,7 @@ import {
 import styles from './styles.module.css';
 import { selectActiveSlide, selectActiveData, $carousel_actions } from '../../store/carousel/carouselSlice';
 import { RootState } from '../../store/store';
-import { building1Config, building2Config } from '../../constants/cameras';
-import { version2Building1Config, version2Building2Config, version2Building3Config } from '../../constants/version2-cameras';
+import { building1Config, building2Config, building3Config, building4Config, building5Config, building6Config } from '../../constants/cameras';
 
 interface Props {
   isPageLoaded: boolean;
@@ -20,26 +19,23 @@ interface Props {
 
 const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
   const version = import.meta.env.VITE_APP_VERSION;
-  const isItSecondVersion = version === 'version_2';
 
-  const BUILDING_1_IMAGES = Object.values(
-    isItSecondVersion
-      ? version2Building1Config
-      : building1Config,
-  ).map((el) => el.image);
+  const BUILDING_1_IMAGES = Object.values(building1Config).map((el) => el.image);
 
-  const BUILDING_2_IMAGES = Object.values(
-    isItSecondVersion
-      ? version2Building2Config
-      : building2Config,
-  ).map((el) => el.image);
+  const BUILDING_2_IMAGES = Object.values(building2Config).map((el) => el.image);
 
-  const BUILDING_3_IMAGES = isItSecondVersion ? Object.values(version2Building3Config).map((el) => el.image) : [];
+  const BUILDING_3_IMAGES = Object.values(building3Config).map((el) => el.image);
+
+  const BUILDING_4_IMAGES = Object.values(building4Config).map((el) => el.image);
+
+  const BUILDING_5_IMAGES = Object.values(building5Config).map((el) => el.image);
+
+  const BUILDING_6_IMAGES = Object.values(building6Config).map((el) => el.image);
 
   const activeSlide = useSelector(selectActiveSlide);
   const activeData = useSelector(selectActiveData);
 
-  const buildingNumber = useSelector((state: RootState) => state.carousel.bulding);
+  const buildingId = useSelector((state: RootState) => state.carousel.buildingId);
   const isGotBack = useSelector((state: RootState) => state.carousel.isGoingBack);
 
   const dispatch = useDispatch();
@@ -57,6 +53,15 @@ const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
 
     const prealoadBuilding3Images = BUILDING_3_IMAGES.filter((_, i) => !(i % 2));
     const lazyLoadBuilding3Iamges = BUILDING_3_IMAGES.filter((_, i) => i % 2);
+
+    const prealoadBuilding4Images = BUILDING_4_IMAGES.filter((_, i) => !(i % 2));
+    const lazyLoadBuilding4Iamges = BUILDING_4_IMAGES.filter((_, i) => i % 2);
+
+    const prealoadBuilding5Images = BUILDING_5_IMAGES.filter((_, i) => !(i % 2));
+    const lazyLoadBuilding5Iamges = BUILDING_5_IMAGES.filter((_, i) => i % 2);
+
+    const prealoadBuilding6Images = BUILDING_6_IMAGES.filter((_, i) => !(i % 2));
+    const lazyLoadBuilding6Iamges = BUILDING_6_IMAGES.filter((_, i) => i % 2);
 
     loadedImages.current.main = prealoadImages.map((element) => activeData.indexOf(element) + 1);
 
@@ -97,9 +102,10 @@ const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
         await loadImage(el.src, false);
       }));
 
-      if (buildingNumber === 'main') {
-        setPageLoaded();
+      
+      if (buildingId === 'main') {
 
+        setPageLoaded();
         Promise.all(lazyLoadIamges.map(async (el) => {
           const img = await loadImage(el.src, false);
           await new Promise((r) => { setTimeout(r, 100); });
@@ -109,6 +115,9 @@ const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
           [...prealoadBuilding1Images.map((el) => loadImage(el)),
             ...prealoadBuilding2Images.map((el) => loadImage(el)),
             ...prealoadBuilding3Images.map((el) => loadImage(el)),
+            ...prealoadBuilding4Images.map((el) => loadImage(el)),
+            ...prealoadBuilding5Images.map((el) => loadImage(el)),
+            ...prealoadBuilding6Images.map((el) => loadImage(el)),
           ]
           ,
         );
@@ -119,6 +128,9 @@ const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
           [...lazyLoadBuilding2Iamges.map((el) => loadImage(el)),
             ...lazyLoadBuilding1Iamges.map((el) => loadImage(el)),
             ...lazyLoadBuilding3Iamges.map((el) => loadImage(el)),
+            ...lazyLoadBuilding4Iamges.map((el) => loadImage(el)),
+            ...lazyLoadBuilding5Iamges.map((el) => loadImage(el)),
+            ...lazyLoadBuilding6Iamges.map((el) => loadImage(el)),
           ],
         );
       }
@@ -149,7 +161,7 @@ const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
     <div className={styles.root} ref={rootRef}>
       {
         activeData.map((el, i) => {
-          let display = (buildingNumber === 'main' && !isGotBack) ? 'none' : '';
+          let display = (buildingId === 'main' && !isGotBack) ? 'none' : '';
 
           if (i === 0) {
             display = '';
