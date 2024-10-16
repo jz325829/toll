@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Html, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import StreetPlan from "../../components/StreetPlan";
 
 // Define the type for positions
-interface Position {
+export interface Position {
   id: number;
   image: string;
   position: [number, number, number];
@@ -190,35 +190,8 @@ const RaycasterHelper: React.FC<{ handlePositionChange: (id: number) => void }> 
     }
   };
 
-  // // Handle the click event for position change
-  // const handleClick = (event: MouseEvent) => {
-  //   const canvasBounds = gl.domElement.getBoundingClientRect();
-  //   const x = ((event.clientX - canvasBounds.left) / canvasBounds.width) * 2 - 1;
-  //   const y = -((event.clientY - canvasBounds.top) / canvasBounds.height) * 2 + 1;
-
-  //   // Update the mouse position and raycaster
-  //   mouse.set(x, y);
-  //   raycaster.setFromCamera(mouse, camera);
-
-  //   // Check for intersections with scene objects
-  //   const intersects = raycaster.intersectObjects(scene.children, true);
-  //   if (intersects.length > 0) {
-  //     const clickedObject = intersects[0].object;
-
-  //     hotspots.forEach((hotspot) => {
-  //       // Compare positions using approximate values to avoid floating point precision issues
-  //       const hotspotPosition = new THREE.Vector3(...hotspot.position);
-  //       const clickedPosition = clickedObject.position.clone();
-
-  //       if (hotspotPosition.distanceTo(clickedPosition) < 1) {
-  //         handlePositionChange(hotspot.targetPositionId);
-  //       }
-  //     });
-  //   }
-  // };
-
   // Attach event listeners once when the component mounts
-  React.useEffect(() => {
+  useEffect(() => {
     gl.domElement.addEventListener("mousemove", handleMouseMove); // Listen for mouse move to detect hover
 
     return () => {
@@ -227,11 +200,58 @@ const RaycasterHelper: React.FC<{ handlePositionChange: (id: number) => void }> 
   }, [gl, camera, scene, raycaster, mouse]);
   
   // Update cursor style based on whether a hotspot is hovered
-  React.useEffect(() => {
+  useEffect(() => {
     gl.domElement.style.cursor = hoveredHotspot ? "pointer" : 'url(icons/rotate-icon.png) 25 25, auto'; 
   }, [hoveredHotspot, gl.domElement]);
 
   return null;
+};
+
+interface CameraCaptureProps {
+  setRotation: (direction: THREE.Euler) => void;
+}
+
+const CameraCapture: React.FC<CameraCaptureProps> = ({ setRotation }) => {
+  const { camera } = useThree();
+  const lastRotation = useRef(new THREE.Euler()); // Keep track of the last known rotation
+  const updateTime = useRef<number>(0);
+
+  // Throttling interval in milliseconds
+  const throttleInterval = 500; // Adjust as needed for less frequent updates
+
+  useFrame(({ clock }) => {
+    const currentTime = clock.getElapsedTime();
+
+    // Only update at intervals (throttling)
+    if (currentTime - updateTime.current >= throttleInterval / 1000) {
+      const currentRotation = camera.rotation.clone();
+
+      // Round the rotation values to reduce sensitivity to minor changes
+      const roundRotation = (value: number) => Math.round(value * 100) / 100;
+
+      const significantRotation =
+        Math.abs(roundRotation(currentRotation.x) - roundRotation(lastRotation.current.x)) > 0.05 ||
+        Math.abs(roundRotation(currentRotation.y) - roundRotation(lastRotation.current.y)) > 0.05;
+
+      if (significantRotation) {
+        lastRotation.current.copy(currentRotation);
+        updateTime.current = currentTime; // Store the last update time
+        setRotation(currentRotation); // Only update when there's significant change
+      }
+    }
+  });
+
+  return (
+    <OrbitControls
+      enableZoom={false}
+      enablePan={false}
+      rotateSpeed={-0.5}
+      minAzimuthAngle={-Math.PI / 4} 
+      maxAzimuthAngle={Math.PI / 4}
+      dampingFactor={0.1}
+      enableDamping={true}
+    />
+  );
 };
 
 interface Props {
@@ -240,6 +260,7 @@ interface Props {
 
 const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
   const [currentPosition, setCurrentPosition] = useState<Position>(positions[0]);
+  const [rotation, setRotation] = useState<THREE.Euler>(new THREE.Euler());
   const dispatch = useDispatch();
 
   // Function to change panorama position with smooth transition
@@ -265,6 +286,7 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
   return (
     <div className="canvas-container" >
       <Canvas style={{ height: "100vh", width: "100vw" }} camera={{ fov: 100, position: [0, 0, 0.1] }}>
+        <CameraCapture setRotation={setRotation} />
         {positions.map((pos) => (
           <Panorama
             key={pos.id}
@@ -273,7 +295,7 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
             setIsPageLoading={setIsPageLoading}
             />
         ))}
-        <OrbitControls enableZoom={false} enablePan={false} rotateSpeed={-0.5}/>
+        {/* <OrbitControls enableZoom={false} enablePan={false} rotateSpeed={-0.5} minAzimuthAngle={-Math.PI / 4} maxAzimuthAngle={Math.PI / 4}/> */}
 
         {toolTipPositions
           .filter((toolTipPosition) => toolTipPosition.panoramaId === currentPosition.id)
@@ -303,7 +325,7 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
 
         <RaycasterHelper handlePositionChange={handlePositionChange} />
       </Canvas>
-      <StreetPlan handlePositionChange={handlePositionChange}/>
+      <StreetPlan handlePositionChange={handlePositionChange} rotation={rotation} currentPosition={currentPosition}/>
     </div>
   );
 };
