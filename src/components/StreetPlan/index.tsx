@@ -27,10 +27,6 @@ const StreetPlan = ({
     togglePopup();
   }
 
-  useEffect(() => {
-    console.log('Camera direction:', rotation);
-  }, [rotation]);
-
   return (
     <>
       {!isOpenPopUp && 

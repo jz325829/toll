@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Html, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
@@ -82,11 +82,28 @@ interface PanoramaProps {
   setIsPageLoading: (loading: boolean) => void;
 }
 
-const Panorama: React.FC<PanoramaProps> = ({ image, visible, setIsPageLoading }) => {
+const Panorama = React.memo(({ image, visible, setIsPageLoading }: PanoramaProps) => {
   const mesh = useRef<THREE.Mesh>(null);
-
-  // Use state to track when the texture is loaded
   const [isTextureLoaded, setIsTextureLoaded] = useState(false);
+
+  // Load and cache textures
+  const texture = useMemo(() => {
+    const loader = new THREE.TextureLoader();
+    const tex = loader.load(
+      image,
+      () => {
+        setIsTextureLoaded(true);
+        setIsPageLoading(false);
+      },
+      undefined,
+      (error) => {
+        console.error("Error loading texture:", error);
+      }
+    );
+    tex.wrapS = THREE.RepeatWrapping;
+    tex.repeat.x = -1;
+    return tex;
+  }, [image, setIsPageLoading]);
 
   useFrame(() => {
     if (mesh.current) {
@@ -94,31 +111,14 @@ const Panorama: React.FC<PanoramaProps> = ({ image, visible, setIsPageLoading })
     }
   });
 
-  // Load the texture and trigger setIsPageLoading(false) after it's fully loaded
-  const texture = new THREE.TextureLoader().load(
-    image,
-    () => {
-      // Callback for when the texture has fully loaded
-      setIsTextureLoaded(true);
-      setIsPageLoading(false); // Set loading to false when texture is fully loaded
-    },
-    undefined, 
-    (error) => {
-      console.error("An error occurred loading the texture:", error);
-    }
-  );
-
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.repeat.x = -1;
-
-  // Return mesh only if texture is loaded
   return isTextureLoaded ? (
     <mesh ref={mesh} rotation={[0, Math.PI / 2, 0]}>
-      <sphereGeometry args={[500, 60, 40]} />
+      <sphereGeometry args={[500, 30, 20]} />
       <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
     </mesh>
-  ) : null; // Optionally, you can return null or a placeholder while the texture is loading
-};
+  ) : null;
+});
+
 
 
 // Hotspot component for clickable spots
@@ -127,15 +127,13 @@ interface HotspotProps {
   onClick: () => void;
 }
 
-const Hotspot: React.FC<HotspotProps> = ({ position, onClick }) => {
+const Hotspot = React.memo(({ position, onClick }: HotspotProps) => {
   const outerRingRef = useRef<THREE.Mesh>(null);
   const innerCircleRef = useRef<THREE.Mesh>(null);
-  const { camera } = useThree(); // Access the camera from useThree
+  const { camera } = useThree();
 
-  // useFrame to update rotation so that the hotspot faces the camera
   useFrame(() => {
     if (outerRingRef.current && innerCircleRef.current) {
-      // Get the vector direction to the camera
       outerRingRef.current.lookAt(camera.position);
       innerCircleRef.current.lookAt(camera.position);
     }
@@ -143,65 +141,47 @@ const Hotspot: React.FC<HotspotProps> = ({ position, onClick }) => {
 
   return (
     <group position={position} onClick={onClick}>
-      {/* Outer Ring */}
-      <mesh ref={outerRingRef} scale={[5, 5, 1]} userData={{ isHotspot: true }}>
-        <ringGeometry args={[0.9, 1.2, 32]} />
+      <mesh ref={outerRingRef} scale={[4, 4, 1]} userData={{ isHotspot: true }}>
+        <ringGeometry args={[0.8, 1.1, 16]} />
         <meshBasicMaterial color="white" side={THREE.DoubleSide} />
       </mesh>
 
-      {/* Inner Circle - Shift it slightly forward to avoid z-fighting */}
-      <mesh ref={innerCircleRef} scale={[3, 3, 1]} position={[0, 0, 0.01]} userData={{ isHotspot: true }}>
-        <circleGeometry args={[0.9, 32]} />
+      <mesh ref={innerCircleRef} scale={[2.5, 2.5, 1]} position={[0, 0, 0.01]} userData={{ isHotspot: true }}>
+        <circleGeometry args={[0.8, 16]} />
         <meshBasicMaterial color="white" side={THREE.DoubleSide} />
       </mesh>
     </group>
   );
-};
+});
 
 // Component to handle raycasting inside the canvas
-const RaycasterHelper: React.FC<{ handlePositionChange: (id: number) => void }> = ({ handlePositionChange }) => {
+const RaycasterHelper = ({ handlePositionChange }: { handlePositionChange: (id: number) => void }) => {
   const { raycaster, mouse, camera, scene, gl } = useThree();
-  const [hoveredHotspot, setHoveredHotspot] = useState<boolean>(false); // Track if a hotspot is being hovered
+  const [hoveredHotspot, setHoveredHotspot] = useState<boolean>(false);
 
-  // Handle the mouse move event for hover detection
   const handleMouseMove = (event: MouseEvent) => {
     const canvasBounds = gl.domElement.getBoundingClientRect();
     const x = ((event.clientX - canvasBounds.left) / canvasBounds.width) * 2 - 1;
     const y = -((event.clientY - canvasBounds.top) / canvasBounds.height) * 2 + 1;
 
-    // Update the mouse position and raycaster
     mouse.set(x, y);
     raycaster.setFromCamera(mouse, camera);
 
-    // Check for intersections with scene objects
     const intersects = raycaster.intersectObjects(scene.children, true);
+    const hotspotHovered = intersects.some(intersect => intersect.object.userData.isHotspot);
 
-    if (intersects.length > 0) {
-      const intersectedObject = intersects[0].object;
-      
-      // Check if the intersected object is a hotspot
-      if (intersectedObject.userData.isHotspot) {
-        setHoveredHotspot(true);
-      } else {
-        setHoveredHotspot(false);
-      }
-    } else {
-      setHoveredHotspot(false);
-    }
+    setHoveredHotspot(hotspotHovered);
   };
 
-  // Attach event listeners once when the component mounts
   useEffect(() => {
-    gl.domElement.addEventListener("mousemove", handleMouseMove); // Listen for mouse move to detect hover
-
+    gl.domElement.addEventListener("mousemove", handleMouseMove);
     return () => {
-      gl.domElement.removeEventListener("mousemove", handleMouseMove); // Clean up on unmount
+      gl.domElement.removeEventListener("mousemove", handleMouseMove);
     };
   }, [gl, camera, scene, raycaster, mouse]);
-  
-  // Update cursor style based on whether a hotspot is hovered
+
   useEffect(() => {
-    gl.domElement.style.cursor = hoveredHotspot ? "pointer" : 'url(icons/rotate-icon.png) 25 25, auto'; 
+    gl.domElement.style.cursor = hoveredHotspot ? "pointer" : 'url(icons/rotate-icon.png) 25 25, auto';
   }, [hoveredHotspot, gl.domElement]);
 
   return null;
@@ -211,32 +191,26 @@ interface CameraCaptureProps {
   setRotation: (direction: THREE.Euler) => void;
 }
 
-const CameraCapture: React.FC<CameraCaptureProps> = ({ setRotation }) => {
+const CameraCapture = ({ setRotation }: CameraCaptureProps) => {
   const { camera } = useThree();
-  const lastRotation = useRef(new THREE.Euler()); // Keep track of the last known rotation
+  const lastRotation = useRef(new THREE.Euler());
   const updateTime = useRef<number>(0);
-
-  // Throttling interval in milliseconds
-  const throttleInterval = 500; // Adjust as needed for less frequent updates
+  const throttleInterval = 1500; // Increased throttle interval
 
   useFrame(({ clock }) => {
     const currentTime = clock.getElapsedTime();
-
-    // Only update at intervals (throttling)
     if (currentTime - updateTime.current >= throttleInterval / 1000) {
       const currentRotation = camera.rotation.clone();
-
-      // Round the rotation values to reduce sensitivity to minor changes
       const roundRotation = (value: number) => Math.round(value * 100) / 100;
 
       const significantRotation =
-        Math.abs(roundRotation(currentRotation.x) - roundRotation(lastRotation.current.x)) > 0.05 ||
-        Math.abs(roundRotation(currentRotation.y) - roundRotation(lastRotation.current.y)) > 0.05;
+        Math.abs(roundRotation(currentRotation.x) - roundRotation(lastRotation.current.x)) > 0.15 ||
+        Math.abs(roundRotation(currentRotation.y) - roundRotation(lastRotation.current.y)) > 0.15;
 
       if (significantRotation) {
         lastRotation.current.copy(currentRotation);
-        updateTime.current = currentTime; // Store the last update time
-        setRotation(currentRotation); // Only update when there's significant change
+        updateTime.current = currentTime;
+        setRotation(currentRotation); 
       }
     }
   });
@@ -246,7 +220,7 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ setRotation }) => {
       enableZoom={false}
       enablePan={false}
       rotateSpeed={-0.5}
-      minAzimuthAngle={-Math.PI / 4} 
+      minAzimuthAngle={-Math.PI / 4}
       maxAzimuthAngle={Math.PI / 4}
       dampingFactor={0.1}
       enableDamping={true}
