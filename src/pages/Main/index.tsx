@@ -39,12 +39,12 @@ const ZoomBox: React.FC<ZoomBoxProps> = ({ children }) => {
   const [
     isDeviceWidthSmallerThenHeight,
     setIsDeviceWidthSmallerThenHeight,
-  ] = useState(window.innerWidth / window.innerHeight > 2800 / 1077);
+  ] = useState(window.innerWidth / window.innerHeight > 1920 / 920);
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsDeviceWidthSmallerThenHeight(window.innerWidth / window.innerHeight > 2800 / 1077);
+      setIsDeviceWidthSmallerThenHeight(window.innerWidth / window.innerHeight > 1920 / 920);
     };
 
     handleResize();

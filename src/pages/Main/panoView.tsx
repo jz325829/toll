@@ -65,16 +65,16 @@ interface Hotspot {
 const hotspots: Hotspot[] = [
   { position: [100, 0, -20], targetPositionId: 2, panoramaId: 1 },
   { position: [-100, 0, -20], targetPositionId: 3, panoramaId: 1 },
-  { position: [50, 0, -60], targetPositionId: 4, panoramaId: 1 },
-  { position: [-60, 0, -60], targetPositionId: 5, panoramaId: 1 },
+  { position: [50, 5, -60], targetPositionId: 4, panoramaId: 1 },
+  { position: [-55, 5, -60], targetPositionId: 5, panoramaId: 1 },
   { position: [-100, 0, 20], targetPositionId: 1, panoramaId: 2 },
-  { position: [-60, 0, -50], targetPositionId: 4, panoramaId: 2 },
+  { position: [-60, 5, -50], targetPositionId: 4, panoramaId: 2 },
   { position: [0, 0, -100], targetPositionId: 2, panoramaId: 4 },
   { position: [100, 0, 0], targetPositionId: 5, panoramaId: 4 },
   { position: [-100, 0, 0], targetPositionId: 4, panoramaId: 5 },
   { position: [0, 0, -100], targetPositionId: 3, panoramaId: 5 },
   { position: [100, 0, 40], targetPositionId: 1, panoramaId: 3 },
-  { position: [50, 0, -60], targetPositionId: 5, panoramaId: 3 },
+  { position: [50, 5, -60], targetPositionId: 5, panoramaId: 3 },
 ];
 
 // Component to render a panorama
