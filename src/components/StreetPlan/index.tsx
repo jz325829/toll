@@ -34,18 +34,15 @@ const StreetPlan = ({
         position="absolute" 
         top="35px" 
         right="25px" 
-        paddingTop="5px" 
-        paddingLeft="5px" 
-        paddingRight="5px"
+        padding="5px"
+        paddingBottom="0px"
         rounded={2}
         zIndex={1000} 
         cursor={'pointer'} 
         backgroundColor="#ffffff">
           <Image
-            objectFit="cover"
             src="images/street_plan.png"
             alt="Chakra UI"
-            width="200px"
             height="120px"
             onClick={togglePopup}
             />
@@ -54,20 +51,18 @@ const StreetPlan = ({
       <Modal
         isOpen={isOpenPopUp}
         togglePopup={togglePopup}
-        maxWidth={isSmallerThan768 ? '660px' : '1020px'}
-        height={isSmallerThan900 ? '100%' : '75%'}
+        maxWidth={isSmallerThan768 ? '660px' : '1280px'}
         width="100%"
+        paddingTop="25px"
         id="street-plan-modal"
       >
         <Image
-          objectFit="cover"
           src="images/street_plan.png"
           width="100%"
           height="100%"
           cursor={'pointer'}
           />
         <Image
-          objectFit="cover"
           src="images/ellipse.png"
           position="absolute" 
           top="16%" 
@@ -89,7 +84,7 @@ const StreetPlan = ({
           objectFit="cover"
           src="images/ellipse.png"
           position="absolute" 
-          top="32%" 
+          top="32%"
           right="27%"
           onClick={() => togglePosition(3)}
           cursor={'pointer'}
