@@ -5,6 +5,7 @@ import * as THREE from "three";
 import UnitTooltip from '../../components/UI/UnitTooltip';
 import { $carousel_actions } from '../../store/carousel/carouselSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { Image } from "@chakra-ui/react";
 import StreetPlan from "../../components/StreetPlan";
 
 // Define the type for positions
@@ -63,16 +64,16 @@ interface Hotspot {
 
 // Update hotspots to include a reference to the panorama they belong to
 const hotspots: Hotspot[] = [
-  { position: [100, 0, -20], targetPositionId: 2, panoramaId: 1 },
+  { position: [100, 0, -30], targetPositionId: 2, panoramaId: 1 },
   { position: [-100, 0, -20], targetPositionId: 3, panoramaId: 1 },
   { position: [50, 5, -60], targetPositionId: 4, panoramaId: 1 },
-  { position: [-55, 5, -60], targetPositionId: 5, panoramaId: 1 },
+  { position: [-50, 5, -60], targetPositionId: 5, panoramaId: 1 },
   { position: [-100, 0, 20], targetPositionId: 1, panoramaId: 2 },
   { position: [-60, 5, -50], targetPositionId: 4, panoramaId: 2 },
-  { position: [0, 0, -100], targetPositionId: 2, panoramaId: 4 },
+  { position: [-10, 0, -100], targetPositionId: 2, panoramaId: 4 },
   { position: [100, 0, 0], targetPositionId: 5, panoramaId: 4 },
   { position: [-100, 0, 0], targetPositionId: 4, panoramaId: 5 },
-  { position: [0, 0, -100], targetPositionId: 3, panoramaId: 5 },
+  { position: [10, 0, -100], targetPositionId: 3, panoramaId: 5 },
   { position: [100, 0, 40], targetPositionId: 1, panoramaId: 3 },
   { position: [50, 5, -60], targetPositionId: 5, panoramaId: 3 },
 ];
@@ -130,27 +131,20 @@ interface HotspotProps {
 }
 
 const Hotspot = React.memo(({ position, onClick }: HotspotProps) => {
-  const outerRingRef = useRef<THREE.Mesh>(null);
-  const innerCircleRef = useRef<THREE.Mesh>(null);
-  const { camera } = useThree();
-
-  useFrame(() => {
-    if (outerRingRef.current && innerCircleRef.current) {
-      outerRingRef.current.lookAt(camera.position);
-      innerCircleRef.current.lookAt(camera.position);
-    }
-  });
-
   return (
-    <group position={position} onClick={onClick}>
-      <mesh ref={outerRingRef} scale={[4, 4, 1]} userData={{ isHotspot: true }}>
-        <ringGeometry args={[0.8, 1.1, 16]} />
-        <meshBasicMaterial color="white" side={THREE.DoubleSide} />
-      </mesh>
-
-      <mesh ref={innerCircleRef} scale={[2.5, 2.5, 1]} position={[0, 0, 0.01]} userData={{ isHotspot: true }}>
-        <circleGeometry args={[0.8, 16]} />
-        <meshBasicMaterial color="white" side={THREE.DoubleSide} />
+    <group position={position}>.
+      <mesh>
+        <Html zIndexRange={[1, 10]}>
+          <Image
+            src="images/hotspot.png"
+            width="60px"
+            marginTop={-20}
+            marginLeft={-30}
+            cursor={"pointer"}
+            _hover={{ width: '80px', marginTop: '-30px', marginLeft: '-30px'}}
+            onClick={onClick}
+            />
+        </Html>
       </mesh>
     </group>
   );
