@@ -7,6 +7,9 @@ import { $carousel_actions } from '../../store/carousel/carouselSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { Image } from "@chakra-ui/react";
 import StreetPlan from "../../components/StreetPlan";
+import ArrowLeftIcon from "../../components/UI/SvgIcons/ArrowLeftIcon";
+import ArrowRightIcon from "../../components/UI/SvgIcons/ArrowRightIcon";
+import ButtonGroup from "../../components/UI/ButtonGroup";
 
 // Define the type for positions
 export interface Position {
@@ -14,15 +17,16 @@ export interface Position {
   image: string;
   position: [number, number, number];
   name: string;
+  arrowCamera: [number, number];
 }
 
 // Positions data with panorama images
 const positions: Position[] = [
-  { id: 1, image: "/images/main_street_P.jpg", position: [0, 0, 0], name: "Main Street"},
-  { id: 2, image: "/images/park1_P.jpg", position: [500, 0, 0], name: "Park 1" },
-  { id: 3, image: "/images/park2_P.jpg", position: [-500, 0, 0], name: "Park 2" },
-  { id: 4, image: "/images/street2_P.jpg", position: [-250, 500, 0], name: "Street 1" },
-  { id: 5, image: "/images/street3_P.jpg", position: [250, 500, 0], name: "Street 2" },
+  { id: 1, image: "/images/main_street_P.jpg", position: [0, 0, 0], name: "Main Street", arrowCamera: [0.2, -0.2]},
+  { id: 2, image: "/images/park1_P.jpg", position: [500, 0, 0], name: "Park 1", arrowCamera: [0.5, 3.14]},
+  { id: 3, image: "/images/park2_P.jpg", position: [-500, 0, 0], name: "Park 2", arrowCamera: [-3.14, -0.6]},
+  { id: 4, image: "/images/street2_P.jpg", position: [-250, 500, 0], name: "Street 1", arrowCamera: [-3.14, -0.5]},
+  { id: 5, image: "/images/street3_P.jpg", position: [250, 500, 0], name: "Street 2", arrowCamera: [0.5, 3.14]},
 ];
 
 interface ToolTipPosition {
@@ -139,7 +143,7 @@ const Hotspot = React.memo(({ position, onClick }: HotspotProps) => {
             src="images/hotspot.png"
             width="60px"
             marginTop={-20}
-            marginLeft={-30}
+            marginLeft={-20}
             cursor={"pointer"}
             _hover={{ width: '80px', marginTop: '-30px', marginLeft: '-30px'}}
             onClick={onClick}
@@ -155,26 +159,26 @@ const RaycasterHelper = ({ handlePositionChange }: { handlePositionChange: (id: 
   const { raycaster, mouse, camera, scene, gl } = useThree();
   const [hoveredHotspot, setHoveredHotspot] = useState<boolean>(false);
 
-  const handleMouseMove = (event: MouseEvent) => {
-    const canvasBounds = gl.domElement.getBoundingClientRect();
-    const x = ((event.clientX - canvasBounds.left) / canvasBounds.width) * 2 - 1;
-    const y = -((event.clientY - canvasBounds.top) / canvasBounds.height) * 2 + 1;
+  // const handleMouseMove = (event: MouseEvent) => {
+  //   const canvasBounds = gl.domElement.getBoundingClientRect();
+  //   const x = ((event.clientX - canvasBounds.left) / canvasBounds.width) * 2 - 1;
+  //   const y = -((event.clientY - canvasBounds.top) / canvasBounds.height) * 2 + 1;
 
-    mouse.set(x, y);
-    raycaster.setFromCamera(mouse, camera);
+  //   mouse.set(x, y);
+  //   raycaster.setFromCamera(mouse, camera);
 
-    const intersects = raycaster.intersectObjects(scene.children, true);
-    const hotspotHovered = intersects.some(intersect => intersect.object.userData.isHotspot);
+  //   const intersects = raycaster.intersectObjects(scene.children, true);
+  //   const hotspotHovered = intersects.some(intersect => intersect.object.userData.isHotspot);
 
-    setHoveredHotspot(hotspotHovered);
-  };
+  //   setHoveredHotspot(hotspotHovered);
+  // };
 
-  useEffect(() => {
-    gl.domElement.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      gl.domElement.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [gl, camera, scene, raycaster, mouse]);
+  // useEffect(() => {
+  //   gl.domElement.addEventListener("mousemove", handleMouseMove);
+  //   return () => {
+  //     gl.domElement.removeEventListener("mousemove", handleMouseMove);
+  //   };
+  // }, [gl, camera, scene, raycaster, mouse]);
 
   useEffect(() => {
     gl.domElement.style.cursor = hoveredHotspot ? "pointer" : 'url(icons/rotate-icon.png) 25 25, auto';
@@ -185,16 +189,23 @@ const RaycasterHelper = ({ handlePositionChange }: { handlePositionChange: (id: 
 
 interface CameraCaptureProps {
   setRotation: (direction: THREE.Euler) => void;
+  currentPosition: Position;
 }
 
-const CameraCapture = ({ setRotation }: CameraCaptureProps) => {
+const CameraCapture = ({ setRotation, currentPosition }: CameraCaptureProps) => {
   const { camera } = useThree();
   const lastRotation = useRef(new THREE.Euler());
   const updateTime = useRef<number>(0);
-  const throttleInterval = 1500; // Increased throttle interval
+  const throttleInterval = 1000;
+  const [showArrowRight, setShowArrowRight] = useState(false);
+  const [showArrowLeft, setShowArrowLeft] = useState(false);
+  const rotationStep = 0.2;
+  const controls = useRef<any>(null);
 
   useFrame(({ clock }) => {
     const currentTime = clock.getElapsedTime();
+    setShowArrowRight(camera.rotation.y < currentPosition.arrowCamera[0]);
+    setShowArrowLeft(camera.rotation.y > currentPosition.arrowCamera[1]);
     if (currentTime - updateTime.current >= throttleInterval / 1000) {
       const currentRotation = camera.rotation.clone();
       const roundRotation = (value: number) => Math.round(value * 100) / 100;
@@ -211,16 +222,53 @@ const CameraCapture = ({ setRotation }: CameraCaptureProps) => {
     }
   });
 
+  const rotateRight = () => {
+    if (camera.rotation.y + rotationStep <= Math.PI / 3) {
+      camera.position.x += rotationStep;
+      controls.current.update();
+    }
+  };
+
+  const rotateLeft = () => {
+    if (camera.rotation.y - rotationStep >= -Math.PI / 3) {
+      camera.position.x -= rotationStep;
+      controls.current.update();
+    }
+  };
+
   return (
-    <OrbitControls
-      enableZoom={false}
-      enablePan={false}
-      rotateSpeed={-0.5}
-      minAzimuthAngle={-Math.PI / 3}
-      maxAzimuthAngle={Math.PI / 3}
-      dampingFactor={0.1}
-      enableDamping={true}
-    />
+    <>
+      <OrbitControls
+        ref={controls}
+        enableZoom={false}
+        enablePan={false}
+        rotateSpeed={-0.5}
+        minAzimuthAngle={-Math.PI / 3}
+        maxAzimuthAngle={Math.PI / 3}
+        dampingFactor={0.1}
+        enableDamping={true}
+        enableRotate={true}
+      />
+
+      {showArrowRight && <ArrowRight onClick={rotateRight} />}
+      {showArrowLeft && <ArrowLeft onClick={rotateLeft} />}
+    </>
+  );
+};
+
+const ArrowLeft = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <Html position={[0, 0, 0]} zIndexRange={[1, 10]} style={{ position: "fixed", left: "45vw", top: "50%", transform: "translateY(-50%)" }}>
+      <ButtonGroup icon={<ArrowRightIcon />} onClick={onClick} />
+    </Html>
+  );
+};
+
+const ArrowRight = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <Html position={[0, 0, 0]} zIndexRange={[1, 10]} style={{ position: "fixed", right: "45vw", top: "50%", transform: "translateY(-50%)" }}>
+      <ButtonGroup icon={<ArrowLeftIcon />} onClick={onClick} />
+    </Html>
   );
 };
 
@@ -256,7 +304,7 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
   return (
     <div className="canvas-container" >
       <Canvas style={{ height: "100vh", width: "100vw" }} camera={{ fov: 100, position: [0, 0, 0.1] }}>
-        <CameraCapture setRotation={setRotation} />
+        <CameraCapture setRotation={setRotation} currentPosition={currentPosition}/>
         {positions.map((pos) => (
           <Panorama
             key={pos.id}
