@@ -96,11 +96,18 @@ const Panorama = React.memo(({ image, visible, setIsPageLoading }: PanoramaProps
   // Load and cache textures
   const texture = useMemo(() => {
     const loader = new THREE.TextureLoader();
+    const cachedTexture = THREE.Cache.get(image);
+    if (cachedTexture) {
+      setIsTextureLoaded(true);
+      setIsPageLoading(false);
+      return cachedTexture;
+    }
     const tex = loader.load(
       image,
       () => {
         setIsTextureLoaded(true);
         setIsPageLoading(false);
+        THREE.Cache.add(image, tex); // Cache the texture
       },
       undefined,
       (error) => {
@@ -120,7 +127,7 @@ const Panorama = React.memo(({ image, visible, setIsPageLoading }: PanoramaProps
 
   return isTextureLoaded ? (
     <mesh ref={mesh} rotation={[0, Math.PI / 2, 0]}>
-      <sphereGeometry args={[500, 30, 20]} />
+      <sphereGeometry args={[500, 100, 100]} />
       <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
     </mesh>
   ) : null;
@@ -193,7 +200,7 @@ interface CameraCaptureProps {
 }
 
 const CameraCapture = ({ setRotation, currentPosition }: CameraCaptureProps) => {
-  const { camera } = useThree();
+  const { camera, gl } = useThree();
   const lastRotation = useRef(new THREE.Euler());
   const updateTime = useRef<number>(0);
   const throttleInterval = 1000;
@@ -201,6 +208,11 @@ const CameraCapture = ({ setRotation, currentPosition }: CameraCaptureProps) => 
   const [showArrowLeft, setShowArrowLeft] = useState(false);
   const rotationStep = 0.2;
   const controls = useRef<any>(null);
+  
+  useEffect(() => {
+    gl.toneMapping = THREE.NoToneMapping;
+    gl.toneMappingExposure = 1.5;
+  }, [gl]);
 
   useFrame(({ clock }) => {
     const currentTime = clock.getElapsedTime();
@@ -242,10 +254,10 @@ const CameraCapture = ({ setRotation, currentPosition }: CameraCaptureProps) => 
         ref={controls}
         enableZoom={false}
         enablePan={false}
-        rotateSpeed={-0.5}
+        rotateSpeed={-0.3}
         minAzimuthAngle={-Math.PI / 3}
         maxAzimuthAngle={Math.PI / 3}
-        dampingFactor={0.1}
+        dampingFactor={0.05}
         enableDamping={true}
         enableRotate={true}
       />
@@ -303,7 +315,7 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
   
   return (
     <div className="canvas-container" >
-      <Canvas style={{ height: "100vh", width: "100vw" }} camera={{ fov: 100, position: [0, 0, 0.1] }}>
+      <Canvas style={{ height: "100vh", width: "100vw" }} camera={{ fov: 82, position: [0, 0, 0.1] }} >
         <CameraCapture setRotation={setRotation} currentPosition={currentPosition}/>
         {positions.map((pos) => (
           <Panorama

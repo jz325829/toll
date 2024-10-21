@@ -32,8 +32,8 @@ const StreetPlan = ({
       {!isOpenPopUp && 
         <Box 
         position="absolute" 
-        top="35px" 
-        right="25px" 
+        top="25px" 
+        right="55px" 
         padding="5px"
         paddingBottom="0px"
         rounded={2}
