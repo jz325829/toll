@@ -86,10 +86,9 @@ const hotspots: Hotspot[] = [
 interface PanoramaProps {
   image: string;
   visible: boolean;
-  setIsPageLoading: (loading: boolean) => void;
 }
 
-const Panorama = React.memo(({ image, visible, setIsPageLoading }: PanoramaProps) => {
+const Panorama = React.memo(({ image, visible }: PanoramaProps) => {
   const mesh = useRef<THREE.Mesh>(null);
   const [isTextureLoaded, setIsTextureLoaded] = useState(false);
 
@@ -99,14 +98,12 @@ const Panorama = React.memo(({ image, visible, setIsPageLoading }: PanoramaProps
     const cachedTexture = THREE.Cache.get(image);
     if (cachedTexture) {
       setIsTextureLoaded(true);
-      setIsPageLoading(false);
       return cachedTexture;
     }
     const tex = loader.load(
       image,
       () => {
         setIsTextureLoaded(true);
-        setIsPageLoading(false);
         THREE.Cache.add(image, tex); // Cache the texture
       },
       undefined,
@@ -117,7 +114,7 @@ const Panorama = React.memo(({ image, visible, setIsPageLoading }: PanoramaProps
     tex.wrapS = THREE.RepeatWrapping;
     tex.repeat.x = -1;
     return tex;
-  }, [image, setIsPageLoading]);
+  }, [image]);
 
   useFrame(() => {
     if (mesh.current) {
@@ -297,7 +294,6 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
   const handlePositionChange = (positionId: number) => {
     const newPosition = positions.find((pos) => pos.id === positionId);
     if (newPosition) {
-      setIsPageLoading(true);
       setCurrentPosition(newPosition);
     }
   };
@@ -322,7 +318,6 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
             key={pos.id}
             image={pos.image}
             visible={pos.id === currentPosition.id} 
-            setIsPageLoading={setIsPageLoading}
             />
         ))}
         {/* <OrbitControls enableZoom={false} enablePan={false} rotateSpeed={-0.5} minAzimuthAngle={-Math.PI / 4} maxAzimuthAngle={Math.PI / 4}/> */}
