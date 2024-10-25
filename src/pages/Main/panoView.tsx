@@ -284,8 +284,8 @@ const CameraCapture = ({ setRotation, currentPosition }: CameraCaptureProps) => 
         enableZoom={false}
         enablePan={false}
         rotateSpeed={-0.3}
-        // minAzimuthAngle={-Math.PI / 3}
-        // maxAzimuthAngle={Math.PI / 3}
+        minAzimuthAngle={-Math.PI / 3}
+        maxAzimuthAngle={Math.PI / 3}
         dampingFactor={0.05}
         enableDamping={true}
         enableRotate={true}
