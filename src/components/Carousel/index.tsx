@@ -104,8 +104,10 @@ const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
 
       
       if (buildingId === 'main') {
-
-        setPageLoaded();
+        setTimeout(() => {
+          setPageLoaded();
+        }, 5000)
+        
         Promise.all(lazyLoadIamges.map(async (el) => {
           const img = await loadImage(el.src, false);
           await new Promise((r) => { setTimeout(r, 100); });
