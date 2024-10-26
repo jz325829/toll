@@ -23,10 +23,10 @@ export interface Position {
 // Positions data with panorama images
 const positions: Position[] = [
   { id: 1, image: "/images/main_street_P.jpg", position: [0, 0, 0], name: "Main Street", arrowCamera: [0.2, -0.2]},
-  { id: 2, image: "/images/park2_P.jpg", position: [500, 0, 0], name: "Park 1", arrowCamera: [0.5, 3.14]},
-  { id: 3, image: "/images/park1_P.jpg", position: [-500, 0, 0], name: "Park 2", arrowCamera: [-3.14, -0.6]},
-  { id: 4, image: "/images/street3_P.jpg", position: [-250, 500, 0], name: "Street 1", arrowCamera: [-3.14, -0.5]},
-  { id: 5, image: "/images/street2_P.jpg", position: [250, 500, 0], name: "Street 2", arrowCamera: [0.5, 3.14]},
+  { id: 2, image: "/images/park1_P.jpg", position: [500, 0, 0], name: "Park 1", arrowCamera: [0.5, 3.14]},
+  { id: 3, image: "/images/park2_P.jpg", position: [-500, 0, 0], name: "Park 2", arrowCamera: [-3.14, -0.6]},
+  { id: 4, image: "/images/street2_P.jpg", position: [-250, 500, 0], name: "Street 1", arrowCamera: [-3.14, -0.5]},
+  { id: 5, image: "/images/street3_P.jpg", position: [250, 500, 0], name: "Street 2", arrowCamera: [0.5, 3.14]},
 ];
 
 interface ToolTipPosition {
@@ -41,14 +41,14 @@ const toolTipPositions: ToolTipPosition[] = [
   { buildingNumber: 3, position: [65, 50, -105], panoramaId: 1},
   { buildingNumber: 5, position: [-200, 50, -105], panoramaId: 1},
   { buildingNumber: 1, position: [200, 50, -105], panoramaId: 1},
-  { buildingNumber: 1, position: [0, 100, -105], panoramaId: 2},
-  { buildingNumber: 4, position: [-200, 100, -105], panoramaId: 2},
-  { buildingNumber: 3, position: [-450, 100, -105], panoramaId: 2},
-  { buildingNumber: 5, position: [-800, 100, -105], panoramaId: 2},
-  { buildingNumber: 4, position: [200, 70, -105], panoramaId: 3},
-  { buildingNumber: 3, position: [450, 70, -105], panoramaId: 3},
-  { buildingNumber: 1, position: [800, 70, -105], panoramaId: 3},
-  { buildingNumber: 5, position: [0, 70, -105], panoramaId: 3},
+  { buildingNumber: 1, position: [0, 80, -105], panoramaId: 2},
+  { buildingNumber: 4, position: [-200, 80, -105], panoramaId: 2},
+  { buildingNumber: 3, position: [-450, 80, -105], panoramaId: 2},
+  { buildingNumber: 5, position: [-800, 80, -105], panoramaId: 2},
+  { buildingNumber: 4, position: [200, 105, -105], panoramaId: 3},
+  { buildingNumber: 3, position: [450, 105, -105], panoramaId: 3},
+  { buildingNumber: 1, position: [800, 105, -105], panoramaId: 3},
+  { buildingNumber: 5, position: [0, 105, -105], panoramaId: 3},
   { buildingNumber: 6, position: [800, 125, -105], panoramaId: 4},
   { buildingNumber: 4, position: [400, 125, -105], panoramaId: 4},
   { buildingNumber: 3, position: [100, 125, -105], panoramaId: 4},
@@ -72,14 +72,14 @@ const hotspots: Hotspot[] = [
   { position: [-100, 0, -20], targetPositionId: 3, panoramaId: 1 },
   { position: [50, 5, -60], targetPositionId: 4, panoramaId: 1 },
   { position: [-50, 5, -60], targetPositionId: 5, panoramaId: 1 },
-  { position: [-100, 0, 30], targetPositionId: 1, panoramaId: 2 },
-  { position: [-60, 5, -70], targetPositionId: 4, panoramaId: 2 },
+  { position: [-100, 0, 20], targetPositionId: 1, panoramaId: 2 },
+  { position: [-60, 5, -50], targetPositionId: 4, panoramaId: 2 },
   { position: [-10, 0, -100], targetPositionId: 2, panoramaId: 4 },
   { position: [100, 0, 0], targetPositionId: 5, panoramaId: 4 },
   { position: [-100, 0, 0], targetPositionId: 4, panoramaId: 5 },
   { position: [10, 0, -100], targetPositionId: 3, panoramaId: 5 },
-  { position: [100, 0, 25], targetPositionId: 1, panoramaId: 3 },
-  { position: [50, 5, -40], targetPositionId: 5, panoramaId: 3 },
+  { position: [100, 0, 40], targetPositionId: 1, panoramaId: 3 },
+  { position: [50, 5, -60], targetPositionId: 5, panoramaId: 3 },
 ];
 
 // Component to render a panorama
@@ -149,7 +149,8 @@ const Panorama = React.memo(({ image, visible }: PanoramaProps) => {
   return isTextureLoaded ? (
     <mesh ref={mesh} rotation={[0, Math.PI / 2, 0]} visible={visible}>
       <sphereGeometry args={[500, 100, 100]} />
-      <shaderMaterial
+      <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
+      {/* <shaderMaterial
         ref={materialRef}
         uniforms={{
           progress: { value: progress },
@@ -159,7 +160,7 @@ const Panorama = React.memo(({ image, visible }: PanoramaProps) => {
         fragmentShader={fragmentShader}
         side={THREE.DoubleSide}
         transparent={true}
-      />
+      /> */}
     </mesh>
   ) : null;
 });

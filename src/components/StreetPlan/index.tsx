@@ -68,7 +68,7 @@ const StreetPlan = ({
               src="images/ellipse.png"
               position="absolute" 
               top="15%" 
-              right="48.5%"
+              right="47.5%"
               width="50px"
               onClick={() => togglePosition(1)}
             />
@@ -76,7 +76,7 @@ const StreetPlan = ({
               src="images/direction.png"
               position="absolute"
               top="18%"
-              right="48%"
+              right="47%"
               width="60px"
               transform={`rotate(${MathUtils.radToDeg(-rotation.y)}deg)`}
               transformOrigin="top"
@@ -87,7 +87,7 @@ const StreetPlan = ({
             src="images/ellipse.png"
             position="absolute" 
             top="15%" 
-            right="49.3%"
+            right="48.3%"
             onClick={() => togglePosition(1)}
             cursor={'pointer'}
             _hover={{ width: '50px', marginTop: '-6px', marginRight: '-6px'}}
@@ -99,16 +99,16 @@ const StreetPlan = ({
               objectFit="cover"
               src="images/ellipse.png"
               position="absolute" 
-              top="21%"
-              right="18%"
+              top="27%"
+              right="25%"
               width="50px"
               onClick={() => togglePosition(3)}
               />
             <Image
               src="images/direction.png"
               position="absolute"
-              top="24%"
-              right="18%"
+              top="30%"
+              right="25%"
               width="50px"
               transform={`rotate(${MathUtils.radToDeg(-rotation.y)}deg)`}
               transformOrigin="top"
@@ -119,8 +119,8 @@ const StreetPlan = ({
             objectFit="cover"
             src="images/ellipse.png"
             position="absolute" 
-            top="22%"
-            right="18%"
+            top="27.5%"
+            right="26%"
             onClick={() => togglePosition(3)}
             cursor={'pointer'}
             _hover={{ width: '50px', marginTop: '-6px', marginRight: '-6px'}}
@@ -132,16 +132,16 @@ const StreetPlan = ({
               objectFit="cover"
               src="images/ellipse.png"
               position="absolute" 
-              top="27%" 
-              right="73%"
+              top="21%" 
+              right="78%"
               width="50px"
               onClick={() => togglePosition(2)}
               />
             <Image
               src="images/direction.png"
               position="absolute"
-              top="30%"
-              right="73%"
+              top="24%"
+              right="78%"
               width="50px"
               transform={`rotate(${MathUtils.radToDeg(-rotation.y)}deg)`}
               transformOrigin="top"
@@ -152,8 +152,8 @@ const StreetPlan = ({
               objectFit="cover"
               src="images/ellipse.png"
               position="absolute" 
-              top="27.5%" 
-              right="73%"
+              top="22%" 
+              right="78%"
               onClick={() => togglePosition(2)}
               cursor={'pointer'}
               _hover={{ width: '50px', marginTop: '-6px', marginRight: '-6px'}}
