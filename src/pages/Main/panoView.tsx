@@ -38,26 +38,26 @@ interface ToolTipPosition {
 
 // Positions data with panorama images
 const toolTipPositions: ToolTipPosition[] = [
-  { buildingNumber: 4, position: [-65, 50, -105], panoramaId: 1},
-  { buildingNumber: 3, position: [65, 50, -105], panoramaId: 1},
-  { buildingNumber: 5, position: [-200, 50, -105], panoramaId: 1},
-  { buildingNumber: 1, position: [200, 50, -105], panoramaId: 1},
-  { buildingNumber: 1, position: [0, 80, -105], panoramaId: 2},
-  { buildingNumber: 4, position: [-200, 80, -105], panoramaId: 2},
-  { buildingNumber: 3, position: [-450, 80, -105], panoramaId: 2},
-  { buildingNumber: 5, position: [-800, 80, -105], panoramaId: 2},
-  { buildingNumber: 4, position: [200, 105, -105], panoramaId: 3},
-  { buildingNumber: 3, position: [450, 105, -105], panoramaId: 3},
-  { buildingNumber: 1, position: [800, 105, -105], panoramaId: 3},
-  { buildingNumber: 5, position: [0, 105, -105], panoramaId: 3},
-  { buildingNumber: 6, position: [800, 125, -105], panoramaId: 4},
-  { buildingNumber: 4, position: [400, 125, -105], panoramaId: 4},
-  { buildingNumber: 3, position: [100, 125, -105], panoramaId: 4},
-  { buildingNumber: 2, position: [-200, 125, -105], panoramaId: 4},
-  { buildingNumber: 6, position: [200, 125, -105], panoramaId: 5},
-  { buildingNumber: 4, position: [-100, 125, -105], panoramaId: 5},
-  { buildingNumber: 3, position: [-400, 125, -105], panoramaId: 5},
-  { buildingNumber: 2, position: [-600, 125, -105], panoramaId: 5}
+  { buildingNumber: 4, position: [-65, 30, -105], panoramaId: 1},
+  { buildingNumber: 3, position: [65, 30, -105], panoramaId: 1},
+  { buildingNumber: 5, position: [-200, 30, -105], panoramaId: 1},
+  { buildingNumber: 1, position: [200, 30, -105], panoramaId: 1},
+  { buildingNumber: 1, position: [0, 40, -105], panoramaId: 2},
+  { buildingNumber: 4, position: [-200, 40, -105], panoramaId: 2},
+  { buildingNumber: 3, position: [-450, 40, -105], panoramaId: 2},
+  { buildingNumber: 5, position: [-800, 40, -105], panoramaId: 2},
+  { buildingNumber: 4, position: [200, 50, -105], panoramaId: 3},
+  { buildingNumber: 3, position: [450, 50, -105], panoramaId: 3},
+  { buildingNumber: 1, position: [800, 50, -105], panoramaId: 3},
+  { buildingNumber: 5, position: [0, 50, -105], panoramaId: 3},
+  { buildingNumber: 6, position: [800, 60, -105], panoramaId: 4},
+  { buildingNumber: 4, position: [400, 60, -105], panoramaId: 4},
+  { buildingNumber: 3, position: [100, 60, -105], panoramaId: 4},
+  { buildingNumber: 2, position: [-200, 60, -105], panoramaId: 4},
+  { buildingNumber: 6, position: [200, 60, -105], panoramaId: 5},
+  { buildingNumber: 4, position: [-100, 60, -105], panoramaId: 5},
+  { buildingNumber: 3, position: [-400, 60, -105], panoramaId: 5},
+  { buildingNumber: 2, position: [-600, 60, -105], panoramaId: 5}
 ];
 
 // Define hotspot positions and associate them with panorama positions
