@@ -4,22 +4,37 @@ import Modal from "../UI/Modal";
 import { useMediaQuery, Box, Image } from "@chakra-ui/react";
 import { MathUtils, Vector3 } from 'three';
 import { Position } from "../../pages/Main/panoView";
+import UnitTooltip from '../../components/UI/UnitTooltip';
+
+interface BuildingPosition {
+  buildingNumber: number;
+  position: [number, number];
+}
+
+// Positions data with panorama images
+const buildingPositions: BuildingPosition[] = [
+  { buildingNumber: 1, position: [50, 20]},
+  { buildingNumber: 2, position: [70, 20]},
+  { buildingNumber: 3, position: [60, 40]},
+  { buildingNumber: 4, position: [60, 60]},
+  { buildingNumber: 5, position: [50, 80]},
+  { buildingNumber: 6, position: [70, 80]},
+];
+
 
 interface Props {
   handlePositionChange: (id: number) => void
   rotation: THREE.Euler;
   currentPosition: Position;
+  toggleBuildingOne: (id: number) => void
+  isOpenPopUp: boolean;
+  togglePopup: () => void
 }
 
 const StreetPlan = ({
-  handlePositionChange, rotation, currentPosition
+  handlePositionChange, rotation, currentPosition, toggleBuildingOne, isOpenPopUp, togglePopup
 }: Props) => {
-  const dispatch = useDispatch();
-  const [isOpenPopUp, setIsOpenPopUp] = useState(false);
-  const togglePopup = () => setIsOpenPopUp(!isOpenPopUp);
   
-  const [isSmallerThan820] = useMediaQuery('(max-width: 820px)');
-  const [isSmallerThan900] = useMediaQuery('(max-width: 900px)');
   const [isSmallerThan768] = useMediaQuery('(max-width: 768px)');
 
   const togglePosition = (id: number) => {
@@ -225,6 +240,22 @@ const StreetPlan = ({
             _hover={{ width: '50px', marginTop: '-6px', marginRight: '-6px'}}
           />
         }
+        {buildingPositions
+          .map((buildingPosition, index) => (
+            <Box
+              position={'absolute'}
+              top={`${buildingPosition.position[0]}%`}
+              left={`${buildingPosition.position[1]}%`}
+            >
+              <UnitTooltip
+                key={index}
+                title={`Building ${buildingPosition.buildingNumber}`}
+                hoveredText={``}
+                hoveredText2={``}
+                onClick={() => toggleBuildingOne(buildingPosition.buildingNumber)}
+                />
+            </Box>
+        ))}
       </Modal>
     </>
   );

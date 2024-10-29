@@ -10,6 +10,7 @@ import StreetPlan from "../../components/StreetPlan";
 import ArrowLeftIcon from "../../components/UI/SvgIcons/ArrowLeftIcon";
 import ArrowRightIcon from "../../components/UI/SvgIcons/ArrowRightIcon";
 import ButtonGroup from "../../components/UI/ButtonGroup";
+import BottomMenu from "../../components/BottomMenu";
 
 // Define the type for positions
 export interface Position {
@@ -246,8 +247,8 @@ const CameraCapture = ({ setRotation, currentPosition }: CameraCaptureProps) => 
 
   useFrame(({ clock }) => {
     const currentTime = clock.getElapsedTime();
-    setShowArrowRight(camera.rotation.y < currentPosition.arrowCamera[0]);
-    setShowArrowLeft(camera.rotation.y > currentPosition.arrowCamera[1]);
+    // setShowArrowRight(camera.rotation.y < currentPosition.arrowCamera[0]);
+    // setShowArrowLeft(camera.rotation.y > currentPosition.arrowCamera[1]);
     if (currentTime - updateTime.current >= throttleInterval / 1000) {
       const currentRotation = camera.rotation.clone();
       const roundRotation = (value: number) => Math.round(value * 100) / 100;
@@ -292,8 +293,8 @@ const CameraCapture = ({ setRotation, currentPosition }: CameraCaptureProps) => 
         enableRotate={true}
       />
 
-      {showArrowRight && <ArrowRight onClick={rotateRight} />}
-      {showArrowLeft && <ArrowLeft onClick={rotateLeft} />}
+      {/* {showArrowRight && <ArrowRight onClick={rotateRight} />}
+      {showArrowLeft && <ArrowLeft onClick={rotateLeft} />} */}
     </>
   );
 };
@@ -321,6 +322,8 @@ interface Props {
 const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
   const [currentPosition, setCurrentPosition] = useState<Position>(positions[0]);
   const [rotation, setRotation] = useState<THREE.Euler>(new THREE.Euler());
+  const [isOpenPopUp, setIsOpenPopUp] = useState(false);
+  const togglePopup = () => setIsOpenPopUp(!isOpenPopUp);
   const dispatch = useDispatch();
 
   // Function to change panorama position with smooth transition
@@ -384,7 +387,20 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
 
         <RaycasterHelper handlePositionChange={handlePositionChange} />
       </Canvas>
-      <StreetPlan handlePositionChange={handlePositionChange} rotation={rotation} currentPosition={currentPosition}/>
+      <BottomMenu
+        toggleBuildingOne={toggleBuildingOne}
+        isOpenPopUp={isOpenPopUp}
+        togglePopup={togglePopup}
+        positionId={currentPosition.id}
+      />
+      <StreetPlan 
+        handlePositionChange={handlePositionChange} 
+        rotation={rotation} currentPosition={currentPosition}
+        toggleBuildingOne={toggleBuildingOne}
+        isOpenPopUp={isOpenPopUp}
+        togglePopup={togglePopup}
+      />
+
     </div>
   );
 };
