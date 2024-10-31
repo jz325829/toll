@@ -513,9 +513,7 @@ const Main = ({
         />
         <ZoomBox>
         { buildingId === 'main' ? 
-          <Box
-            cursor={'url(icons/rotate-icon.png) 25 25, auto'}
-          >
+          <Box>
             <PanoView
               setIsPageLoading={handlePageLoading}
             />

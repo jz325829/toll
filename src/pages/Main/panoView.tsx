@@ -193,9 +193,9 @@ const Hotspot = React.memo(({ position, onClick }: HotspotProps) => {
 });
 
 // Component to handle raycasting inside the canvas
-const RaycasterHelper = ({ handlePositionChange }: { handlePositionChange: (id: number) => void }) => {
-  const { raycaster, mouse, camera, scene, gl } = useThree();
-  const [hoveredHotspot, setHoveredHotspot] = useState<boolean>(false);
+// const RaycasterHelper = ({ handlePositionChange }: { handlePositionChange: (id: number) => void }) => {
+//   const { raycaster, mouse, camera, scene, gl } = useThree();
+//   const [hoveredHotspot, setHoveredHotspot] = useState<boolean>(false);
 
   // const handleMouseMove = (event: MouseEvent) => {
   //   const canvasBounds = gl.domElement.getBoundingClientRect();
@@ -218,12 +218,12 @@ const RaycasterHelper = ({ handlePositionChange }: { handlePositionChange: (id: 
   //   };
   // }, [gl, camera, scene, raycaster, mouse]);
 
-  useEffect(() => {
-    gl.domElement.style.cursor = hoveredHotspot ? "pointer" : 'url(icons/rotate-icon.png) 25 25, auto';
-  }, [hoveredHotspot, gl.domElement]);
+//   useEffect(() => {
+//     gl.domElement.style.cursor = hoveredHotspot ? "pointer" : 'url(icons/rotate-icon.png) 25 25, auto';
+//   }, [hoveredHotspot, gl.domElement]);
 
-  return null;
-};
+//   return null;
+// };
 
 interface CameraCaptureProps {
   setRotation: (direction: THREE.Euler) => void;
@@ -385,12 +385,12 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
             />
           ))}
 
-        <RaycasterHelper handlePositionChange={handlePositionChange} />
+        {/* <RaycasterHelper handlePositionChange={handlePositionChange} /> */}
       </Canvas>
       <BottomMenu
         toggleBuildingOne={toggleBuildingOne}
-        isOpenPopUp={isOpenPopUp}
         togglePopup={togglePopup}
+        handlePositionChange={handlePositionChange} 
         positionId={currentPosition.id}
       />
       <StreetPlan 
