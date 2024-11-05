@@ -1,7 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import * as THREE from 'three';
 import { useMemo } from 'react';
-import { building2Config } from 'src/constants/cameras';
 
 const objectReset: (() => void)[] = [];
 
@@ -21,6 +20,14 @@ function useCategorizeChildrenInModal(
     const building4: THREE.Object3D<THREE.Object3DEventMap>[] = [];
     const building5: THREE.Object3D<THREE.Object3DEventMap>[] = [];
     const building6: THREE.Object3D<THREE.Object3DEventMap>[] = [];
+    const divider1: THREE.Object3D<THREE.Object3DEventMap>[] = [];
+    const divider2: THREE.Object3D<THREE.Object3DEventMap>[] = [];
+    const divider3: THREE.Object3D<THREE.Object3DEventMap>[] = [];
+    const dividerMesh: THREE.Object3D<THREE.Object3DEventMap>[] = [];
+    const roof2: THREE.Object3D<THREE.Object3DEventMap>[] = [];
+    const roof3: THREE.Object3D<THREE.Object3DEventMap>[] = [];
+
+    const roof1: THREE.Object3D<THREE.Object3DEventMap>[] = [];
 
     const oldList: { parent: THREE.Object3D, object: THREE.Object3D }[] = [];
 
@@ -31,19 +38,21 @@ function useCategorizeChildrenInModal(
       list.push(object);
     };
 
-    objects.forEach((obj) => {
+    objects.forEach((o) => {
+      const obj = o.children[0]
       const { name } = obj;
-      if (name.startsWith('AirHandlerMD_PlasticWhite331')) {
-        pushObject(building1, obj);
-      } else if (name.startsWith('Shape159')) {
+      console.log(name)
+      if (name.startsWith('building_a_unit_')) {
         pushObject(building2, obj);
-      } else if (name.startsWith('Shape528')) {
+      } else if (name.startsWith('building_b_unit_')) {
+        pushObject(building1, obj);
+      } else if (name.startsWith('building_c_unit_')) {
         pushObject(building3, obj);
-      } else if (name.startsWith('Shape870')) {
+      } else if (name.startsWith('building_d_unit_')) {
         pushObject(building4, obj);
-      } else if (name.startsWith('Shape1237c')) {
+      } else if (name.startsWith('building_f_unit_')) {
         pushObject(building5, obj);
-      } else if (name.startsWith('Shape1237')) {
+      } else if (name.startsWith('building_e_unit_')) {
         pushObject(building6, obj);
       }
     });

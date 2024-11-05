@@ -118,7 +118,7 @@ const MainBuildings: React.FC<Props> = ({
   const isItSecondVersion = version === 'version_2';
 
   const dispatch = useDispatch();
-  let modelPath = 'models/buildings.glb';
+  let modelPath = 'models/apartments.glb';
 
   const { assetPath } = window.swellData;
   if (assetPath) {
@@ -168,6 +168,7 @@ const MainBuildings: React.FC<Props> = ({
     building5,
     building6,
   } = useCategorizeChildrenInModal(modelScene.children);
+  console.log(building1)
 
   const renderTextureAPIref = useRef<RenderTextureAPI>(null);
   const zoomUnitMaterial = useMemo(() => new THREE.MeshBasicMaterial({
@@ -220,26 +221,19 @@ const MainBuildings: React.FC<Props> = ({
   const tooltipPivotRef = useRef<THREE.Object3D>(null);
   const pointerDownRef = useRef(new THREE.Vector3());
 
-  const [availableAparments, setAvailbleAparments] = useState([0, 0, 0]);
-  const [numberApartments, setNumberApartments] = useState([0, 0, 0]);
+  const [availableAparments, setAvailbleAparments] = useState([0, 0, 0, 0, 0, 0]);
+  const [numberApartments, setNumberApartments] = useState([0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
     if (dummyData) {
-      if (isItSecondVersion) {
-        const {
-          countBuilding1Available, countBuilding2Available, countBuilding3Available, countBuilding1, countBuilding2, countBuilding3,
-        } = findAllAvialableUnits(dummyData);
-        if (countBuilding3Available) {
-          setAvailbleAparments([countBuilding1Available, countBuilding2Available, countBuilding3Available]);
-          console.log({ countBuilding1Available, countBuilding2Available, countBuilding3Available });
-          setNumberApartments([countBuilding1, countBuilding2, countBuilding3]);
-        }
-      } else {
-        const {
-          countBuilding1Available, countBuilding1, countBuilding2, countBuilding2Available,
-        } = findAllAvialableUnits(dummyData);
-        setAvailbleAparments([countBuilding1Available, countBuilding2Available]);
-        setNumberApartments([countBuilding1, countBuilding2]);
+      const {
+        countBuilding1Available, countBuilding2Available, countBuilding3Available, countBuilding4Available, countBuilding5Available, countBuilding6Available,
+        countBuilding1, countBuilding2, countBuilding3, countBuilding4, countBuilding5, countBuilding6
+      } = findAllAvialableUnits(dummyData);
+      if (countBuilding3Available) {
+        setAvailbleAparments([countBuilding1Available, countBuilding2Available, countBuilding3Available]);
+        console.log({ countBuilding1Available, countBuilding2Available, countBuilding3Available });
+        setNumberApartments([countBuilding1, countBuilding2, countBuilding3]);
       }
     }
   }, [dummyData]);
