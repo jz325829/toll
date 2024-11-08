@@ -474,6 +474,7 @@ const Main = ({
             toggleFilterPopup={toggleFilterPopup}
             toggleTableModalPopup={closeTableModalPopup}
             toggleTableModal={toggleTableModalPopup}
+            setIsPageLoading={handlePageLoading}
           />
           <FilterModal
             setIsUnitModalMobileOpen={setIsModalMobileOpen}

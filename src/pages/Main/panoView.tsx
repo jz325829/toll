@@ -339,9 +339,9 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
     dispatch($carousel_actions.setBuildingId(`building${id}`));
     dispatch($carousel_actions.updateBuildingDataNumber(1));
     setIsPageLoading(true);
+    // @ts-ignore asd
+    window.GLOBAL_CACHE.updateCurrentSlide(16, true);
     setTimeout(() => {
-      // @ts-ignore asd
-      window.GLOBAL_CACHE.updateCurrentSlide(61, true);
       setIsPageLoading(false);
     }, 2000);
   };

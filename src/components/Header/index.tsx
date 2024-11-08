@@ -20,11 +20,12 @@ import { $carousel_actions } from '../../store/carousel/carouselSlice';
 interface Props {
   toggleFilterPopup: () => void;
   toggleTableModalPopup: () => void;
-  toggleTableModal: () => void
+  toggleTableModal: () => void;
+  setIsPageLoading: (loading: boolean) => void;
 }
 
 export default function Header({
-  toggleFilterPopup, toggleTableModalPopup, toggleTableModal,
+  toggleFilterPopup, toggleTableModalPopup, toggleTableModal, setIsPageLoading
 }: Props) {
   const dispatch = useDispatch();
   const [isOpenPopUp, setIsOpenPopUp] = useState(false);
@@ -72,9 +73,12 @@ export default function Header({
     dispatch($carousel_actions.updateBuildingDataNumber(0));
     dispatch($carousel_actions.setIsGotBack(true));
     dispatch($carousel_actions.setToolTip(false));
-
+    setIsPageLoading(true);
     // @ts-ignore
     window.GLOBAL_CACHE.setManualyScale(0, 0, 0, 0, 0);
+    setTimeout(() => {
+      setIsPageLoading(false);
+    }, 2000)
   };
 
   const handleClickFilter = () => {
