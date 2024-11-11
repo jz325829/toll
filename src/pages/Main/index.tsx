@@ -384,12 +384,35 @@ const Main = ({
   };
 
   const updateCurrentSlide = (v: number, hard = false) => {
+    let slideNumber = v
+    switch (buildingId) {
+      case 'building1':
+        slideNumber = v + 119;
+        break;
+      case 'building2':
+        slideNumber = v + 1;
+        break;
+      case 'building3':
+        slideNumber = v + 1;
+        break;
+      case 'building4':
+        slideNumber = v + 1;
+        break;
+      case 'building5':
+        slideNumber = v + 1;
+        break;
+      case 'building6':
+        slideNumber = v + 1;
+        break;
+    }
+    slideNumber = slideNumber % 120
     if (v !== currentSlideRef.current || hard) {
       currentSlideRef.current = v;
-      if (loadedImages.current.main.includes(v) || hard) {
-        const element = buildingConfig[v as keyof typeof buildingConfig];
+      if (loadedImages.current.main.includes(slideNumber) || hard) {
+        const element = buildingConfig[slideNumber as keyof typeof buildingConfig];
+        const imageElement = buildingConfig[v as keyof typeof buildingConfig];
         // @ts-ignore debug
-        window.GLOBAL_CACHE.updateSlide(element.camera_name);
+        window.GLOBAL_CACHE.updateSlide(imageElement.camera_name);
         // @ts-ignore debug
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         window.GLOBAL_CACHE.changeViewerCamera && window.GLOBAL_CACHE.changeViewerCamera(element);

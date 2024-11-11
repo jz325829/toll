@@ -75,6 +75,7 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
         .map((menu, index) => (
           <Box
             padding="5px"
+            key={index}
           >
             <Text
               fontSize="16px"
@@ -87,7 +88,6 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
               <>
                 {positionId == 1 ?
                   <Image
-                    key={index}
                     width={"10vw"}
                     height={"10vh"}
                     src={menu.image}
@@ -98,7 +98,6 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
                   />
                   :
                   <Image
-                    key={index}
                     width={"10vw"}
                     height={"10vh"}
                     src={menu.image}
@@ -110,7 +109,6 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
               </>
               :
               <Image
-                key={index}
                 width={"10vw"}
                 height={"10vh"}
                 src={menu.image}

@@ -158,6 +158,10 @@ const MainBuildings: React.FC<Props> = ({
   const mainGroupRef = useRef<THREE.Group<THREE.Object3DEventMap>>(null!);
   const building1Ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null!);
   const building2Ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null!);
+  const building3Ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null!);
+  const building4Ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null!);
+  const building5Ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null!);
+  const building6Ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null!);
 
   const filters = useSelector((state: RootState) => state.filters);
   const {
@@ -168,7 +172,6 @@ const MainBuildings: React.FC<Props> = ({
     building5,
     building6,
   } = useCategorizeChildrenInModal(modelScene.children);
-  console.log(building1)
 
   const renderTextureAPIref = useRef<RenderTextureAPI>(null);
   const zoomUnitMaterial = useMemo(() => new THREE.MeshBasicMaterial({
@@ -178,24 +181,28 @@ const MainBuildings: React.FC<Props> = ({
   }), []);
 
   let fov: number;
-  if (isItSecondVersion) {
-    switch (buildingId) {
-      case 'building1':
-        fov = 19;
-        break;
-      case 'building2':
-        fov = 17;
-        break;
-      case 'building3':
-        fov = 17;
-        break;
-      default:
-        fov = 45;
-    }
-  } else {
-    fov = 45;
+  switch (buildingId) {
+    case 'building1':
+      fov = 25;
+      break;
+    case 'building2':
+      fov = 26;
+      break;
+    case 'building3':
+      fov = 25;
+      break;
+    case 'building4':
+      fov = 25;
+      break;
+    case 'building5':
+      fov = 25;
+      break;
+    case 'building6':
+      fov = 25;
+      break;
+    default:
+      fov = 45;
   }
-
   const unitMaterial = useMemo(() => new THREE.MeshBasicMaterial({ name: 'm', color: 0xFFFFFF, transparent: false }), []);
   const unitMaterialDisabled = useMemo(() => new THREE.MeshBasicMaterial({ name: 'md', color: 0x0C223F, transparent: false }), []);
   const dividerMaterial = useMemo(() => new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: false, side: 2 }), []);
@@ -231,9 +238,8 @@ const MainBuildings: React.FC<Props> = ({
         countBuilding1, countBuilding2, countBuilding3, countBuilding4, countBuilding5, countBuilding6
       } = findAllAvialableUnits(dummyData);
       if (countBuilding3Available) {
-        setAvailbleAparments([countBuilding1Available, countBuilding2Available, countBuilding3Available]);
-        console.log({ countBuilding1Available, countBuilding2Available, countBuilding3Available });
-        setNumberApartments([countBuilding1, countBuilding2, countBuilding3]);
+        setAvailbleAparments([countBuilding1Available, countBuilding2Available, countBuilding3Available, countBuilding4Available, countBuilding5Available, countBuilding6Available]);
+        setNumberApartments([countBuilding1, countBuilding2, countBuilding3, countBuilding4, countBuilding5, countBuilding6]);
       }
     }
   }, [dummyData]);
@@ -290,7 +296,6 @@ const MainBuildings: React.FC<Props> = ({
   const changeViewerCamera = (data: any, objectToFind: any = objectsPositions) => {
     const position = objectToFind[data.camera_name];
     const target = objectToFind[`${data.camera_name}.Target`];
-
     if (position && target) {
       renderCameraRef.current.position.copy(position).fromArray(position);
       renderCameraRef.current.lookAt(new THREE.Vector3().fromArray(target));
@@ -512,7 +517,7 @@ const MainBuildings: React.FC<Props> = ({
         <RenderTexture ref={renderTextureAPIref} attach="map">
           <PerspectiveCamera ref={renderCameraRef} makeDefault fov={fov} />
           <group ref={mainGroupRef} onClick={handleCloseToolTop}>
-            {/* <group
+            <group
               name="building_1"
               onPointerMove={handleMouseEnter}
               onPointerUp={handlePointerUp}
@@ -536,7 +541,7 @@ const MainBuildings: React.FC<Props> = ({
                     buildingNumber={buildingId}
                   />
                 ))}
-              {!isZoomed && !!availableAparments[0] && (
+              {/* {!isZoomed && !!availableAparments[0] && (
                 <mesh visible={false} position={isItSecondVersion ? [-125, 16, -82.5] : [30, 28, 0]}>
                   <meshBasicMaterial color={0xff0000} />
                   <boxGeometry args={[10, 10, 10]} />
@@ -549,8 +554,8 @@ const MainBuildings: React.FC<Props> = ({
                     />
                   </Html>
                 </mesh>
-              )}
-              {(!isZoomed && !isItSecondVersion && !!availableAparments[0]) && (
+              )} */}
+              {/* {(!isZoomed && !isItSecondVersion && !!availableAparments[0]) && (
                 <mesh visible={false} position={[-80, 14, -50]}>
                   <meshBasicMaterial color={0xff0000} />
                   <boxGeometry args={[10, 10, 10]} />
@@ -563,7 +568,7 @@ const MainBuildings: React.FC<Props> = ({
                     />
                   </Html>
                 </mesh>
-              )}
+              )} */}
 
             </group>
             <group
@@ -590,7 +595,7 @@ const MainBuildings: React.FC<Props> = ({
                     buildingNumber={buildingId}
                   />
                 ))}
-              {!isZoomed && !!availableAparments[1] && (
+              {/* {!isZoomed && !!availableAparments[1] && (
                 <mesh visible={false} position={isItSecondVersion ? [-65, 16, -105] : [22.235, 28.172, -69.690]}>
                   <meshBasicMaterial color={0xff0000} />
                   <boxGeometry args={[1, 1, 1]} />
@@ -604,7 +609,7 @@ const MainBuildings: React.FC<Props> = ({
                     />
                   </Html>
                 </mesh>
-              )}
+              )} */}
 
             </group>
             <group
@@ -614,7 +619,7 @@ const MainBuildings: React.FC<Props> = ({
               onPointerDown={handleToolTipClick}
               onPointerOut={handlePointerMissed}
               onClick={handleMouseClick}
-              ref={building2Ref}
+              ref={building3Ref}
             >
               {isZoomed
                 && buildingId === 'building3'
@@ -632,7 +637,7 @@ const MainBuildings: React.FC<Props> = ({
                   />
                 ))}
 
-              {(!isZoomed && isItSecondVersion && !!availableAparments[2]) && (
+              {/* {(!isZoomed && isItSecondVersion && !!availableAparments[2]) && (
                 <mesh visible={false} position={[-112.5, 16, -42.5]}>
                   <meshBasicMaterial color={0xff0000} />
                   <boxGeometry args={[10, 10, 10]} />
@@ -645,9 +650,84 @@ const MainBuildings: React.FC<Props> = ({
                     />
                   </Html>
                 </mesh>
-              )}
+              )} */}
 
-            </group> */}
+            </group>
+            <group
+              name="building_4"
+              onPointerMove={handleMouseEnter}
+              onPointerUp={handlePointerUp}
+              onPointerDown={handleToolTipClick}
+              onPointerOut={handlePointerMissed}
+              onClick={handleMouseClick}
+              ref={building4Ref}
+            >
+              {isZoomed
+                && buildingId === 'building4'
+                && building4.map((model) => (
+                  <BuildingModel
+                    material={unitMaterial}
+                    zoomMaterial={zoomUnitMaterial}
+                    materialDisabled={unitMaterialDisabled}
+                    key={model.name}
+                    materials={categorizedMaterials}
+                    model={model}
+                    dummyData={dummyData}
+                    filters={filters}
+                    buildingNumber={buildingId}
+                  />
+                ))}
+            </group>
+            <group
+              name="building_5"
+              onPointerMove={handleMouseEnter}
+              onPointerUp={handlePointerUp}
+              onPointerDown={handleToolTipClick}
+              onPointerOut={handlePointerMissed}
+              onClick={handleMouseClick}
+              ref={building5Ref}
+            >
+              {isZoomed
+                && buildingId === 'building5'
+                && building5.map((model) => (
+                  <BuildingModel
+                    material={unitMaterial}
+                    zoomMaterial={zoomUnitMaterial}
+                    materialDisabled={unitMaterialDisabled}
+                    key={model.name}
+                    materials={categorizedMaterials}
+                    model={model}
+                    dummyData={dummyData}
+                    filters={filters}
+                    buildingNumber={buildingId}
+                  />
+                ))}
+            </group>
+            <group
+              name="building_6"
+              onPointerMove={handleMouseEnter}
+              onPointerUp={handlePointerUp}
+              onPointerDown={handleToolTipClick}
+              onPointerOut={handlePointerMissed}
+              onClick={handleMouseClick}
+              ref={building6Ref}
+            >
+              {isZoomed
+                && buildingId === 'building6'
+                && building6.map((model) => (
+                  <BuildingModel
+                    material={unitMaterial}
+                    zoomMaterial={zoomUnitMaterial}
+                    materialDisabled={unitMaterialDisabled}
+                    key={model.name}
+                    materials={categorizedMaterials}
+                    model={model}
+                    dummyData={dummyData}
+                    filters={filters}
+                    buildingNumber={buildingId}
+                  />
+                ))}
+            </group>
           </group>
           {/* {
             buildingId !== 'main'

@@ -334,10 +334,10 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
     }
   };
 
-  const toggleBuildingOne = (id: number) => {
+  const toggleBuildingOne = (id:  0 | 1 | 2 | 3 | 4 | 5 | 6) => {
     dispatch($carousel_actions.setZoomed(true));
     dispatch($carousel_actions.setBuildingId(`building${id}`));
-    dispatch($carousel_actions.updateBuildingDataNumber(1));
+    dispatch($carousel_actions.updateBuildingDataNumber(id));
     setIsPageLoading(true);
     setTimeout(() => {
       // @ts-ignore asd

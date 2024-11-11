@@ -20,7 +20,7 @@ interface CaouselState {
   isDragging: boolean
   isLoadedFirstImages: boolean;
   isGoingBack: boolean;
-  buildingDataNumber: 0 | 1 | 2 | 3;
+  buildingDataNumber: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   isNoDataFound: boolean;
   isLoadingRender: boolean;
   zoomedUnit: string;

@@ -40,20 +40,30 @@ function useCategorizeChildrenInModal(
 
     objects.forEach((o) => {
       const obj = o.children[0]
-      const { name } = obj;
-      console.log(name)
-      if (name.startsWith('building_a_unit_')) {
-        pushObject(building2, obj);
-      } else if (name.startsWith('building_b_unit_')) {
-        pushObject(building1, obj);
-      } else if (name.startsWith('building_c_unit_')) {
-        pushObject(building3, obj);
-      } else if (name.startsWith('building_d_unit_')) {
-        pushObject(building4, obj);
-      } else if (name.startsWith('building_f_unit_')) {
-        pushObject(building5, obj);
-      } else if (name.startsWith('building_e_unit_')) {
-        pushObject(building6, obj);
+      if (obj != undefined)
+      {
+        const { name } = obj;
+        obj.rotation.copy(o.rotation);
+        obj.scale.copy(new THREE.Vector3(obj.scale.x * o.scale.x, obj.scale.y * o.scale.y, obj.scale.z * o.scale.z));
+        if (name.startsWith('building_a_unit_')) {
+          obj.position.copy(new THREE.Vector3(o.position.x-1, o.position.y, o.position.z));
+          pushObject(building2, obj);
+        } else if (name.startsWith('building_b_unit_')) {
+          obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z));
+          pushObject(building1, obj);
+        } else if (name.startsWith('building_c_unit_')) {
+          obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z-1.5));
+          pushObject(building3, obj);
+        } else if (name.startsWith('building_d_unit_')) {
+          obj.position.copy(new THREE.Vector3(o.position.x-1, o.position.y, o.position.z-1));
+          pushObject(building4, obj);
+        } else if (name.startsWith('building_f_unit_')) {
+          obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z-0.5));
+          pushObject(building5, obj);
+        } else if (name.startsWith('building_e_unit_')) {
+          obj.position.copy(new THREE.Vector3(o.position.x-1, o.position.y, o.position.z));
+          pushObject(building6, obj);
+        }
       }
     });
 

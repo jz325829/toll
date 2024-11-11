@@ -243,12 +243,12 @@ const StreetPlan = ({
         {buildingPositions
           .map((buildingPosition, index) => (
             <Box
+              key={index}
               position={'absolute'}
               top={`${buildingPosition.position[0]}%`}
               left={`${buildingPosition.position[1]}%`}
             >
               <UnitTooltip
-                key={index}
                 title={`Building ${buildingPosition.buildingNumber}`}
                 hoveredText={``}
                 hoveredText2={``}
