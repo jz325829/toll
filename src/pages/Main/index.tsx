@@ -406,6 +406,9 @@ const Main = ({
         break;
     }
     slideNumber = slideNumber % 120
+    if (slideNumber == 0) {
+      slideNumber = 1;
+    }
     if (v !== currentSlideRef.current || hard) {
       currentSlideRef.current = v;
       if (loadedImages.current.main.includes(slideNumber) || hard) {
