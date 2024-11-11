@@ -192,13 +192,13 @@ const MainBuildings: React.FC<Props> = ({
       fov = 25;
       break;
     case 'building4':
-      fov = 25;
+      fov = 26;
       break;
     case 'building5':
       fov = 25;
       break;
     case 'building6':
-      fov = 25;
+      fov = 26;
       break;
     default:
       fov = 45;

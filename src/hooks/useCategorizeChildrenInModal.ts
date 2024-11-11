@@ -55,13 +55,13 @@ function useCategorizeChildrenInModal(
           obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z-1.5));
           pushObject(building3, obj);
         } else if (name.startsWith('building_d_unit_')) {
-          obj.position.copy(new THREE.Vector3(o.position.x-1, o.position.y, o.position.z-1));
+          obj.position.copy(new THREE.Vector3(o.position.x-1.5, o.position.y, o.position.z-1));
           pushObject(building4, obj);
         } else if (name.startsWith('building_f_unit_')) {
           obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z-0.5));
           pushObject(building5, obj);
         } else if (name.startsWith('building_e_unit_')) {
-          obj.position.copy(new THREE.Vector3(o.position.x-1, o.position.y, o.position.z));
+          obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z));
           pushObject(building6, obj);
         }
       }

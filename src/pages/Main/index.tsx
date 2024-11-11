@@ -396,7 +396,7 @@ const Main = ({
         slideNumber = v + 1;
         break;
       case 'building4':
-        slideNumber = v + 1;
+        slideNumber = v + 2;
         break;
       case 'building5':
         slideNumber = v + 1;
@@ -407,7 +407,7 @@ const Main = ({
     }
     slideNumber = slideNumber % 120
     if (slideNumber == 0) {
-      slideNumber = 1;
+      slideNumber = 119;
     }
     if (v !== currentSlideRef.current || hard) {
       currentSlideRef.current = v;
@@ -435,12 +435,12 @@ const Main = ({
         let updatedSlideId = currentSlideRef.current - 1;
 
         if (updatedSlideId <= 0) {
-          updatedSlideId = 120;
+          updatedSlideId = 119;
         }
         next = updatedSlideId;
       } else if (movementX < 0) {
         let updatedSlideId = currentSlideRef.current + 1;
-        if (updatedSlideId >= 121) {
+        if (updatedSlideId >= 120) {
           updatedSlideId = 1;
         }
         next = updatedSlideId;
@@ -464,12 +464,12 @@ const Main = ({
         if (deltaX > 0) {
           let updatedSlideId = currentSlideRef.current - 1;
           if (updatedSlideId === 0) {
-            updatedSlideId = 120;
+            updatedSlideId = 119;
           }
           next = updatedSlideId;
         } else if (deltaX < 0) {
           let updatedSlideId = currentSlideRef.current + 1;
-          if (updatedSlideId === 121) {
+          if (updatedSlideId === 120) {
             updatedSlideId = 1;
           }
           next = updatedSlideId;
