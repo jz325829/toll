@@ -23,6 +23,9 @@ function useCategorizeChildrenInModal(
     const divider1: THREE.Object3D<THREE.Object3DEventMap>[] = [];
     const divider2: THREE.Object3D<THREE.Object3DEventMap>[] = [];
     const divider3: THREE.Object3D<THREE.Object3DEventMap>[] = [];
+    const divider4: THREE.Object3D<THREE.Object3DEventMap>[] = [];
+    const divider5: THREE.Object3D<THREE.Object3DEventMap>[] = [];
+    const divider6: THREE.Object3D<THREE.Object3DEventMap>[] = [];
     const dividerMesh: THREE.Object3D<THREE.Object3DEventMap>[] = [];
     const roof2: THREE.Object3D<THREE.Object3DEventMap>[] = [];
     const roof3: THREE.Object3D<THREE.Object3DEventMap>[] = [];
@@ -64,6 +67,24 @@ function useCategorizeChildrenInModal(
         } else if (name.startsWith('building_e_unit_')) {
           obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z));
           pushObject(building6, obj);
+        } else if (name.startsWith('Divider_A')) {
+          obj.position.copy(new THREE.Vector3(o.position.x-1, o.position.y, o.position.z));
+          pushObject(divider2, obj);
+        } else if (name.startsWith('Divider_B')) {
+          obj.position.copy(new THREE.Vector3(o.position.x-1, o.position.y, o.position.z));
+          pushObject(divider1, obj);
+        } else if (name.startsWith('Divider_C')) {
+          obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z-1.6));
+          pushObject(divider3, obj);
+        } else if (name.startsWith('Divider_D')) {
+          obj.position.copy(new THREE.Vector3(o.position.x-1.5, o.position.y, o.position.z-1));
+          pushObject(divider4, obj);
+        } else if (name.startsWith('Divider_E')) {
+          obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z));
+          pushObject(divider6, obj);
+        } else if (name.startsWith('Divider_F')) {
+          obj.position.copy(new THREE.Vector3(o.position.x-1, o.position.y, o.position.z));
+          pushObject(divider5, obj);
         }
       }
     });
@@ -81,6 +102,12 @@ function useCategorizeChildrenInModal(
       building4,
       building5,
       building6,
+      divider1,
+      divider2,
+      divider3,
+      divider4,
+      divider5,
+      divider6
     };
   }, []);
 

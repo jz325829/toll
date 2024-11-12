@@ -171,6 +171,12 @@ const MainBuildings: React.FC<Props> = ({
     building4,
     building5,
     building6,
+    divider1,
+    divider2,
+    divider3,
+    divider4,
+    divider5,
+    divider6
   } = useCategorizeChildrenInModal(modelScene.children);
 
   const renderTextureAPIref = useRef<RenderTextureAPI>(null);
@@ -526,6 +532,17 @@ const MainBuildings: React.FC<Props> = ({
               onClick={handleMouseClick}
               ref={building1Ref}
             >
+              <group name="divider_1">
+                {isZoomed && buildingId === 'building1' && divider1.map((model) => (
+                  <primitive
+                    object={model}
+                    key={model.name}
+                    side={THREE.DoubleSide}
+                  >
+                    <primitive attach="material" object={dividerMaterial} />
+                  </primitive>
+                ))}
+              </group>
               {isZoomed
                 && buildingId === 'building1'
                 && building1.map((model) => (
@@ -580,6 +597,17 @@ const MainBuildings: React.FC<Props> = ({
               onClick={handleMouseClick}
               ref={building2Ref}
             >
+              <group name="divider_2">
+                {isZoomed && buildingId === 'building2' && divider2.map((model) => (
+                  <primitive
+                    object={model}
+                    key={model.name}
+                    side={THREE.DoubleSide}
+                  >
+                    <primitive attach="material" object={dividerMaterial} />
+                  </primitive>
+                ))}
+              </group>
               {isZoomed
                 && buildingId === 'building2'
                 && building2.map((model) => (
@@ -621,6 +649,17 @@ const MainBuildings: React.FC<Props> = ({
               onClick={handleMouseClick}
               ref={building3Ref}
             >
+              <group name="divider_3">
+                {isZoomed && buildingId === 'building3' && divider3.map((model) => (
+                  <primitive
+                    object={model}
+                    key={model.name}
+                    side={THREE.DoubleSide}
+                  >
+                    <primitive attach="material" object={dividerMaterial} />
+                  </primitive>
+                ))}
+              </group>
               {isZoomed
                 && buildingId === 'building3'
                 && building3.map((model) => (
@@ -662,6 +701,17 @@ const MainBuildings: React.FC<Props> = ({
               onClick={handleMouseClick}
               ref={building4Ref}
             >
+              <group name="divider_4">
+                {isZoomed && buildingId === 'building4' && divider4.map((model) => (
+                  <primitive
+                    object={model}
+                    key={model.name}
+                    side={THREE.DoubleSide}
+                  >
+                    <primitive attach="material" object={dividerMaterial} />
+                  </primitive>
+                ))}
+              </group>
               {isZoomed
                 && buildingId === 'building4'
                 && building4.map((model) => (
@@ -687,6 +737,17 @@ const MainBuildings: React.FC<Props> = ({
               onClick={handleMouseClick}
               ref={building5Ref}
             >
+              <group name="divider_5">
+                {isZoomed && buildingId === 'building5' && divider5.map((model) => (
+                  <primitive
+                    object={model}
+                    key={model.name}
+                    side={THREE.DoubleSide}
+                  >
+                    <primitive attach="material" object={dividerMaterial} />
+                  </primitive>
+                ))}
+              </group>
               {isZoomed
                 && buildingId === 'building5'
                 && building5.map((model) => (
@@ -712,6 +773,17 @@ const MainBuildings: React.FC<Props> = ({
               onClick={handleMouseClick}
               ref={building6Ref}
             >
+              <group name="divider_6">
+                {isZoomed && buildingId === 'building6' && divider6.map((model) => (
+                  <primitive
+                    object={model}
+                    key={model.name}
+                    side={THREE.DoubleSide}
+                  >
+                    <primitive attach="material" object={dividerMaterial} />
+                  </primitive>
+                ))}
+              </group>
               {isZoomed
                 && buildingId === 'building6'
                 && building6.map((model) => (

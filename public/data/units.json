@@ -250,21 +250,18 @@
         "bedrooms": 1,
         "bathrooms": 2,
         "floors": 1,
-        "category": "sold",
         "unitNumber": 95
       },
       "2": {
         "price": 417384,
         "square": 87,
         "bedrooms": 3,
-        "category": "deposit",
         "bathrooms": 1,
         "floors": 1,
         "unitNumber": 94
       },
       "3": {
         "price": 84713,
-        "category": "coming_soon",
         "square": 84,
         "bedrooms": 1,
         "bathrooms": 1,
@@ -273,7 +270,6 @@
       },
       "4": {
         "price": 43844,
-        "category": "future_phase",
         "square": 96,
         "bedrooms": 2,
         "bathrooms": 3,
@@ -282,7 +278,6 @@
       },
       "5": {
         "price": 199922,
-        "category": "quick_delivery",
         "square": 113,
         "bedrooms": 3,
         "bathrooms": 2,
@@ -291,7 +286,6 @@
       },
       "6": {
         "price": 90832,
-        "category": "not_available",
         "square": 133,
         "bedrooms": 1,
         "bathrooms": 2,
@@ -299,7 +293,6 @@
         "unitNumber": 99
       },
       "7": {
-        "category": "available",
         "price": 378365,
         "square": 72,
         "bedrooms": 3,
@@ -308,7 +301,6 @@
         "unitNumber": 101
       },
       "8": {
-        "category": "unavailable",
         "price": 277417,
         "square": 68,
         "bedrooms": 1,

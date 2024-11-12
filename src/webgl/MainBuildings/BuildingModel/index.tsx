@@ -35,7 +35,6 @@ const BuildingModel: React.FC<Props> = ({
   const inputString = model.name;
   const parts = inputString.split('_');
   let unitNumber = +parts[parts.length - 1];
-  console.log(unitNumber)
   switch (buildingNumber) {
     case 'building1':
       unitNumber = unitNumber - 200;
