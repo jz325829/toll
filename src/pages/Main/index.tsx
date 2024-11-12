@@ -399,7 +399,7 @@ const Main = ({
         slideNumber = v + 2;
         break;
       case 'building5':
-        slideNumber = v + 1;
+        slideNumber = v + 61;
         break;
       case 'building6':
         slideNumber = v + 1;

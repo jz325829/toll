@@ -34,7 +34,28 @@ const BuildingModel: React.FC<Props> = ({
   const zoomedUnit = useSelector((state: RootState) => state.carousel.zoomedUnit);
   const inputString = model.name;
   const parts = inputString.split('_');
-  const unitNumber = +parts[parts.length - 1];
+  let unitNumber = +parts[parts.length - 1];
+  console.log(unitNumber)
+  switch (buildingNumber) {
+    case 'building1':
+      unitNumber = unitNumber - 200;
+      break;
+    case 'building2':
+      unitNumber = unitNumber - 100;
+      break;
+    case 'building3':
+      unitNumber = unitNumber - 300;
+      break;
+    case 'building4':
+      unitNumber = unitNumber - 400;
+      break;
+    case 'building5':
+      unitNumber = unitNumber - 600;
+      break;
+    case 'building6':
+      unitNumber = unitNumber - 500;
+      break;
+  }
   const buildingData = dummyData && dummyData[buildingNumber];
   const unitData: UnitData | undefined = buildingData ? buildingData[unitNumber] : undefined;
 

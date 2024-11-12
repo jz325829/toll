@@ -44,21 +44,22 @@ function useCategorizeChildrenInModal(
       {
         const { name } = obj;
         obj.rotation.copy(o.rotation);
-        obj.scale.copy(new THREE.Vector3(obj.scale.x * o.scale.x, obj.scale.y * o.scale.y, obj.scale.z * o.scale.z));
+        obj.quaternion.copy(o.quaternion);
+        // obj.scale.copy(new THREE.Vector3(obj.scale.x * o.scale.x, obj.scale.y * o.scale.y, obj.scale.z * o.scale.z));
         if (name.startsWith('building_a_unit_')) {
           obj.position.copy(new THREE.Vector3(o.position.x-1, o.position.y, o.position.z));
           pushObject(building2, obj);
         } else if (name.startsWith('building_b_unit_')) {
-          obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z));
+          obj.position.copy(new THREE.Vector3(o.position.x-1, o.position.y, o.position.z));
           pushObject(building1, obj);
         } else if (name.startsWith('building_c_unit_')) {
-          obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z-1.5));
+          obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z-1.6));
           pushObject(building3, obj);
         } else if (name.startsWith('building_d_unit_')) {
           obj.position.copy(new THREE.Vector3(o.position.x-1.5, o.position.y, o.position.z-1));
           pushObject(building4, obj);
         } else if (name.startsWith('building_f_unit_')) {
-          obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z-0.5));
+          obj.position.copy(new THREE.Vector3(o.position.x-1, o.position.y, o.position.z));
           pushObject(building5, obj);
         } else if (name.startsWith('building_e_unit_')) {
           obj.position.copy(new THREE.Vector3(o.position.x, o.position.y, o.position.z));

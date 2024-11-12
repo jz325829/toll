@@ -195,7 +195,7 @@ const MainBuildings: React.FC<Props> = ({
       fov = 26;
       break;
     case 'building5':
-      fov = 25;
+      fov = 24.5;
       break;
     case 'building6':
       fov = 26;
@@ -554,8 +554,8 @@ const MainBuildings: React.FC<Props> = ({
                     />
                   </Html>
                 </mesh>
-              )} */}
-              {/* {(!isZoomed && !isItSecondVersion && !!availableAparments[0]) && (
+              )}
+              {(!isZoomed && !isItSecondVersion && !!availableAparments[0]) && (
                 <mesh visible={false} position={[-80, 14, -50]}>
                   <meshBasicMaterial color={0xff0000} />
                   <boxGeometry args={[10, 10, 10]} />
@@ -729,7 +729,7 @@ const MainBuildings: React.FC<Props> = ({
                 ))}
             </group>
           </group>
-          {/* {
+          {
             buildingId !== 'main'
             && isZoomed
             && !isMobile
@@ -750,7 +750,7 @@ const MainBuildings: React.FC<Props> = ({
                 </Html>
               </object3D>
             )
-          } */}
+          }
           {/* <OrbitControls /> */}
         </RenderTexture>
       </primitive>
