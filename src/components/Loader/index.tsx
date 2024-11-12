@@ -21,7 +21,7 @@ const Loader: React.FC<LoaderProps> = ({ isLoading }) => {
           backgroundImage: isItSecondVersion ? 'url(images/loader-newtalley.jpg)' : 'url(images/preload_image.jpg)',
           backgroundPosition: '50% 50%',
           backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
+          backgroundSize: 'cover'
         }}
         >
           <Spinner
