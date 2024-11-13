@@ -13,6 +13,9 @@ import { BuildingData, UnitData } from 'src/webgl/MainBuildings/types';
 import {
   Camera, Object3D, Vector2, Vector3,
 } from 'three';
+import {
+  useGLTF
+} from '@react-three/drei';
 import Header from '../../components/Header';
 import FilterModal from '../../components/FilterModal';
 import NoResultModal from '../../components/NoResultsModal';
@@ -26,6 +29,7 @@ import { $carousel_actions } from '../../store/carousel/carouselSlice';
 import UnitCard from '../../components/UnitCard';
 import { building1Config, building2Config, building3Config, building4Config, building5Config, building6Config } from '../../constants/cameras';
 
+import { useCategorizeChildrenInModal } from '../../hooks/useCategorizeChildrenInModal';
 import { CameraData } from './types';
 import useIsSomeUnitAvailable from '../../hooks/useIsSomeUnitAvailable';
 import PanoView from './panoView';
@@ -265,6 +269,30 @@ const Main = ({
   const target = useRef(null);
 
   const dispatch = useDispatch();
+
+  let modelPath = 'models/apartments.glb';
+
+  const { assetPath } = window.swellData;
+  if (assetPath) {
+    modelPath = `${assetPath}/${modelPath}`;
+  }
+
+  const { scene: modelScene } = useGLTF(modelPath);
+  const {
+    building1,
+    building2,
+    building3,
+    building4,
+    building5,
+    building6,
+    divider1,
+    divider2,
+    divider3,
+    divider4,
+    divider5,
+    divider6
+  } = useCategorizeChildrenInModal(modelScene.children);
+
 
   let buildingConfig: CameraData;
 
@@ -607,6 +635,18 @@ const Main = ({
                   setPageLoaded={handlePageLoaded}
                   isPageLoaded={!isPageLoading}
                   dummyData={dummyData}
+                  building1={building1}
+                  building2={building2}
+                  building3={building3}
+                  building4={building4}
+                  building5={building5}
+                  building6={building6}
+                  divider1={divider1}
+                  divider2={divider2}
+                  divider3={divider3}
+                  divider4={divider4}
+                  divider5={divider5}
+                  divider6={divider6}
                 />
               </Canvas>
             </Box>

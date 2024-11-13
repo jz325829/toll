@@ -12,7 +12,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ThreeEvent, useFrame, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { $carousel_actions } from '../../store/carousel/carouselSlice';
-import { useCategorizeChildrenInModal } from '../../hooks/useCategorizeChildrenInModal';
 import { BuildingData, UnitData } from './types';
 import BuildingModel, { MaterialsCategorized } from './BuildingModel';
 import { RootState } from '../../store/store';
@@ -30,6 +29,18 @@ interface Props {
   isPageLoaded: boolean,
   dummyData: BuildingData | null | undefined;
   setPageLoadedTrue: () => void;
+  building1: THREE.Object3D<THREE.Object3DEventMap>[];
+  building2: THREE.Object3D<THREE.Object3DEventMap>[];
+  building3: THREE.Object3D<THREE.Object3DEventMap>[];
+  building4: THREE.Object3D<THREE.Object3DEventMap>[];
+  building5: THREE.Object3D<THREE.Object3DEventMap>[];
+  building6: THREE.Object3D<THREE.Object3DEventMap>[];
+  divider1: THREE.Object3D<THREE.Object3DEventMap>[];
+  divider2: THREE.Object3D<THREE.Object3DEventMap>[];
+  divider3: THREE.Object3D<THREE.Object3DEventMap>[];
+  divider4: THREE.Object3D<THREE.Object3DEventMap>[];
+  divider5: THREE.Object3D<THREE.Object3DEventMap>[];
+  divider6: THREE.Object3D<THREE.Object3DEventMap>[];
 }
 
 class MeshMaskedMaterial extends THREE.MeshBasicMaterial {
@@ -110,7 +121,8 @@ class MeshMaskedMaterial extends THREE.MeshBasicMaterial {
 }
 
 const MainBuildings: React.FC<Props> = ({
-  isVisibleRooms, dummyData,
+  isVisibleRooms, dummyData, building1,
+  building2, building3, building4, building5, building6, divider1, divider2, divider3, divider4, divider5, divider6
 }) => {
   const buildingId = useSelector((state: RootState) => state.carousel.buildingId);
 
@@ -118,14 +130,6 @@ const MainBuildings: React.FC<Props> = ({
   const isItSecondVersion = version === 'version_2';
 
   const dispatch = useDispatch();
-  let modelPath = 'models/apartments.glb';
-
-  const { assetPath } = window.swellData;
-  if (assetPath) {
-    modelPath = `${assetPath}/${modelPath}`;
-  }
-
-  const { scene: modelScene } = useGLTF(modelPath);
 
   const toolTipInfo = useSelector((state: RootState) => state.carousel.toolTipInfo);
   const zoomedUnit = useSelector((state: RootState) => state.carousel.zoomedUnit);
@@ -164,20 +168,6 @@ const MainBuildings: React.FC<Props> = ({
   const building6Ref = useRef<THREE.Group<THREE.Object3DEventMap>>(null!);
 
   const filters = useSelector((state: RootState) => state.filters);
-  const {
-    building1,
-    building2,
-    building3,
-    building4,
-    building5,
-    building6,
-    divider1,
-    divider2,
-    divider3,
-    divider4,
-    divider5,
-    divider6
-  } = useCategorizeChildrenInModal(modelScene.children);
 
   const renderTextureAPIref = useRef<RenderTextureAPI>(null);
   const zoomUnitMaterial = useMemo(() => new THREE.MeshBasicMaterial({
