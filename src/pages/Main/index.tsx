@@ -217,8 +217,8 @@ const ZoomBox: React.FC<ZoomBoxProps> = ({ children }) => {
         ref={divRef}
         style={{
           position: 'relative',
-          width: isDeviceWidthSmallerThenHeight ? 'auto' : '100%',
-          height: !isDeviceWidthSmallerThenHeight ? 'auto' : '100%',
+          width: '100%',
+          height: '100%',
           transformOrigin: '0 0',
           aspectRatio: '1920/920',
         }}
