@@ -56,7 +56,7 @@ const StreetPlan = ({
           cursor={'pointer'} 
           backgroundColor="#ffffff">
             <Image
-              src="images/street_plan.png"
+              src="images/street_plan.jpg"
               alt="Chakra UI"
               height="120px"
               onClick={togglePopup}
@@ -73,7 +73,7 @@ const StreetPlan = ({
         cursor={'default'}
       >
         <Image
-          src="images/street_plan.png"
+          src="images/street_plan.jpg"
           width="100%"
           height="100%"
           />
