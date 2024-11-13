@@ -67,13 +67,13 @@ export const findAllAvialableUnits = (dummyData: BuildingData) => {
   const countBuilding6 = building6Data.length;
 
   return {
-    countBuilding1Available,
     countBuilding1,
     countBuilding2,
     countBuilding3,
     countBuilding4,
     countBuilding5,
     countBuilding6,
+    countBuilding1Available,
     countBuilding2Available,
     countBuilding3Available,
     countBuilding4Available,

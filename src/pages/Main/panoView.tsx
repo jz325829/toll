@@ -317,9 +317,11 @@ const ArrowRight = ({ onClick }: { onClick: () => void }) => {
 
 interface Props {
   setIsPageLoading: (loading: boolean) => void;
+  availableAparments: number[];
+  numberApartments: number[];
 }
 
-const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
+const PanoView: React.FC<Props> = ({ setIsPageLoading, availableAparments, numberApartments }) => {
   const [currentPosition, setCurrentPosition] = useState<Position>(positions[0]);
   const [rotation, setRotation] = useState<THREE.Euler>(new THREE.Euler());
   const [isOpenPopUp, setIsOpenPopUp] = useState(false);
@@ -368,8 +370,8 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
               <Html zIndexRange={[1, 10]}>
                 <UnitTooltip
                   title={`Building ${toolTipPosition.buildingNumber}`}
-                  hoveredText={``}
-                  hoveredText2={``}
+                  hoveredText={`${numberApartments[toolTipPosition.buildingNumber - 1]} Residences`}
+                  hoveredText2={`${availableAparments[toolTipPosition.buildingNumber - 1]} Available`}
                   onClick={() => toggleBuildingOne(toolTipPosition.buildingNumber)}
                  />
               </Html>
@@ -399,6 +401,8 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading }) => {
         toggleBuildingOne={toggleBuildingOne}
         isOpenPopUp={isOpenPopUp}
         togglePopup={togglePopup}
+        availableAparments={availableAparments}
+        numberApartments={numberApartments}
       />
 
     </div>

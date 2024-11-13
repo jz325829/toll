@@ -28,11 +28,13 @@ interface Props {
   currentPosition: Position;
   toggleBuildingOne: (id: number) => void
   isOpenPopUp: boolean;
-  togglePopup: () => void
+  togglePopup: () => void;
+  availableAparments: number[];
+  numberApartments: number[];
 }
 
 const StreetPlan = ({
-  handlePositionChange, rotation, currentPosition, toggleBuildingOne, isOpenPopUp, togglePopup
+  handlePositionChange, rotation, currentPosition, toggleBuildingOne, isOpenPopUp, togglePopup, availableAparments, numberApartments
 }: Props) => {
   
   const [isSmallerThan768] = useMediaQuery('(max-width: 768px)');
@@ -250,8 +252,8 @@ const StreetPlan = ({
             >
               <UnitTooltip
                 title={`Building ${buildingPosition.buildingNumber}`}
-                hoveredText={``}
-                hoveredText2={``}
+                hoveredText={`${numberApartments[buildingPosition.buildingNumber - 1]} Residences`}
+                hoveredText2={`${availableAparments[buildingPosition.buildingNumber - 1]} Available`}
                 onClick={() => toggleBuildingOne(buildingPosition.buildingNumber)}
                 />
             </Box>

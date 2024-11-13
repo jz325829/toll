@@ -17,7 +17,6 @@ import BuildingModel, { MaterialsCategorized } from './BuildingModel';
 import { RootState } from '../../store/store';
 import UnitTooltip from '../../components/UI/UnitTooltip';
 import { RenderTexture, RenderTextureAPI } from '../helpers/RenderTexture';
-import { findAllAvialableUnits } from '../../helpers/findAllAvialableUnits';
 import {
   BUILDING1_CAMERAS, BUILDING2_CAMERAS, BUILDING3_CAMERAS, BUILDING4_CAMERAS, BUILDING5_CAMERAS, BUILDING6_CAMERAS
 } from '../../constants/cameras';
@@ -223,22 +222,6 @@ const MainBuildings: React.FC<Props> = ({
   const buildingData = dummyData && dummyData[buildingId as keyof typeof dummyData];
   const tooltipPivotRef = useRef<THREE.Object3D>(null);
   const pointerDownRef = useRef(new THREE.Vector3());
-
-  const [availableAparments, setAvailbleAparments] = useState([0, 0, 0, 0, 0, 0]);
-  const [numberApartments, setNumberApartments] = useState([0, 0, 0, 0, 0, 0]);
-
-  useEffect(() => {
-    if (dummyData) {
-      const {
-        countBuilding1Available, countBuilding2Available, countBuilding3Available, countBuilding4Available, countBuilding5Available, countBuilding6Available,
-        countBuilding1, countBuilding2, countBuilding3, countBuilding4, countBuilding5, countBuilding6
-      } = findAllAvialableUnits(dummyData);
-      if (countBuilding3Available) {
-        setAvailbleAparments([countBuilding1Available, countBuilding2Available, countBuilding3Available, countBuilding4Available, countBuilding5Available, countBuilding6Available]);
-        setNumberApartments([countBuilding1, countBuilding2, countBuilding3, countBuilding4, countBuilding5, countBuilding6]);
-      }
-    }
-  }, [dummyData]);
 
   const unitData: UnitData | undefined = buildingData
     ? buildingData[+toolTipInfo.toolTipId]

@@ -32,6 +32,7 @@ import { building1Config, building2Config, building3Config, building4Config, bui
 import { useCategorizeChildrenInModal } from '../../hooks/useCategorizeChildrenInModal';
 import { CameraData } from './types';
 import useIsSomeUnitAvailable from '../../hooks/useIsSomeUnitAvailable';
+import { findAllAvialableUnits } from '../../helpers/findAllAvialableUnits';
 import PanoView from './panoView';
 
 interface ZoomBoxProps {
@@ -294,6 +295,8 @@ const Main = ({
     divider6
   } = useCategorizeChildrenInModal(modelScene.children);
 
+  const [availableAparments, setAvailbleAparments] = useState([0, 0, 0, 0, 0, 0]);
+  const [numberApartments, setNumberApartments] = useState([0, 0, 0, 0, 0, 0]);
 
   let buildingConfig: CameraData;
 
@@ -322,6 +325,18 @@ const Main = ({
   }
 
   const buildingData = dummyData && dummyData[buildingId as keyof typeof dummyData];;
+  
+  useEffect(() => {
+    if (dummyData) {
+      const {
+        countBuilding1Available, countBuilding2Available, countBuilding3Available, countBuilding4Available, countBuilding5Available, countBuilding6Available,
+        countBuilding1, countBuilding2, countBuilding3, countBuilding4, countBuilding5, countBuilding6
+      } = findAllAvialableUnits(dummyData);
+      setAvailbleAparments([countBuilding1Available, countBuilding2Available, countBuilding3Available, countBuilding4Available, countBuilding5Available, countBuilding6Available]);
+      setNumberApartments([countBuilding1, countBuilding2, countBuilding3, countBuilding4, countBuilding5, countBuilding6]);
+    }
+  }, [dummyData]);
+
   const unitData: UnitData | undefined = buildingData
     ? buildingData[unitCardNumber]
     : undefined;
@@ -593,6 +608,8 @@ const Main = ({
           <Box>
             <PanoView
               setIsPageLoading={handlePageLoading}
+              availableAparments={availableAparments}
+              numberApartments={numberApartments}
             />
             <Carousel
               loadedImages={loadedImages}

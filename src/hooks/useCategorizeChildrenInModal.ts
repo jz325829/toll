@@ -94,7 +94,6 @@ function useCategorizeChildrenInModal(
         el.parent.add(el.object);
       });
     });
-
     return {
       building1,
       building2,
