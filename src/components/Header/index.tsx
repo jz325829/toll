@@ -78,7 +78,7 @@ export default function Header({
     window.GLOBAL_CACHE.setManualyScale(0, 0, 0, 0, 0);
     setTimeout(() => {
       setIsPageLoading(false);
-    }, 2000)
+    }, 5000)
   };
 
   const handleClickFilter = () => {
