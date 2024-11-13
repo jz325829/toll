@@ -43,12 +43,12 @@ const ZoomBox: React.FC<ZoomBoxProps> = ({ children }) => {
   const [
     isDeviceWidthSmallerThenHeight,
     setIsDeviceWidthSmallerThenHeight,
-  ] = useState(window.innerWidth / window.innerHeight > 1920 / 920);
+  ] = useState(window.innerWidth / window.innerHeight > 2800/1077);
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsDeviceWidthSmallerThenHeight(window.innerWidth / window.innerHeight > 1920 / 920);
+      setIsDeviceWidthSmallerThenHeight(window.innerWidth / window.innerHeight > 2800/1077);
     };
 
     handleResize();
@@ -76,6 +76,7 @@ const ZoomBox: React.FC<ZoomBoxProps> = ({ children }) => {
       const zoomInRef = document.querySelector('#zoom-in');
       const zoomOutRef = document.querySelector('#zoom-out');
       const handleButtonClick = (e: React.MouseEvent<HTMLDivElement>, dir: number) => {
+        console.log('sdfffffffff')
         e.preventDefault();
         let scale = scaleV.x;
 
@@ -199,7 +200,7 @@ const ZoomBox: React.FC<ZoomBoxProps> = ({ children }) => {
     const el = document.getElementById(window.swellData.targetElement || 'rootId');
 
     if (el) {
-      el.style.aspectRatio = '1920/920';
+      el.style.aspectRatio = '2800/1077';
     }
   });
 
@@ -217,10 +218,10 @@ const ZoomBox: React.FC<ZoomBoxProps> = ({ children }) => {
         ref={divRef}
         style={{
           position: 'relative',
-          width: '100%',
-          height: '100%',
+          width: '100vw',
+          height: 'auto',
           transformOrigin: '0 0',
-          aspectRatio: '1920/920',
+          aspectRatio: '2800/1077',
         }}
       >
         {children}
@@ -522,30 +523,6 @@ const Main = ({
   return (
     <div className="app">
       <Loader isLoading={isPageLoading || buildingLoading || isLoadingRender} />
-      { buildingId !== 'main' && (
-        <>
-          <Header
-            toggleFilterPopup={toggleFilterPopup}
-            toggleTableModalPopup={closeTableModalPopup}
-            toggleTableModal={toggleTableModalPopup}
-            setIsPageLoading={handlePageLoading}
-          />
-          <FilterModal
-            setIsUnitModalMobileOpen={setIsModalMobileOpen}
-            closeTableModal={closeTableModalPopup}
-            togglePopup={toggleFilterPopup}
-            isOpen={isOpenFilter}
-            isOpenTableModal={isOpenTableModal}
-            toggleTableModalPopup={toggleTableModalPopup}
-            dummyData={dummyData!}
-          />
-          <NoResultModal
-            isOpen={isOpenNoRes}
-            togglePopup={toggleNoResPopup}
-            toggleFilterModal={toggleOpenFilterPopup}
-          />
-        </>
-      )}
         {/* {unitData && !window.swellData.unitData && (
           <UnitCard
             isModalMobileOpen={isModalMobileOpen}
@@ -560,12 +537,57 @@ const Main = ({
           />
         )} */}
         {/* <BuildingCard /> */}
-        <Zoom
-          isOpenTableModal={isOpenTableModal}
-          closeTableModal={closeTableModal}
-          isVisible={isVisibleRooms}
-          handleHideRooms={handleRoomsVisibility}
-        />
+        <Box
+          position={"absolute"}
+          top="0px"
+          width="100%"
+          height="100%"
+          overflow="hidden"
+          display="flex"
+          justifyContent='center'
+          alignItems='center'
+        >
+          <div
+            style={{
+              position: 'relative',
+              width: '100vw',
+              height: 'auto',
+              transformOrigin: '0 0',
+              aspectRatio: '2800/1077',
+            }}
+          >
+            { buildingId !== 'main' && !(isPageLoading || buildingLoading || isLoadingRender) && 
+              <>
+                <Header
+                  toggleFilterPopup={toggleFilterPopup}
+                  toggleTableModalPopup={closeTableModalPopup}
+                  toggleTableModal={toggleTableModalPopup}
+                  setIsPageLoading={handlePageLoading}
+                />
+                <FilterModal
+                  setIsUnitModalMobileOpen={setIsModalMobileOpen}
+                  closeTableModal={closeTableModalPopup}
+                  togglePopup={toggleFilterPopup}
+                  isOpen={isOpenFilter}
+                  isOpenTableModal={isOpenTableModal}
+                  toggleTableModalPopup={toggleTableModalPopup}
+                  dummyData={dummyData!}
+                />
+                <NoResultModal
+                  isOpen={isOpenNoRes}
+                  togglePopup={toggleNoResPopup}
+                  toggleFilterModal={toggleOpenFilterPopup}
+                />
+              </>
+            }
+            <Zoom
+              isOpenTableModal={isOpenTableModal}
+              closeTableModal={closeTableModal}
+              isVisible={isVisibleRooms}
+              handleHideRooms={handleRoomsVisibility}
+            />
+          </div>
+        </Box>
         <ZoomBox>
         { buildingId === 'main' ? 
           <Box>
