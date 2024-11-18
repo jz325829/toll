@@ -413,34 +413,6 @@ const MainBuildings: React.FC<Props> = ({
     return null;
   };
   const handleToolTipClick = (e: ThreeEvent<PointerEvent>) => {
-    if (tooltipPivotRef.current &&  e.pointerType === 'touch') {
-      if (!e.object.userData.isAvailable) {
-        return handlePointerMissed();
-      }
-      if (e.object.userData.n) {
-        dispatch(
-          $carousel_actions
-            .setToolTipInfo({
-              toolTipId: e.object.userData.n,
-              unitNumber: e.object.userData.unitNumber,
-            }),
-        );
-
-        // tooltipPivotRef.current.position.copy(updatedPosition as THREE.Vector3);
-        tooltipPivotRef.current.position.set(e.point.x, e.point.y + 0.8, e.point.z);
-        tooltipPivotRef.current.updateMatrix();
-        // gl.render(scene, camera);
-        // rerenderScreen();
-      }
-
-      // if (e.object.userData.n) {
-      //   setUnitNumber(e.object.userData.n);
-      // }
-
-      if (isVisibleRooms) {
-        dispatch($carousel_actions.setToolTip(true));
-      }
-    }
     if (isZoomed) {
       pointerDownRef.current.copy(e.point);
     }
