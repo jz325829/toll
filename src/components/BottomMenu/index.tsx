@@ -48,6 +48,8 @@ const menus: Menu[] = [
   { name: "Legend", image: "images/street_plan.jpg", positionId: 5},
 ];
 
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS|FxiOS|Tablet|tablet/i.test(navigator.userAgent);
+
 const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, positionId }: Props) => {
 
   const toggleImage = (menu: Menu) => {
@@ -78,7 +80,7 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
             key={index}
           >
             <Text
-              fontSize="16px"
+              fontSize= {isMobile ? "10px" : "16px" }
               fontWeight="700"
               textAlign={"center"}
             >
@@ -88,8 +90,10 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
               <>
                 {positionId == 1 ?
                   <Image
-                    width={"10vw"}
-                    height={"10vh"}
+                    style={{
+                      height: isMobile ? "55px" : "10vh",
+                      width: isMobile ? "55px" : "10vw",
+                    }}
                     src={menu.image}
                     cursor={'defult'}
                     borderRadius="md"
@@ -98,8 +102,10 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
                   />
                   :
                   <Image
-                    width={"10vw"}
-                    height={"10vh"}
+                    style={{
+                      height: isMobile ? "55px" : "10vh",
+                      width: isMobile ? "55px" : "10vw",
+                    }}
                     src={menu.image}
                     cursor={'pointer'}
                     borderRadius="md"
@@ -109,8 +115,10 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
               </>
               :
               <Image
-                width={"10vw"}
-                height={"10vh"}
+                style={{
+                  height: isMobile ? "55px" : "10vh",
+                  width: isMobile ? "55px" : "10vw",
+                }}
                 src={menu.image}
                 cursor={'pointer'}
                 borderRadius="md"

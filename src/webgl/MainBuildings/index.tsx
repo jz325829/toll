@@ -382,6 +382,40 @@ const MainBuildings: React.FC<Props> = ({
       return handlePointerMissed();
     }
     if (tooltipPivotRef.current && e.pointerType === 'mouse') {
+        if (!e.object.userData.isAvailable) {
+        return handlePointerMissed();
+      }
+      if (e.object.userData.n) {
+        dispatch(
+          $carousel_actions
+            .setToolTipInfo({
+              toolTipId: e.object.userData.n,
+              unitNumber: e.object.userData.unitNumber,
+            }),
+        );
+
+        // tooltipPivotRef.current.position.copy(updatedPosition as THREE.Vector3);
+        tooltipPivotRef.current.position.set(e.point.x, e.point.y + 0.8, e.point.z);
+        tooltipPivotRef.current.updateMatrix();
+        // gl.render(scene, camera);
+        // rerenderScreen();
+      }
+
+      // if (e.object.userData.n) {
+      //   setUnitNumber(e.object.userData.n);
+      // }
+
+      if (isVisibleRooms) {
+        dispatch($carousel_actions.setToolTip(true));
+      }
+    } else if (tooltipPivotRef.current && e.pointerType === 'touch') {
+      tooltipPivotRef.current?.position.set(9999999, 9999999, 9999999);
+    }
+
+    return null;
+  };
+  const handleToolTipClick = (e: ThreeEvent<PointerEvent>) => {
+    if (tooltipPivotRef.current &&  e.pointerType === 'touch') {
       if (!e.object.userData.isAvailable) {
         return handlePointerMissed();
       }
@@ -409,10 +443,6 @@ const MainBuildings: React.FC<Props> = ({
         dispatch($carousel_actions.setToolTip(true));
       }
     }
-
-    return null;
-  };
-  const handleToolTipClick = (e: ThreeEvent<PointerEvent>) => {
     if (isZoomed) {
       pointerDownRef.current.copy(e.point);
     }
@@ -777,7 +807,7 @@ const MainBuildings: React.FC<Props> = ({
           {
             buildingId !== 'main'
             && isZoomed
-            && !isMobile
+            // && !isMobile
             && (
               <object3D position={[0, -9999, 0]} ref={tooltipPivotRef}>
                 <Html zIndexRange={[1, 1]} style={{ pointerEvents: 'none' }}>

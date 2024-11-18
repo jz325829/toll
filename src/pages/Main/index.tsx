@@ -77,7 +77,6 @@ const ZoomBox: React.FC<ZoomBoxProps> = ({ children }) => {
       const zoomInRef = document.querySelector('#zoom-in');
       const zoomOutRef = document.querySelector('#zoom-out');
       const handleButtonClick = (e: React.MouseEvent<HTMLDivElement>, dir: number) => {
-        console.log('sdfffffffff')
         e.preventDefault();
         let scale = scaleV.x;
 
