@@ -382,7 +382,7 @@ const MainBuildings: React.FC<Props> = ({
       return handlePointerMissed();
     }
     if (tooltipPivotRef.current && e.pointerType === 'mouse') {
-        if (!e.object.userData.isAvailable) {
+      if (!e.object.userData.isAvailable) {
         return handlePointerMissed();
       }
       if (e.object.userData.n) {
@@ -408,8 +408,6 @@ const MainBuildings: React.FC<Props> = ({
       if (isVisibleRooms) {
         dispatch($carousel_actions.setToolTip(true));
       }
-    } else if (tooltipPivotRef.current && e.pointerType === 'touch') {
-      tooltipPivotRef.current?.position.set(9999999, 9999999, 9999999);
     }
 
     return null;

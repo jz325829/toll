@@ -63,11 +63,11 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
   return (
     <Box
       position={'absolute'}
-      bottom="0px"
+      bottom= {isMobile ? "50px" : "0px" }
       display={"flex"}
       left="50%"
       padding="10px"
-      paddingBottom={"30px"}
+      paddingBottom={"20px"}
       transform= 'translateX(-50%)'
       rounded={2}
       cursor={'default'} 
