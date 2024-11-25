@@ -23,11 +23,11 @@ export interface CameraObject {
 export const building1Config = {
   '1': {
     camera_name: 'Cam_1_001',
-    image: './renders/spin1/spin1_0118.jpg',
+    image: './renders/spin1/spin1_0119.jpg',
   },
   '2': {
     camera_name: 'Cam_1_002',
-    image: './renders/spin1/spin1_0119.jpg',
+    image: './renders/spin1/spin1_0000.jpg',
   },
   '3': {
     camera_name: 'Cam_1_003',
@@ -496,13 +496,17 @@ export const building1Config = {
   '119': {
     camera_name: 'Cam_1_119',
     image: './renders/spin1/spin1_0117.jpg',
+  },
+  '120': {
+    camera_name: 'Cam_1_120',
+    image: './renders/spin1/spin1_0118.jpg',
   }
 }
 
 export const building2Config ={
   '1': {
-    camera_name: 'Cam_2_119',
-    image: './renders/spin2/spin2_0119.jpg',
+    camera_name: 'Cam_2_000',
+    image: './renders/spin2/spin2_0000.jpg',
   },
   '2': {
     camera_name: 'Cam_2_001',
@@ -975,13 +979,17 @@ export const building2Config ={
   '119': {
     camera_name: 'Cam_2_118',
     image: './renders/spin2/spin2_0118.jpg',
+  },
+  '120': {
+    camera_name: 'Cam_2_119',
+    image: './renders/spin2/spin2_0119.jpg',
   }
 }
 
 export const building3Config = {
   '1': {
-    camera_name: 'Cam3_119',
-    image: './renders/spin3/spin3_0119.jpg',
+    camera_name: 'Cam3_120',
+    image: './renders/spin3/spin3_0000.jpg',
   },
   '2': {
     camera_name: 'Cam3_001',
@@ -1454,13 +1462,17 @@ export const building3Config = {
   '119': {
     camera_name: 'Cam3_118',
     image: './renders/spin3/spin3_0118.jpg',
-  }
+  },
+  '120': {
+    camera_name: 'Cam3_119',
+    image: './renders/spin3/spin3_0119.jpg',
+  },
 }
 
 export const building4Config = {
   '1': {
-    camera_name: 'Cam4_119',
-    image: './renders/spin4/spin4_0119.jpg',
+    camera_name: 'Cam4_120',
+    image: './renders/spin4/spin4_0000.jpg',
   },
   '2': {
     camera_name: 'Cam4_001',
@@ -1933,13 +1945,17 @@ export const building4Config = {
   '119': {
     camera_name: 'Cam4_118',
     image: './renders/spin4/spin4_0118.jpg',
-  }
+  },
+  '120': {
+    camera_name: 'Cam4_119',
+    image: './renders/spin4/spin4_0119.jpg',
+  },
 }
 
 export const building5Config = {
   '1': {
-    camera_name: 'Cam5_119',
-    image: './renders/spin5/spin5_0119.jpg',
+    camera_name: 'Cam5_120',
+    image: './renders/spin5/spin5_0000.jpg',
   },
   '2': {
     camera_name: 'Cam5_001',
@@ -2412,13 +2428,17 @@ export const building5Config = {
   '119': {
     camera_name: 'Cam5_118',
     image: './renders/spin5/spin5_0118.jpg',
-  }
+  },
+  '120': {
+    camera_name: 'Cam5_119',
+    image: './renders/spin5/spin5_0119.jpg',
+  },
 }
 
 export const building6Config = {
   '1': {
-    camera_name: 'Cam6_119',
-    image: './renders/spin6/spin6_0119.jpg',
+    camera_name: 'Cam6_120',
+    image: './renders/spin6/spin6_0000.jpg',
   },
   '2': {
     camera_name: 'Cam6_001',
@@ -2891,7 +2911,11 @@ export const building6Config = {
   '119': {
     camera_name: 'Cam6_118',
     image: './renders/spin6/spin6_0118.jpg',
-  }
+  },
+  '120': {
+    camera_name: 'Cam6_119',
+    image: './renders/spin6/spin6_0119.jpg',
+  },
 }
 
 const { assetPath } = window.swellData;
