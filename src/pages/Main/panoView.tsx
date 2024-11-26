@@ -111,7 +111,7 @@ const Panorama = React.memo(({ image, visible, setIsPageLoading }: PanoramaProps
           tex.repeat.x = -1;
           THREE.Cache.add(image, tex);
           setTexture(tex);
-          setIsPageLoading(false);
+          // setIsPageLoading(false);
         },
         undefined,
         (error) => console.error("Error loading texture:", error)
