@@ -95,32 +95,32 @@ const Panorama = React.memo(({ image, visible, setIsPageLoading }: PanoramaProps
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
 
   useEffect(() => {
-    if (visible) {
-      setIsPageLoading(true);
+    // if (visible) {
+    //   setIsPageLoading(true);
       // Load texture dynamically only when visible
-      const loader = new THREE.TextureLoader();
-      const cachedTexture = THREE.Cache.get(image);
-      if (cachedTexture) {
-        setTexture(cachedTexture);
-        setIsPageLoading(false);
-      } else {
-        loader.load(
-          image,
-          (tex) => {
-            tex.wrapS = THREE.RepeatWrapping;
-            tex.repeat.x = -1;
-            THREE.Cache.add(image, tex);
-            setTexture(tex);
-            setIsPageLoading(false);
-          },
-          undefined,
-          (error) => console.error("Error loading texture:", error)
-        );
-      }
+    const loader = new THREE.TextureLoader();
+    const cachedTexture = THREE.Cache.get(image);
+    if (cachedTexture) {
+      setTexture(cachedTexture);
+      // setIsPageLoading(false);
     } else {
-      // Optional: Clean up texture when no longer visible
-      setTexture(null);
+      loader.load(
+        image,
+        (tex) => {
+          tex.wrapS = THREE.RepeatWrapping;
+          tex.repeat.x = -1;
+          THREE.Cache.add(image, tex);
+          setTexture(tex);
+          setIsPageLoading(false);
+        },
+        undefined,
+        (error) => console.error("Error loading texture:", error)
+      );
     }
+    // } else {
+    //   // Optional: Clean up texture when no longer visible
+    //   setTexture(null);
+    // }
   }, [image, visible]);
 
   return texture ? (

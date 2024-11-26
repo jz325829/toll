@@ -42,103 +42,105 @@ const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const prealoadImages = activeData.filter((_, i) => !(i % 2));
-    const lazyLoadIamges = activeData.filter((_, i) => i % 2);
+    setTimeout(() => {
+      const prealoadImages = activeData.filter((_, i) => !(i % 2));
+      const lazyLoadIamges = activeData.filter((_, i) => i % 2);
 
-    const prealoadBuilding1Images = BUILDING_1_IMAGES.filter((_, i) => !(i % 2));
-    const lazyLoadBuilding1Iamges = BUILDING_1_IMAGES.filter((_, i) => i % 2);
+      const prealoadBuilding1Images = BUILDING_1_IMAGES.filter((_, i) => !(i % 2));
+      const lazyLoadBuilding1Iamges = BUILDING_1_IMAGES.filter((_, i) => i % 2);
 
-    const prealoadBuilding2Images = BUILDING_2_IMAGES.filter((_, i) => !(i % 2));
-    const lazyLoadBuilding2Iamges = BUILDING_2_IMAGES.filter((_, i) => i % 2);
+      const prealoadBuilding2Images = BUILDING_2_IMAGES.filter((_, i) => !(i % 2));
+      const lazyLoadBuilding2Iamges = BUILDING_2_IMAGES.filter((_, i) => i % 2);
 
-    const prealoadBuilding3Images = BUILDING_3_IMAGES.filter((_, i) => !(i % 2));
-    const lazyLoadBuilding3Iamges = BUILDING_3_IMAGES.filter((_, i) => i % 2);
+      const prealoadBuilding3Images = BUILDING_3_IMAGES.filter((_, i) => !(i % 2));
+      const lazyLoadBuilding3Iamges = BUILDING_3_IMAGES.filter((_, i) => i % 2);
 
-    const prealoadBuilding4Images = BUILDING_4_IMAGES.filter((_, i) => !(i % 2));
-    const lazyLoadBuilding4Iamges = BUILDING_4_IMAGES.filter((_, i) => i % 2);
+      const prealoadBuilding4Images = BUILDING_4_IMAGES.filter((_, i) => !(i % 2));
+      const lazyLoadBuilding4Iamges = BUILDING_4_IMAGES.filter((_, i) => i % 2);
 
-    const prealoadBuilding5Images = BUILDING_5_IMAGES.filter((_, i) => !(i % 2));
-    const lazyLoadBuilding5Iamges = BUILDING_5_IMAGES.filter((_, i) => i % 2);
+      const prealoadBuilding5Images = BUILDING_5_IMAGES.filter((_, i) => !(i % 2));
+      const lazyLoadBuilding5Iamges = BUILDING_5_IMAGES.filter((_, i) => i % 2);
 
-    const prealoadBuilding6Images = BUILDING_6_IMAGES.filter((_, i) => !(i % 2));
-    const lazyLoadBuilding6Iamges = BUILDING_6_IMAGES.filter((_, i) => i % 2);
+      const prealoadBuilding6Images = BUILDING_6_IMAGES.filter((_, i) => !(i % 2));
+      const lazyLoadBuilding6Iamges = BUILDING_6_IMAGES.filter((_, i) => i % 2);
 
-    loadedImages.current.main = prealoadImages.map((element) => activeData.indexOf(element) + 1);
+      loadedImages.current.main = prealoadImages.map((element) => activeData.indexOf(element) + 1);
 
-    const onImageLoaded = (el: { id: string, src: string }, imageEl?: HTMLImageElement) => {
-      loadedImages.current.main.push(activeData.indexOf(el) + 1);
+      const onImageLoaded = (el: { id: string, src: string }, imageEl?: HTMLImageElement) => {
+        loadedImages.current.main.push(activeData.indexOf(el) + 1);
 
-      const target = rootRef.current!.querySelector(`#${el.id ? el.id : 0}`) as HTMLDivElement;
-      const img = target!.querySelector('img') as HTMLImageElement;
-      img.loading = 'eager';
-      target.style.display = 'block';
-    };
+        const target = rootRef.current!.querySelector(`#${el.id ? el.id : 0}`) as HTMLDivElement;
+        const img = target!.querySelector('img') as HTMLImageElement;
+        img.loading = 'eager';
+        target.style.display = 'block';
+      };
 
-    prealoadImages.forEach((el) => onImageLoaded(el));
+      prealoadImages.forEach((el) => onImageLoaded(el));
 
-    const loadImage = async (src: string, debug = false) => {
-      return new Promise<HTMLImageElement>((resolve) => {
-        const img = new Image();
-        img.src = src;
+      const loadImage = async (src: string, debug = false) => {
+        return new Promise<HTMLImageElement>((resolve) => {
+          const img = new Image();
+          img.src = src;
 
-        const isImageLoaded = () => {
-          return img.complete || (img.naturalWidth > 0 && img.naturalHeight > 0);
-        };
-
-        if (isImageLoaded()) {
-          // Если изображение уже загружено, разрешаем обещание сразу
-          resolve(img);
-        } else {
-          // Если изображение еще не загружено, устанавливаем обработчик события onload
-          img.onload = () => {
-            resolve(img);
+          const isImageLoaded = () => {
+            return img.complete || (img.naturalWidth > 0 && img.naturalHeight > 0);
           };
-        }
-      });
-    };
 
-    const f = async () => {
-      await Promise.all(prealoadImages.map(async (el) => {
-        await loadImage(el.src, false);
-      }));
+          if (isImageLoaded()) {
+            // Если изображение уже загружено, разрешаем обещание сразу
+            resolve(img);
+          } else {
+            // Если изображение еще не загружено, устанавливаем обработчик события onload
+            img.onload = () => {
+              resolve(img);
+            };
+          }
+        });
+      };
 
-      
-      if (buildingId === 'main') {
-        setTimeout(() => {
-          setPageLoaded();
-        }, 5000)
-        
-        Promise.all(lazyLoadIamges.map(async (el) => {
-          const img = await loadImage(el.src, false);
-          await new Promise((r) => { setTimeout(r, 100); });
-          onImageLoaded(el, img);
+      const f = async () => {
+        await Promise.all(prealoadImages.map(async (el) => {
+          await loadImage(el.src, false);
         }));
-        await Promise.all(
-          [...prealoadBuilding1Images.map((el) => loadImage(el)),
-            ...prealoadBuilding2Images.map((el) => loadImage(el)),
-            ...prealoadBuilding3Images.map((el) => loadImage(el)),
-            ...prealoadBuilding4Images.map((el) => loadImage(el)),
-            ...prealoadBuilding5Images.map((el) => loadImage(el)),
-            ...prealoadBuilding6Images.map((el) => loadImage(el)),
-          ]
-          ,
-        );
 
-        dispatch($carousel_actions.setFirstLoaded(true));
+        
+        if (buildingId === 'main') {
+          setTimeout(() => {
+            setPageLoaded();
+          }, 5000)
+          
+          Promise.all(lazyLoadIamges.map(async (el) => {
+            const img = await loadImage(el.src, false);
+            await new Promise((r) => { setTimeout(r, 100); });
+            onImageLoaded(el, img);
+          }));
+          await Promise.all(
+            [...prealoadBuilding1Images.map((el) => loadImage(el)),
+              ...prealoadBuilding2Images.map((el) => loadImage(el)),
+              ...prealoadBuilding3Images.map((el) => loadImage(el)),
+              ...prealoadBuilding4Images.map((el) => loadImage(el)),
+              ...prealoadBuilding5Images.map((el) => loadImage(el)),
+              ...prealoadBuilding6Images.map((el) => loadImage(el)),
+            ]
+            ,
+          );
 
-        await Promise.all(
-          [...lazyLoadBuilding2Iamges.map((el) => loadImage(el)),
-            ...lazyLoadBuilding1Iamges.map((el) => loadImage(el)),
-            ...lazyLoadBuilding3Iamges.map((el) => loadImage(el)),
-            ...lazyLoadBuilding4Iamges.map((el) => loadImage(el)),
-            ...lazyLoadBuilding5Iamges.map((el) => loadImage(el)),
-            ...lazyLoadBuilding6Iamges.map((el) => loadImage(el)),
-          ],
-        );
-      }
-    };
+          dispatch($carousel_actions.setFirstLoaded(true));
 
-    f();
+          await Promise.all(
+            [...lazyLoadBuilding2Iamges.map((el) => loadImage(el)),
+              ...lazyLoadBuilding1Iamges.map((el) => loadImage(el)),
+              ...lazyLoadBuilding3Iamges.map((el) => loadImage(el)),
+              ...lazyLoadBuilding4Iamges.map((el) => loadImage(el)),
+              ...lazyLoadBuilding5Iamges.map((el) => loadImage(el)),
+              ...lazyLoadBuilding6Iamges.map((el) => loadImage(el)),
+            ],
+          );
+        }
+      };
+
+      f();    
+    }, 5000);
   }, []);
 
   const updateSlide = useCallback((current: string) => {
