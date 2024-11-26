@@ -116,36 +116,36 @@ const Panorama = React.memo(({ image, visible }: PanoramaProps) => {
     return tex;
   }, [image]);
 
-  useEffect(() => {
-    if (visible && materialRef.current) {
-      // Start the shader effect when panorama is visible
-      setProgress(0);
-      // Use tween or similar for smooth animation
-      const animation = setInterval(() => {
-        setProgress((prev) => Math.min(prev + 0.05, 1)); // Adjust increment for smooth transition
-      }, 50);
-      return () => clearInterval(animation);
-    }
-  }, [visible]);
+  // useEffect(() => {
+  //   if (visible && materialRef.current) {
+  //     // Start the shader effect when panorama is visible
+  //     setProgress(0);
+  //     // Use tween or similar for smooth animation
+  //     const animation = setInterval(() => {
+  //       setProgress((prev) => Math.min(prev + 0.05, 1)); // Adjust increment for smooth transition
+  //     }, 50);
+  //     return () => clearInterval(animation);
+  //   }
+  // }, [visible]);
 
-  const fragmentShader = `
-    uniform float progress;
-    uniform sampler2D tex;
-    varying vec2 vUv;
-    void main() {
-      vec4 textureColor = texture2D(tex, vUv);
-      // float alpha = smoothstep(0.0, 1.0, progress);
-      gl_FragColor = vec4(textureColor.rgb, 1.0); 
-    }
-  `;
+  // const fragmentShader = `
+  //   uniform float progress;
+  //   uniform sampler2D tex;
+  //   varying vec2 vUv;
+  //   void main() {
+  //     vec4 textureColor = texture2D(tex, vUv);
+  //     // float alpha = smoothstep(0.0, 1.0, progress);
+  //     gl_FragColor = vec4(textureColor.rgb, 1.0); 
+  //   }
+  // `;
 
-  const vertexShader = `
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `;
+  // const vertexShader = `
+  //   varying vec2 vUv;
+  //   void main() {
+  //     vUv = uv;
+  //     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  //   }
+  // `;
 
   return isTextureLoaded ? (
     <mesh ref={mesh} rotation={[0, Math.PI / 2, 0]} visible={visible}>

@@ -97,8 +97,6 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
                     src={menu.image}
                     cursor={'defult'}
                     borderRadius="md"
-                    border="4px solid"
-                    borderColor="#110d89"
                   />
                   :
                   <Image
@@ -109,7 +107,12 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
                     src={menu.image}
                     cursor={'pointer'}
                     borderRadius="md"
+                    transition="transform 0.3s ease"
+                    _hover={{
+                      transform: "scale(0.85)",
+                    }}
                     onClick={() => handlePositionChange(1)}
+                    
                   />
                 }
               </>
@@ -118,6 +121,10 @@ const BottomMenu = ({ toggleBuildingOne, togglePopup, handlePositionChange, posi
                 style={{
                   height: isMobile ? "55px" : "10vh",
                   width: isMobile ? "55px" : "10vw",
+                }}
+                transition="transform 0.3s ease"
+                _hover={{
+                  transform: "scale(0.85)",
                 }}
                 src={menu.image}
                 cursor={'pointer'}

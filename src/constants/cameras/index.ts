@@ -19,7 +19,8 @@ export interface DataObject {
 export interface CameraObject {
   [key: string]: THREE.Vector3Tuple;
 }
-
+export const mainviewConfig = {
+}
 export const building1Config = {
   '1': {
     camera_name: 'Cam_1_001',

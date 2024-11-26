@@ -56,6 +56,10 @@ const StreetPlan = ({
           rounded={2}
           zIndex={1000} 
           cursor={'pointer'} 
+          transition="transform 0.3s ease"
+          _hover={{
+            transform: "scale(0.85)",
+          }}
           backgroundColor="#ffffff">
             <Image
               src="images/street_plan.jpg"
