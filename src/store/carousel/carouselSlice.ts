@@ -4,7 +4,7 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '../store';
 import {
-  Camera, building1Config, building2Config, building3Config, building4Config, building5Config, building6Config, mainviewConfig
+  Camera, building1Config, building2Config, building3Config, building4Config, building5Config, building6Config, mainviewConfig,
 } from '../../constants/cameras';
 
 interface CaouselState {
@@ -122,11 +122,11 @@ export const selectActiveSlide = createSelector(selectCarousel, (state) => {
       data = building6Config;
       break;
     default:
-      data = building1Config;
+      data = mainviewConfig;
       break;
   }
 
-  return data[state.activeItem as keyof typeof building1Config];
+  return data[state.activeItem as keyof typeof mainviewConfig];
 });
 
 export const selectActiveData = createSelector(selectCarousel, (state) => {

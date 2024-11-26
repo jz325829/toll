@@ -27,7 +27,7 @@ import { RootState } from '../../store/store';
 import Loader from '../../components/Loader';
 import { $carousel_actions } from '../../store/carousel/carouselSlice';
 import UnitCard from '../../components/UnitCard';
-import { building1Config, building2Config, building3Config, building4Config, building5Config, building6Config } from '../../constants/cameras';
+import { building1Config, building2Config, building3Config, building4Config, building5Config, building6Config, mainviewConfig } from '../../constants/cameras';
 
 import { useCategorizeChildrenInModal } from '../../hooks/useCategorizeChildrenInModal';
 import { CameraData } from './types';
@@ -319,7 +319,7 @@ const Main = ({
       buildingConfig = building6Config;
       break;
     default:
-      buildingConfig = building1Config;
+      buildingConfig = mainviewConfig;
       break;
   }
 

@@ -87,85 +87,49 @@ const hotspots: Hotspot[] = [
 interface PanoramaProps {
   image: string;
   visible: boolean;
+  setIsPageLoading: (loading: boolean) => void;
 }
 
-const Panorama = React.memo(({ image, visible }: PanoramaProps) => {
+const Panorama = React.memo(({ image, visible, setIsPageLoading }: PanoramaProps) => {
   const mesh = useRef<THREE.Mesh>(null);
-  const [isTextureLoaded, setIsTextureLoaded] = useState(false);
-  const [progress, setProgress] = useState(1); // For animation progress
-  const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const [texture, setTexture] = useState<THREE.Texture | null>(null);
 
-  const texture = useMemo(() => {
-    const loader = new THREE.TextureLoader();
-    const cachedTexture = THREE.Cache.get(image);
-    if (cachedTexture) {
-      setIsTextureLoaded(true);
-      return cachedTexture;
+  useEffect(() => {
+    if (visible) {
+      setIsPageLoading(true);
+      // Load texture dynamically only when visible
+      const loader = new THREE.TextureLoader();
+      const cachedTexture = THREE.Cache.get(image);
+      if (cachedTexture) {
+        setTexture(cachedTexture);
+        setIsPageLoading(false);
+      } else {
+        loader.load(
+          image,
+          (tex) => {
+            tex.wrapS = THREE.RepeatWrapping;
+            tex.repeat.x = -1;
+            THREE.Cache.add(image, tex);
+            setTexture(tex);
+            setIsPageLoading(false);
+          },
+          undefined,
+          (error) => console.error("Error loading texture:", error)
+        );
+      }
+    } else {
+      // Optional: Clean up texture when no longer visible
+      setTexture(null);
     }
-    const tex = loader.load(
-      image,
-      () => {
-        setIsTextureLoaded(true);
-        THREE.Cache.add(image, tex);
-      },
-      undefined,
-      (error) => console.error("Error loading texture:", error)
-    );
-    tex.wrapS = THREE.RepeatWrapping;
-    tex.repeat.x = -1;
-    return tex;
-  }, [image]);
+  }, [image, visible]);
 
-  // useEffect(() => {
-  //   if (visible && materialRef.current) {
-  //     // Start the shader effect when panorama is visible
-  //     setProgress(0);
-  //     // Use tween or similar for smooth animation
-  //     const animation = setInterval(() => {
-  //       setProgress((prev) => Math.min(prev + 0.05, 1)); // Adjust increment for smooth transition
-  //     }, 50);
-  //     return () => clearInterval(animation);
-  //   }
-  // }, [visible]);
-
-  // const fragmentShader = `
-  //   uniform float progress;
-  //   uniform sampler2D tex;
-  //   varying vec2 vUv;
-  //   void main() {
-  //     vec4 textureColor = texture2D(tex, vUv);
-  //     // float alpha = smoothstep(0.0, 1.0, progress);
-  //     gl_FragColor = vec4(textureColor.rgb, 1.0); 
-  //   }
-  // `;
-
-  // const vertexShader = `
-  //   varying vec2 vUv;
-  //   void main() {
-  //     vUv = uv;
-  //     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  //   }
-  // `;
-
-  return isTextureLoaded ? (
+  return texture ? (
     <mesh ref={mesh} rotation={[0, Math.PI / 2, 0]} visible={visible}>
       <sphereGeometry args={[500, 100, 100]} />
       <meshBasicMaterial map={texture} side={THREE.DoubleSide} />
-      {/* <shaderMaterial
-        ref={materialRef}
-        uniforms={{
-          progress: { value: progress },
-          tex: { value: texture },
-        }}
-        vertexShader={vertexShader}
-        fragmentShader={fragmentShader}
-        side={THREE.DoubleSide}
-        transparent={true}
-      /> */}
     </mesh>
   ) : null;
 });
-
 // Hotspot component for clickable spots
 interface HotspotProps {
   position: [number, number, number];
@@ -357,6 +321,7 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading, availableAparments, numbe
             key={pos.id}
             image={pos.image}
             visible={pos.id === currentPosition.id} 
+            setIsPageLoading={setIsPageLoading}
             />
         ))}
         {/* <OrbitControls enableZoom={false} enablePan={false} rotateSpeed={-0.5} minAzimuthAngle={-Math.PI / 4} maxAzimuthAngle={Math.PI / 4}/> */}
