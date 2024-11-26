@@ -140,7 +140,7 @@ const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
       };
 
       f();    
-    }, 5000);
+    }, 10000);
   }, []);
 
   const updateSlide = useCallback((current: string) => {
