@@ -55,6 +55,7 @@ const BuildingModel: React.FC<Props> = ({
       unitNumber = unitNumber - 500;
       break;
   }
+  
   const buildingData = dummyData && dummyData[buildingNumber];
   const unitData: UnitData | undefined = buildingData ? buildingData[unitNumber] : undefined;
 

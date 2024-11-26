@@ -309,7 +309,7 @@ const PanoView: React.FC<Props> = ({ setIsPageLoading, availableAparments, numbe
       // @ts-ignore asd
       window.GLOBAL_CACHE.updateCurrentSlide(17, true);
       setIsPageLoading(false);
-    }, 2000);
+    }, 3000);
   };
   
   return (

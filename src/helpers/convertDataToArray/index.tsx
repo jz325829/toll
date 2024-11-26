@@ -82,25 +82,25 @@ export const convertDataToArray = (
   let arrayData: ExtraDataValue[] = [];
   switch (buildingId) {
     case 'building1':
-      arrayData = convertToObjectWithUnitKey(dummyData.building1, '1', filters);
+      arrayData = convertToObjectWithUnitKey(dummyData.building1, 'building1', filters);
       break;
     case 'building2':
-      arrayData = convertToObjectWithUnitKey(dummyData.building2, '2', filters);
+      arrayData = convertToObjectWithUnitKey(dummyData.building2, 'building2', filters);
       break;
     case 'building3':
-      arrayData = convertToObjectWithUnitKey(dummyData.building3, '3', filters);
+      arrayData = convertToObjectWithUnitKey(dummyData.building3, 'building3', filters);
       break;
     case 'building4':
-      arrayData = convertToObjectWithUnitKey(dummyData.building4, '4', filters);
+      arrayData = convertToObjectWithUnitKey(dummyData.building4, 'building4', filters);
       break;
     case 'building5':
-      arrayData = convertToObjectWithUnitKey(dummyData.building5, '5', filters);
+      arrayData = convertToObjectWithUnitKey(dummyData.building5, 'building5', filters);
       break;
     case 'building6':
-      arrayData = convertToObjectWithUnitKey(dummyData.building6, '6', filters);
+      arrayData = convertToObjectWithUnitKey(dummyData.building6, 'building6', filters);
       break;
     default:
-      convertToObjectWithUnitKey(dummyData.building1, '1', filters);
+      convertToObjectWithUnitKey(dummyData.building1, 'building1', filters);
   }
 
   let sortedData: ExtraDataValue[];

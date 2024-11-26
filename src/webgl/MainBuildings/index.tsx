@@ -190,7 +190,7 @@ const MainBuildings: React.FC<Props> = ({
       fov = 25.5;
       break;
     case 'building5':
-      fov = 24.5;
+      fov = 25;
       break;
     case 'building6':
       fov = 26;

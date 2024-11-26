@@ -48,6 +48,9 @@ const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
       }, 5000)
     }
     setTimeout(() => {
+      if (loadedImages.current.main.length > 0){
+        return;
+      }
       const prealoadImages = activeData.filter((_, i) => !(i % 2));
       const lazyLoadIamges = activeData.filter((_, i) => i % 2);
 
