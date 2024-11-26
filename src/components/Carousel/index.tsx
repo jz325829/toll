@@ -42,6 +42,11 @@ const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (buildingId === 'main') {
+      setTimeout(() => {
+        setPageLoaded();
+      }, 5000)
+    }
     setTimeout(() => {
       const prealoadImages = activeData.filter((_, i) => !(i % 2));
       const lazyLoadIamges = activeData.filter((_, i) => i % 2);
@@ -105,10 +110,6 @@ const Carousel: FC<Props> = ({ isPageLoaded, loadedImages, setPageLoaded }) => {
 
         
         if (buildingId === 'main') {
-          setTimeout(() => {
-            setPageLoaded();
-          }, 5000)
-          
           Promise.all(lazyLoadIamges.map(async (el) => {
             const img = await loadImage(el.src, false);
             await new Promise((r) => { setTimeout(r, 100); });
