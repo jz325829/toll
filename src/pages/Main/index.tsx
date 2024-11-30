@@ -271,7 +271,7 @@ const Main = ({
 
   const dispatch = useDispatch();
 
-  let modelPath = 'models/apartments.glb';
+  let modelPath = 'models/apartments_3.glb';
 
   const { assetPath } = window.swellData;
   if (assetPath) {
@@ -430,13 +430,13 @@ const Main = ({
     let slideNumber = v
     switch (buildingId) {
       case 'building1':
-        slideNumber = v + 120;
+        slideNumber = v;
         break;
       case 'building2':
         slideNumber = v + 1;
         break;
       case 'building3':
-        slideNumber = v + 1;
+        slideNumber = v + 2;
         break;
       case 'building4':
         slideNumber = v + 2;
@@ -445,7 +445,7 @@ const Main = ({
         slideNumber = v + 2;
         break;
       case 'building6':
-        slideNumber = v + 1;
+        slideNumber = v + 2;
         break;
     }
     slideNumber = slideNumber % 121
